@@ -82,12 +82,13 @@ export default function Hero() {
   const reveal = "block mina-reveal motion-reduce:animate-none";
 
   return (
-    <section
-      className="sticky top-0 z-0 isolate h-[90svh] min-h-[650px] max-h-[1080px] overflow-hidden bg-cocoa text-ivory md:h-[92svh] md:min-h-[600px]"
-      aria-label="A taste of Mina"
-      aria-roledescription="carousel"
-      data-paused={stopped}
-    >
+   <section
+  className="sticky top-0 z-0 isolate h-[calc(100svh_+_var(--r))] overflow-hidden bg-cocoa text-ivory"
+  aria-label="A taste of Mina"
+  aria-roledescription="carousel"
+  data-paused={stopped}
+  style={{ "--r": "clamp(28px, 4.5vw, 62px)" }}
+>
       <style>{`
         @keyframes mina-wipe { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
         @keyframes mina-settle { from { transform: scale(1.2) translateY(6%); } to { transform: scale(1) translateY(0); } }
@@ -170,7 +171,7 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="absolute inset-x-5 top-[130px] bottom-[110px] flex flex-col justify-between text-white md:inset-x-12">
+      <div className="absolute inset-x-5 top-[130px] bottom-[calc(110px_+_var(--r))] flex flex-col justify-between text-white md:inset-x-12">
         <h1 className="font-(family-name:--font-cormorant) text-5xl mt-8 uppercase leading-[0.95] md:text-7xl">
           <span className="block overflow-hidden pb-[0.1em]">
             <span className={`${reveal} [animation-delay:180ms]`}>
@@ -207,7 +208,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <div className="absolute left-6 right-6 bottom-6 grid grid-cols-[1fr_40px] gap-x-3 gap-y-[18px] items-end md:left-[38px] md:right-[38px] md:bottom-[34px] md:grid-cols-[1fr_minmax(200px,1.1fr)_44px] md:gap-9">
+      <div className="absolute left-6 right-6 bottom-[calc(1.5rem_+_var(--r))] grid grid-cols-[1fr_40px] gap-x-3 gap-y-[18px] items-end md:left-[38px] md:right-[38px] md:bottom-[calc(34px_+_var(--r))] md:grid-cols-[1fr_minmax(200px,1.1fr)_44px] md:gap-9">
         <div className="col-start-1 md:col-auto">
           <p className="font-semibold text-xs leading-[1.55] m-0 md:text-sm">
             A LITTLE SOMETHING
