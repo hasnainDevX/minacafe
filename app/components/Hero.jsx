@@ -1,0 +1,243 @@
+"use client";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { productImages } from "../assets";
+import Navbar from "./Navbar";
+
+const slides = [
+  {
+    src: productImages["strawberry-milk-bottle"],
+    name: "Strawberry Milk",
+    position: "center 56%",
+  },
+  {
+    src: productImages["nut-and-nectar-cup"],
+    name: "Nut & Nectar",
+    position: "center 63%",
+  },
+  {
+    src: productImages["mango-milk-bottle"],
+    name: "Mango Milk",
+    position: "center 58%",
+  },
+];
+const SLIDE_DURATION = 6500;
+const WIPE = 1300; // ms, wipe/exit duration
+
+export default function Hero() {
+  const [active, setActive] = useState(0);
+  const [previous, setPrevious] = useState(null);
+  const [paused, setPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
+  const [loaded, setLoaded] = useState([]);
+  const remaining = useRef(SLIDE_DURATION);
+  const stopped = paused || reducedMotion || !pageVisible;
+
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreference = () => setReducedMotion(preference.matches);
+    const updateVisibility = () => setPageVisible(!document.hidden);
+    updatePreference();
+    updateVisibility();
+    preference.addEventListener("change", updatePreference);
+    document.addEventListener("visibilitychange", updateVisibility);
+    return () => {
+      preference.removeEventListener("change", updatePreference);
+      document.removeEventListener("visibilitychange", updateVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    remaining.current = SLIDE_DURATION;
+  }, [active]);
+
+  useEffect(() => {
+    if (stopped || !loaded.includes(active)) return;
+    const next = Array.from(
+      { length: slides.length - 1 },
+      (_, offset) => (active + offset + 1) % slides.length,
+    ).find((index) => loaded.includes(index));
+    if (next === undefined) return;
+    const started = performance.now();
+    const timer = setTimeout(() => {
+      setPrevious(active);
+      setActive(next);
+    }, remaining.current);
+    return () => {
+      clearTimeout(timer);
+      remaining.current = Math.max(
+        0,
+        remaining.current - (performance.now() - started),
+      );
+    };
+  }, [active, stopped, loaded]);
+
+  function selectSlide(index) {
+    if (index === active) return;
+    setPrevious(active);
+    setActive(index);
+  }
+
+  const reveal = "block mina-reveal motion-reduce:animate-none";
+
+  return (
+    <section
+      className="sticky top-0 z-0 isolate h-[90svh] min-h-[650px] max-h-[1080px] overflow-hidden bg-cocoa text-ivory md:h-[92svh] md:min-h-[600px]"
+      aria-label="A taste of Mina"
+      aria-roledescription="carousel"
+      data-paused={stopped}
+    >
+      <style>{`
+        @keyframes mina-wipe { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+        @keyframes mina-settle { from { transform: scale(1.2) translateY(6%); } to { transform: scale(1) translateY(0); } }
+        @keyframes mina-exit { from { transform: scale(1) translateY(0); } to { transform: scale(1.05) translateY(-12%); } }
+        @keyframes mina-zoom { from { transform: scale(1); } to { transform: scale(1.18); } }
+        @keyframes mina-text-reveal { from { transform: translateY(110%); } to { transform: translateY(0); } }
+        @keyframes mina-fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+        .mina-slide-active { animation: mina-wipe ${WIPE}ms cubic-bezier(0.77, 0, 0.175, 1) both; }
+        .mina-slide-active .mina-motion { animation: mina-settle 2s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .mina-slide-leaving .mina-motion { animation: mina-exit ${WIPE}ms cubic-bezier(0.77, 0, 0.175, 1) both; }
+        .mina-slide-active img,
+        .mina-slide-leaving img { animation: mina-zoom ${SLIDE_DURATION + WIPE}ms linear both; }
+
+        .mina-slide-initial,
+        .mina-slide-initial .mina-motion { animation: none; }
+
+        .mina-reveal { animation: mina-text-reveal 1.1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .mina-fade-up { animation: mina-fade-up 1s ease 0.7s both; }
+
+        [data-paused="true"] .mina-slide-active,
+        [data-paused="true"] .mina-motion,
+        [data-paused="true"] img { animation-play-state: paused; }
+
+        @media (max-width: 767px) {
+          .mina-slide-active img, .mina-slide-leaving img { animation: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .mina-slide-active, .mina-slide-active .mina-motion, .mina-slide-leaving .mina-motion,
+          .mina-slide-active img, .mina-slide-leaving img,
+          .mina-reveal, .mina-fade-up { animation: none; }
+        }
+      `}</style>
+
+      <Navbar />
+
+      <div className="absolute inset-0 z-[-3]" aria-hidden="true">
+        {slides.map((slide, index) => {
+          const state =
+            index === active
+              ? "active"
+              : index === previous
+                ? "leaving"
+                : "idle";
+          return (
+            <div
+              key={slide.src}
+              className={`absolute inset-0 overflow-hidden ${
+                state === "active"
+                  ? `mina-slide-active z-20 ${previous === null ? "mina-slide-initial" : ""}`
+                  : state === "leaving"
+                    ? "mina-slide-leaving z-10"
+                    : "invisible z-0"
+              }`}
+            >
+              <div className="mina-motion absolute inset-0">
+                <Image
+                  src={slide.src}
+                  alt=""
+                  fill
+                  sizes="100vw"
+                  preload={index === 0}
+                  loading={index === 0 ? undefined : "eager"}
+                  className="object-cover"
+                  style={{ objectPosition: slide.position }}
+                  onLoad={() =>
+                    setLoaded((current) =>
+                      current.includes(index) ? current : [...current, index],
+                    )
+                  }
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div
+        className="absolute inset-0 z-[-1] pointer-events-none bg-[#180f0c]/60"
+        aria-hidden="true"
+      />
+
+      <div className="absolute inset-x-5 top-[130px] bottom-[110px] flex flex-col justify-between text-white md:inset-x-12">
+        <h1 className="font-(family-name:--font-cormorant) text-5xl mt-8 uppercase leading-[0.95] md:text-7xl">
+          <span className="block overflow-hidden pb-[0.1em]">
+            <span className={`${reveal} [animation-delay:180ms]`}>
+              From my hands
+            </span>
+          </span>
+          <span className="-mt-[0.06em] block overflow-hidden pb-[0.1em]">
+            <span className={`${reveal} [animation-delay:360ms]`}>
+              to your heart.
+            </span>
+          </span>
+        </h1>
+
+        <div className="mina-fade-up max-w-[360px] self-start md:self-end">
+          <p className="font-[family-name:var(--font-source-sans)] text-lg leading-[1.5] md:text-xl">
+            Fresh, hygienic and delicious treats made by hand in Karachi, every
+            cup and bottle, just for you.
+          </p>
+          <div className="mt-5 flex items-center gap-4">
+            <a
+              href="/menu"
+              className="border border-white bg-white px-5 py-2.5 text-sm uppercase tracking-[0.15em] text-cocoa transition-colors hover:bg-transparent hover:text-white motion-reduce:transition-none"
+            >
+              View Menu
+            </a>
+            <a
+              href="https://www.instagram.com/mina.cafe_/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-white px-5 py-2.5 text-sm uppercase tracking-[0.15em] transition-colors hover:bg-white hover:text-cocoa motion-reduce:transition-none"
+            >
+              Order Now
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="absolute left-6 right-6 bottom-6 grid grid-cols-[1fr_40px] gap-x-3 gap-y-[18px] items-end md:left-[38px] md:right-[38px] md:bottom-[34px] md:grid-cols-[1fr_minmax(200px,1.1fr)_44px] md:gap-9">
+        <div className="col-start-1 md:col-auto">
+          <p className="font-semibold text-xs leading-[1.55] m-0 md:text-sm">
+            A LITTLE SOMETHING
+            <br />
+            TO MAKE YOUR DAY.
+          </p>
+        </div>
+        <div className="flex items-center gap-3 pb-px col-start-1 row-start-2 md:gap-[18px] md:col-auto md:row-auto">
+          <div
+            className="flex flex-1 gap-[6px]"
+            role="group"
+            aria-label="Choose a hero image"
+          >
+            {slides.map((slide, index) => {
+              const isCurrent = index === active;
+              return (
+                <button
+                  type="button"
+                  key={slide.src}
+                  aria-label={`Show ${slide.name}`}
+                  aria-pressed={isCurrent}
+                  onClick={() => selectSlide(index)}
+                  className="flex-1 min-w-[32px] h-11 flex items-center p-0 bg-transparent border-0 cursor-pointer"
+                ></button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    
+    </section>
+  );
+}

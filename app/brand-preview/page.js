@@ -1,3 +1,4 @@
+import Navbar from "../components/Navbar";
 import "./preview.css";
 
 export const metadata = {
@@ -6,17 +7,14 @@ export const metadata = {
 };
 
 const colors = [
-  ["Ivory", "#F3ECDA"], ["Butter", "#F4EDBE"], ["Peach", "#EFD5BE"],
+  ["Ivory", "#F3ECE8"], ["Butter", "#F4EDBE"], ["Peach", "#EFD5BE"],
   ["Cocoa", "#4A2E1C"], ["Burgundy", "#601E1C"], ["Ink", "#000000"],
 ];
 
 export default function BrandPreview() {
   return (
     <main className="brand-preview">
-      <header className="preview-header">
-        <span className="preview-wordmark">mina</span>
-        <span>COLOUR & SURFACE STUDY / 01</span>
-      </header>
+      <Navbar />
       <section className="preview-intro">
         <p className="preview-eyebrow">A warmer kind of everyday.</p>
         <h1>Soft colours.<br />A little character.</h1>

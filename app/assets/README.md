@@ -1,7 +1,7 @@
 # Mina brand and asset guide
 
 ## Palette
-Ivory #F3ECDA (base), butter #F4EDBE (soft accent), peach #EFD5BE (secondary surface),
+Ivory #F3ECE8 (base), butter #F4EDBE (soft accent), peach #EFD5BE (secondary surface),
 cocoa #4A2E1C (headings/borders), burgundy #601E1C (strong accent/footer), ink #000000 (body).
 Tailwind tokens: bg-ivory, bg-butter, bg-peach, bg-cocoa, bg-burgundy, text-ink, etc.
 
@@ -12,7 +12,7 @@ Tailwind tokens: bg-ivory, bg-butter, bg-peach, bg-cocoa, bg-burgundy, text-ink,
 - mina-paper can also be applied to solid brand-colour sections.
 - Override --stripe-width and --paper-grain-opacity per section if needed.
 - /brand-preview is a noindex design review route, not the final homepage.
-- Preview uses system typography; final Romie/Source Sans font integration is separate.
+- Preview uses Cormorant Light (300), loaded through the Google Fonts stylesheet, for headings and local Source Sans Pro (300/400/600) for body text. Romie files are preserved but unused.
 
 ## Asset folders
 - public/images/products/: nine old-site AI placeholder images. Not verified photographs.
@@ -31,4 +31,3 @@ name/extension, or change its single entry in app/assets/index.js if the format 
 Update manifest status to real-photo once replaced. Do not label AI placeholders as real photos.
 Use consented original images for the final launch. Keep source/licence records for supplied
 decorative references. No asset was deleted or recompressed during organization.
-
