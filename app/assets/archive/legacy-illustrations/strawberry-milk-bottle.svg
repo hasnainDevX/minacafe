@@ -1,0 +1,8 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="108" rx="30" ry="6" fill="#4A2E1C" opacity="0.08"></ellipse>
+          <path d="M46 22 h28 v14 l6 10 v56 a6 6 0 0 1 -6 6 h-28 a6 6 0 0 1 -6 -6 v-56 l6 -10 Z" fill="#FFFDFB" stroke="#C97B63" stroke-width="2.5"></path>
+          <rect x="44" y="60" width="32" height="38" rx="3" fill="#F4A0AE"></rect>
+          <rect x="50" y="18" width="20" height="8" rx="2" fill="#C97B63"></rect>
+          <path d="M44 60 h32" stroke="#C97B63" stroke-width="2"></path>
+          <text x="60" y="80" font-family="Playfair Display, serif" font-size="9" fill="#B6624B" text-anchor="middle" font-weight="700">Mina</text>
+        </svg>

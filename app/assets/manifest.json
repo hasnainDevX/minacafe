@@ -1,0 +1,134 @@
+[
+  {
+    "original": "Fruit-Glass-1.jfif.jpeg",
+    "destination": "public/images/products/fresh-fruit-glass.jpg",
+    "status": "ai-placeholder",
+    "sha256": "794FED7178AD4BEE64A38B4E2C04F27A6213F772965ABEB15253D1CF619F1B78"
+  },
+  {
+    "original": "creamy-4.jfif.jpeg",
+    "destination": "public/images/products/creamy-milk-bottle.jpg",
+    "status": "ai-placeholder",
+    "sha256": "51395517609F950326070F0A12598E78A1681270B2594C32ECA5A10BEA5B5016"
+  },
+  {
+    "original": "strawberry-2.jfif.jpeg",
+    "destination": "public/images/products/strawberry-milk-bottle.jpg",
+    "status": "ai-placeholder",
+    "sha256": "E5168F34A0118EFFC3B70ABC791541EC3C5B6042D3C9DF18B19DAC395D4B93F1"
+  },
+  {
+    "original": "chocolate-2.jfif.jpeg",
+    "destination": "public/images/products/chocolate-milk-bottle.jpg",
+    "status": "ai-placeholder",
+    "sha256": "717FD0B9690233D000904AFCAD5C96233C075B0A416A3594974B73E1855C37CD"
+  },
+  {
+    "original": "mango.jfif.jpeg",
+    "destination": "public/images/products/mango-milk-bottle.jpg",
+    "status": "ai-placeholder",
+    "sha256": "BC1E35B8E0FF9588CE5BDC133E4B530CCD82D2CBF039BA7ED134C1F66521E1F8"
+  },
+  {
+    "original": "mini.jpg.jpeg",
+    "destination": "public/images/products/nut-and-nectar-mini-box.jpg",
+    "status": "ai-placeholder",
+    "sha256": "24E6753C3029B77FC0598305332A6028956E6FAE8E25743DE7926CFC9DF5080D"
+  },
+  {
+    "original": "cup.jpg.jpeg",
+    "destination": "public/images/products/nut-and-nectar-cup.jpg",
+    "status": "ai-placeholder",
+    "sha256": "DB15DBC24B0A703EB6DB0F373005A09B3095206C3E70E1D1BC1AE6FE3CF0A5C9"
+  },
+  {
+    "original": "Bucket.jpg.jpeg",
+    "destination": "public/images/products/nut-and-nectar-bucket.jpg",
+    "status": "ai-placeholder",
+    "sha256": "60EB08D0AE7D0360124A6224D9264FB5B68FE89793DC6A77DD8EC03E5FB45B08"
+  },
+  {
+    "original": "salad%20ai.jpg.jpeg",
+    "destination": "public/images/products/chicken-salad-bowl.jpg",
+    "status": "ai-placeholder",
+    "sha256": "1C1A47B53D661EA47483A73D32C5BFA55C43B22A5F23AC630E44CC6E5F433C73"
+  },
+  {
+    "original": "d7cea9ce-3a1d-4bd1-8cad-77f3003c705b.jpeg",
+    "destination": "public/images/brand/mina-original-logo.jpg",
+    "status": "existing-logo",
+    "sha256": "361B3B6B5B5CD70EAEE293EEABC2617919F767AEA8191DDFEE3F98AF70636263"
+  },
+  {
+    "original": "bg1.jpeg",
+    "destination": "public/images/textures/ivory-paper-grain.jpg",
+    "status": "supplied-reference",
+    "sha256": "4CBB2D411E9ECFB507942E3A9D5A05729C8C0C2BEDB90EF4314B8B0D342E5E14"
+  },
+  {
+    "original": "5.png",
+    "destination": "public/images/decorations/green-gingham-tape.png",
+    "status": "supplied-reference",
+    "sha256": "1140C75ECB8346B8B8BAC3BBA10A119F736FF02982BD380D970C90D18B79D6F6"
+  },
+  {
+    "original": "6_copy.png",
+    "destination": "public/images/textures/crumpled-ivory-paper.png",
+    "status": "supplied-reference",
+    "sha256": "A996F4BF7B3D6C43A0D29232BA2EAF44947C379003C42B65BA99EA529D075EE7"
+  },
+  {
+    "original": "1bfb3c38f54bc2c37e47806f0dc69bc2-removebg-preview.png",
+    "destination": "public/images/decorations/pink-ornamental-paper-frame-01.png",
+    "status": "supplied-reference",
+    "sha256": "9CDFCBCA7CE4D0580D48BA8EA5B10C2D8E3FF918A86FE33EC479461ADE83E2E6"
+  },
+  {
+    "original": "1bfb3c38f54bc2c37e47806f0dc69bc2-removebg-preview (1).png",
+    "destination": "public/images/decorations/pink-ornamental-paper-frame-02.png",
+    "status": "supplied-reference",
+    "sha256": "6B6F2A032053B64147C1B93663AB5C2D856F5C554389FA0B186CBD7409FFEBEE"
+  },
+  {
+    "original": "357e9a58-b374-4f0f-93a4-23c3312cfa66.svg",
+    "destination": "app/assets/archive/legacy-illustrations/strawberry-milk-bottle.svg",
+    "status": "archived",
+    "sha256": "5C1C8CC40F00FE69A5F22F49BF5751BF500A42E471322A3672482136881066CC"
+  },
+  {
+    "original": "3709df5a-0cd1-49cc-b70c-4a5fe78605e6.svg",
+    "destination": "app/assets/archive/legacy-illustrations/creamy-milk-bottle.svg",
+    "status": "archived",
+    "sha256": "8D8871729EF96F4780FCDDD9BB18C8BF0100C4D4BC091A19AC386C1DF37A0828"
+  },
+  {
+    "original": "ab4bccaf-855b-43dd-8cfe-f6c7ceed29a5.svg",
+    "destination": "app/assets/archive/legacy-illustrations/chocolate-milk-bottle.svg",
+    "status": "archived",
+    "sha256": "DFC3D28A61E8C3AC79F5994C7A783BD0B71A0EDFC94EF4F7C5B6738A6ED80BBF"
+  },
+  {
+    "original": "858240ac-00f1-4dbd-a788-3bd04cd5d0f2.svg",
+    "destination": "app/assets/archive/legacy-illustrations/heart.svg",
+    "status": "archived",
+    "sha256": "E70A58D22E23FD688AA65EE2827CD04A1998986040B011D0A8313271E988E855"
+  },
+  {
+    "original": "c428bfc7-4ad1-4acb-9e52-ef4c3a35b3e7.svg",
+    "destination": "app/assets/archive/legacy-illustrations/fruit-glass.svg",
+    "status": "archived",
+    "sha256": "60DB65EF41D085D5988C08D9205362FC6EF4595940E47B5CBBCA4D0EDCAB6903"
+  },
+  {
+    "original": "72d95064-1d3f-47a3-9530-d3045a2f39ae.svg",
+    "destination": "app/assets/archive/reference-dividers/scalloped-edge.svg",
+    "status": "archived-reference",
+    "sha256": "968515CCD257E4D7178C9B62C3880C16872B65DBC85FE9BC4648BF016ECBB41B"
+  },
+  {
+    "original": "571092ea-ec79-4538-8afe-b5d3068e998a.svg",
+    "destination": "app/assets/archive/reference-dividers/wave-divider.svg",
+    "status": "archived-reference",
+    "sha256": "80731FF793770D7C942D298CF377ACC02874E785DDA055F0D19EF710146AADB1"
+  }
+]

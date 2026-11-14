@@ -1,0 +1,18 @@
+<svg viewBox="0 0 1280 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Define a pattern using your background image -->
+  <defs>
+    <pattern patternUnits="userSpaceOnUse">
+      <image href="https://static.showit.co/file/4wHI1ZuxoCCzHHLz7cEpIQ/343147/2.png" preserveAspectRatio="xMidYMid slice"></image>
+    </pattern>
+  </defs>
+
+  <!-- Wave shape filled with the pattern -->
+  <path d="
+    M0,100
+    C160,200 320,0 480,100
+    C640,200 800,0 960,100
+    C1120,200 1280,0 1280,100
+    L1280,0
+    L0,0
+    Z"></path>
+</svg>

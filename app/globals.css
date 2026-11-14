@@ -1,22 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --mina-ivory: #f3ecda;
+  --mina-butter: #f4edbe;
+  --mina-peach: #efd5be;
+  --mina-cocoa: #4a2e1c;
+  --mina-burgundy: #601e1c;
+  --mina-ink: #000000;
+  --background: var(--mina-ivory);
+  --foreground: var(--mina-ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-ivory: var(--mina-ivory);
+  --color-butter: var(--mina-butter);
+  --color-peach: var(--mina-peach);
+  --color-cocoa: var(--mina-cocoa);
+  --color-burgundy: var(--mina-burgundy);
+  --color-ink: var(--mina-ink);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -24,3 +29,44 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Equal-width vertical stripes, independent of image downloads. */
+.mina-stripes {
+  --stripe-light: var(--mina-ivory);
+  --stripe-accent: var(--mina-peach);
+  --stripe-width: clamp(44px, 7vw, 96px);
+  background-color: var(--stripe-light);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--stripe-light) 0,
+    var(--stripe-light) var(--stripe-width),
+    var(--stripe-accent) var(--stripe-width),
+    var(--stripe-accent) calc(var(--stripe-width) * 2)
+  );
+}
+
+.mina-stripes-butter { --stripe-accent: var(--mina-butter); }
+.mina-stripes-burgundy { --stripe-accent: var(--mina-burgundy); }
+
+/* Optional static grain sits below content and never intercepts taps. */
+.mina-paper {
+  position: relative;
+  isolation: isolate;
+}
+.mina-paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: url("/images/textures/paper-noise.svg") repeat;
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+  opacity: var(--paper-grain-opacity, 0.055);
+}
+
+@media (forced-colors: active) {
+  .mina-paper::before { display: none; }
+}
+
