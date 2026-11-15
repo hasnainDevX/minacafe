@@ -31,7 +31,7 @@ export function AddToCartButton({
   const { addItem } = useCart();
   return (
     <button type="button" aria-label={`Add ${productName} to cart`} onClick={() => { beforeAdd?.(); addItem(productId); }} className={className}>
-      <CartIcon className="h-4 w-4 shrink-0" />
+      <CartIcon className="md:h-4 md:w-4 h-3 w-3 shrink-0" />
       <span className={labelClassName}>Add to Cart</span>
     </button>
   );

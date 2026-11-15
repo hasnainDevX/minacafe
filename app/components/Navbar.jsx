@@ -267,7 +267,7 @@ export default function Navbar() {
                           productId={product.id}
                           productName={product.name}
                           beforeAdd={closeForNavigation}
-                          className="inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center border border-burgundy bg-burgundy text-xs text-white hover:bg-burgundy/95 md:mt-3 md:h-auto md:min-h-11 md:w-auto md:gap-2 md:px-3 md:py-2"
+                          className="inline-flex h-6 w-6 md:h-9 md:w-9 shrink-0 cursor-pointer items-center justify-center border border-burgundy bg-burgundy text-xs text-white hover:bg-burgundy/95 md:mt-3 md:h-auto md:min-h-11 md:w-auto md:gap-2 md:px-3 md:py-2"
                           labelClassName="sr-only md:not-sr-only"
                         />
                       </div>
