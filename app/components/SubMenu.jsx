@@ -16,18 +16,18 @@ export default function SubMenu() {
   return (
     <section
       aria-labelledby="submenu-heading"
-      className="relative isolate px-5 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24 [--stripe-bg:#ffff] md:[--stripe-color:#f8e59a] [--stripe-color:#f8e59a]/60"
+      className="relative isolate px-5 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32 [--stripe-bg:#ffff] md:[--stripe-color:#f8e59a]/80 [--stripe-color:#f8e59a]/60"
     >
       <StripedBackground />
       <div className="mx-auto max-w-[1080px]">
         <h2
           id="submenu-heading"
-          className="mb-8 font-(family-name:--font-cormorant) text-burgundy text-4xl font-light leading-[1.15] md:mb-10 md:text-5xl lg:text-7xl"
+          className="mb-12 font-(family-name:--font-cormorant) text-burgundy text-4xl font-light leading-[1.15] md:mb-20 md:text-5xl lg:text-7xl text-center md:text-left"
         >
           Our little favourites
         </h2>
 
-        <ul className="flex flex-col gap-12 md:gap-16">
+        <ul className="flex flex-col gap-12 md:gap-16 ">
           {items.map((item) => (
             <li
               key={item.id}
@@ -45,9 +45,12 @@ export default function SubMenu() {
                     className="object-contain p-6 md:p-8 transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
                   />
                 </span>
-                <span className="block pt-3">
-                  <span className="text-xs font-normal uppercase leading-relaxed tracking-[0.16em] md:text-sm">
+                <span className="flex justify-between pt-3">
+                  <span className="text-xs uppercase tracking-[0.16em] md:text-sm">
                     {item.name}
+                  </span>
+                  <span className="text-xs uppercase tracking-[0.16em] md:text-sm">
+                    Add to Cart
                   </span>
                 </span>
               </Link>

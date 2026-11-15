@@ -5,6 +5,7 @@ import Categories from "./components/Categories";
 import SubMenu from "./components/SubMenu";
 import Hours from "./components/Hours";
 import Testimonials from "./components/Testimonials";
+import Bulksection from "./components/Bulksection";
 
 export default function Home() {
   return (
@@ -30,6 +31,7 @@ export default function Home() {
         <Hours />
         <LocationIntro />
         <Testimonials/>
+        <Bulksection/>
       </main>
     </>
   );

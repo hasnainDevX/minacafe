@@ -5,10 +5,8 @@ export default function LocationIntro() {
   return (
     <section
       aria-labelledby="location-heading"
-      className="relative isolate z-10 bg-[var(--mina-ivory)] px-6 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24"
+      className="relative isolate z-10 bg-[var(--mina-ivory)] px-6 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32"
     >
-      
-
       {/* grain background */}
       <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
         <Image
