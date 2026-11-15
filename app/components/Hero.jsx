@@ -22,7 +22,7 @@ const slides = [
   },
 ];
 const SLIDE_DURATION = 6500;
-const WIPE = 1300; // ms, wipe/exit duration
+const WIPE = 1300; 
 
 export default function Hero() {
   const [active, setActive] = useState(0);

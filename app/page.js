@@ -19,16 +19,13 @@ export default function Home() {
         <div data-section-underlay>
           <Hero />
         </div>
-
-        {/* The cover must be at least as tall as the screen so it fully
-            covers the pinned hero before the pin ends. */}
         <div
           data-section-cover
           className="relative z-10 min-h-[calc(100svh_+_var(--r))] bg-white"
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-[calc(var(--r)*-1+1px)] h-[var(--r)] bg-white"
+            className="hidden md:block pointer-events-none absolute inset-x-0 top-[calc(var(--r)*-1+1px)] h-[var(--r)] bg-white"
             style={{
               WebkitMask:
                 "radial-gradient(circle at 50% 100%, #000 calc(var(--r) - 0.5px), transparent var(--r)) 0 0 / calc(var(--r) * 2) 100% repeat-x",
