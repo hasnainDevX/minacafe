@@ -93,7 +93,7 @@ export default function Hero() {
         @keyframes mina-wipe { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
         @keyframes mina-settle { from { transform: scale(1.2) translateY(6%); } to { transform: scale(1) translateY(0); } }
         @keyframes mina-exit { from { transform: scale(1) translateY(0); } to { transform: scale(1.05) translateY(-12%); } }
-        @keyframes mina-zoom { from { transform: scale(1); } to { transform: scale(1.18); } }
+       @keyframes mina-zoom { from { transform: scale(1.25); } to { transform: scale(1); } }
         @keyframes mina-text-reveal { from { transform: translateY(110%); } to { transform: translateY(0); } }
         @keyframes mina-fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 

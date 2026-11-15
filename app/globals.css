@@ -72,7 +72,6 @@ body {
 }
 
 
-
 @keyframes mina-drawer-in {
   from { clip-path: inset(0 0 0 100%); opacity: 0; }
   to   { clip-path: inset(0 0 0 0);    opacity: 1; }
@@ -86,10 +85,8 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-@keyframes mina-hero-zoom-out {
-  from { transform: scale(1.12); }
-  to { transform: scale(1); }
-}
+@keyframes mina-zoom { from { transform: scale(1.18); } to { transform: scale(1); } }
+
 @keyframes mina-hero-progress {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
