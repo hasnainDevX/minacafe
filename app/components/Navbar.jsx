@@ -212,7 +212,7 @@ export default function Navbar() {
                 <div className="flex flex-col gap-4 my-6">
                   <div>
                     <h2 className="font-(family-name:--font-cormorant) font-light text-4xl">
-                      Find Your Little Favourite.
+                      Find Your Favourite.
                     </h2>
                   </div>
                   <div
