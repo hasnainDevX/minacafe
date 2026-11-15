@@ -49,9 +49,6 @@ export default function Hours() {
               </li>
             ))}
           </ul>
-          <p className="mt-4 font-[family-name:var(--font-source-sans)] text-base">
-            Message us on Instagram for today&apos;s availability.
-          </p>
         </div>
       </div>
     </section>

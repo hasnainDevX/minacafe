@@ -83,7 +83,7 @@ export default function Hero() {
 
   return (
     <section
-      className="sticky top-0 z-0 isolate h-[calc(100svh_+_var(--r))] overflow-hidden bg-cocoa text-ivory"
+      className="relative z-0 isolate h-[calc(100svh_+_var(--r))] overflow-hidden bg-cocoa text-ivory"
       aria-label="A taste of Mina"
       aria-roledescription="carousel"
       data-paused={stopped}

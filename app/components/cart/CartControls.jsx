@@ -21,12 +21,18 @@ export function CartButton({ beforeOpen }) {
   );
 }
 
-export function AddToCartButton({ productId, productName, beforeAdd, className = "mt-3 inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 border border-burgundy bg-burgundy px-3 py-2 text-xs text-white hover:bg-burgundy/95" }) {
+export function AddToCartButton({
+  productId,
+  productName,
+  beforeAdd,
+  className = "mt-3 inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 border border-burgundy bg-burgundy px-3 py-2 text-xs text-white hover:bg-burgundy/95",
+  labelClassName = "",
+}) {
   const { addItem } = useCart();
   return (
     <button type="button" aria-label={`Add ${productName} to cart`} onClick={() => { beforeAdd?.(); addItem(productId); }} className={className}>
       <CartIcon className="h-4 w-4 shrink-0" />
-      <span>Add to Cart</span>
+      <span className={labelClassName}>Add to Cart</span>
     </button>
   );
 }

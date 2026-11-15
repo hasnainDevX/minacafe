@@ -32,16 +32,20 @@ export default function Footer() {
 
   return (
     <footer
+      data-footer-reveal
       aria-labelledby="contact-heading"
-      className="relative z-0 -mt-px [--footer-h:max(100svh,640px)] md:h-[var(--footer-h)] md:[clip-path:inset(0)]"
+      className="relative z-0 -mt-px [--footer-h:max(100svh,640px)] md:h-[var(--footer-h)] md:overflow-hidden"
       style={{ "--r": "clamp(28px, 4.5vw, 62px)" }}
     >
-      <div className="flex flex-col justify-between bg-[var(--mina-burgundy)] px-6 pb-8 pt-[calc(var(--r)+3rem)] text-[var(--mina-ivory)] md:fixed md:inset-x-0 md:bottom-0 md:h-[var(--footer-h)] md:px-16 md:pb-10 md:pt-[calc(var(--r)+4rem)]">
-  <div className="mx-auto grid w-full max-w-[1300px] gap-10 md:grid-cols-2 md:gap-24">
+      <div
+        data-footer-content
+        className="flex flex-col justify-between bg-[var(--mina-burgundy)] px-6 pb-8 pt-[calc(var(--r)+3rem)] text-[var(--mina-ivory)] md:h-full md:px-16 md:pb-10 md:pt-[calc(var(--r)+4rem)]"
+      >
+        <div className="mx-auto grid w-full max-w-[1300px] gap-10 md:grid-cols-2 md:gap-24">
           <div>
             <h2
               id="contact-heading"
-              className="font-(family-name:--font-cormorant) text-3xl font-light leading-[1.15] md:text-4xl text-white"
+              className="font-(family-name:--font-cormorant) text-3xl font-light leading-[1.15] text-white md:text-4xl"
             >
               Say hello,
               <br />

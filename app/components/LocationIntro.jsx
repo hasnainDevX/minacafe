@@ -5,7 +5,7 @@ export default function LocationIntro() {
   return (
     <section
       aria-labelledby="location-heading"
-      className="relative isolate z-10 bg-ivory min-h-screen px-6 py-18 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32"
+      className="relative isolate bg-ivory  px-6 py-18 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32"
     >
       
       <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
@@ -16,6 +16,7 @@ export default function LocationIntro() {
           sizes="100vw"
           className="object-cover object-center"
         />
+        <div className="absolute inset-0 bg-butter/20"></div>
       </div>
 
       {/* Distort only the alpha outline; keep the photo pixels untouched. */}

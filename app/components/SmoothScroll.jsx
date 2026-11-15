@@ -1,24 +1,113 @@
 "use client";
-import "lenis/dist/lenis.css";
-import { useEffect } from "react";
-import Lenis from "lenis";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother, useGSAP);
+
+ScrollTrigger.config({ ignoreMobileResize: true });
+
+const MOUSE =
+  "(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)";
+
+// Comma = "or". Valid media query syntax (no "and not").
+const TOUCH =
+  "(prefers-reduced-motion: no-preference) and (hover: none), (prefers-reduced-motion: no-preference) and (pointer: coarse)";
 
 export default function SmoothScroll({ children }) {
-  useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.06, wheelMultiplier: 0.9 });
-    window.lenis = lenis;
-    let id;
-    const raf = (time) => {
-      lenis.raf(time);
-      id = requestAnimationFrame(raf);
-    };
-    id = requestAnimationFrame(raf);
-    return () => {
-      cancelAnimationFrame(id);
-      lenis.destroy();
-      delete window.lenis;
-    };
-  }, []);
+  const wrapper = useRef(null);
+  const content = useRef(null);
 
-  return children;
+  useGSAP(
+    () => {
+      const media = gsap.matchMedia();
+
+      // Mouse devices: smooth scroll + JS section stack + footer reveal
+      media.add(MOUSE, () => {
+        const smoother = ScrollSmoother.create({
+          wrapper: wrapper.current,
+          content: content.current,
+          smooth: 1.1,
+          smoothTouch: false,
+          effects: true,
+        });
+        window.smoother = smoother;
+
+        content.current
+          .querySelectorAll("[data-section-stack]")
+          .forEach((stack) => {
+            const underlay = stack.querySelector("[data-section-underlay]");
+            const cover = stack.querySelector("[data-section-cover]");
+            if (!underlay || !cover) return;
+
+            gsap.to(underlay, {
+              y: () => cover.offsetHeight,
+              ease: "none",
+              scrollTrigger: {
+                trigger: underlay,
+                start: "top top",
+                end: () => `+=${cover.offsetHeight}`,
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
+            });
+          });
+
+        const footer = content.current.querySelector("[data-footer-reveal]");
+        const footerContent = content.current.querySelector(
+          "[data-footer-content]",
+        );
+        if (footer && footerContent) {
+          gsap.fromTo(
+            footerContent,
+            { yPercent: -100 },
+            {
+              yPercent: 0,
+              ease: "none",
+              scrollTrigger: {
+                trigger: footer,
+                start: "top bottom",
+                end: "bottom bottom",
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
+            },
+          );
+        }
+
+        return () => {
+          delete window.smoother;
+          smoother.kill();
+        };
+      });
+
+      // Touch devices: hero stays pinned with CSS sticky (no JS, no lag)
+      media.add(TOUCH, () => {
+        content.current
+          .querySelectorAll("[data-section-underlay]")
+          .forEach((underlay) => {
+            gsap.set(underlay, { position: "sticky", top: 0, zIndex: 0 });
+          });
+      });
+
+      const onLoad = () => ScrollTrigger.refresh();
+      window.addEventListener("load", onLoad);
+
+      return () => {
+        window.removeEventListener("load", onLoad);
+        media.revert();
+      };
+    },
+    { scope: wrapper },
+  );
+
+  return (
+    <div ref={wrapper} id="smooth-wrapper">
+      <div ref={content} id="smooth-content">
+        {children}
+      </div>
+    </div>
+  );
 }
