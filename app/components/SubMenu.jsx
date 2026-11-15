@@ -16,7 +16,7 @@ export default function SubMenu() {
   return (
     <section
       aria-labelledby="submenu-heading"
-      className="relative isolate px-5 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24 [--stripe-bg:#ffff] [--stripe-color:#f8e59a]"
+      className="relative isolate px-5 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24 [--stripe-bg:#ffff] md:[--stripe-color:#f8e59a] [--stripe-color:#f8e59a]/60"
     >
       <StripedBackground />
       <div className="mx-auto max-w-[1080px]">
