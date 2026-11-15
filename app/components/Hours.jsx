@@ -1,10 +1,10 @@
 const hours = [
-  ["Monday", "Closed"],
-  ["Tuesday", "Closed"],
-  ["Wednesday", "Closed"],
-  ["Thursday", "Closed"],
-  ["Friday", "Closed"],
-  ["Saturday", "Closed"],
+  ["Monday", "4:00 PM – 10:00 PM"],
+  ["Tuesday", "4:00 PM – 10:00 PM"],
+  ["Wednesday", "4:00 PM – 10:00 PM"],
+  ["Thursday", "4:00 PM – 10:00 PM"],
+  ["Friday", "4:00 PM – 10:00 PM"],
+  ["Saturday", "4:00 PM – 10:00 PM"],
   ["Sunday", "Closed"],
 ];
 

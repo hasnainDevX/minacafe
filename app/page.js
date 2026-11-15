@@ -6,6 +6,7 @@ import SubMenu from "./components/SubMenu";
 import Hours from "./components/Hours";
 import Testimonials from "./components/Testimonials";
 import Bulksection from "./components/Bulksection";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -32,6 +33,7 @@ export default function Home() {
         <LocationIntro />
         <Testimonials/>
         <Bulksection/>
+        <Footer/>
       </main>
     </>
   );

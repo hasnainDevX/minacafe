@@ -82,7 +82,7 @@ export default function LocationIntro() {
             href="https://www.instagram.com/mina.cafe_/"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center justify-center border border-[var(--mina-cocoa)] px-8 py-4 text-xs uppercase tracking-[0.2em] transition-colors hover:border-[var(--mina-burgundy)] hover:bg-[var(--mina-burgundy)] hover:text-[var(--mina-ivory)] motion-reduce:transition-none"
+            className="mt-8 inline-flex items-center justify-center border bg-white border-[var(--mina-cocoa)] px-8 py-4 text-xs uppercase tracking-[0.2em] transition-colors hover:border-[var(--mina-burgundy)] hover:bg-[var(--mina-burgundy)] hover:text-[var(--mina-ivory)] motion-reduce:transition-none"
           >
             Visit us on Instagram
           </a>

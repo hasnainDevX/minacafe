@@ -1,0 +1,134 @@
+"use client";
+import { useState } from "react";
+
+const FORM_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"; // replace with your endpoint
+
+export default function Footer() {
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | error
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    setStatus("sending");
+    try {
+      const response = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      if (!response.ok) throw new Error("Request failed");
+      form.reset();
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  const field =
+    "w-full border-0 border-b border-[var(--mina-ivory)]/40 bg-transparent py-2 font-[family-name:var(--font-source-sans)] text-sm text-[var(--mina-ivory)] placeholder:text-[var(--mina-ivory)]/60 focus:border-[var(--mina-butter,#F4EDBE)] focus:outline-none";
+
+  return (
+    <footer
+      aria-labelledby="contact-heading"
+      className="relative z-0 -mt-px [--footer-h:max(100svh,640px)] md:h-[var(--footer-h)] md:[clip-path:inset(0)]"
+      style={{ "--r": "clamp(28px, 4.5vw, 62px)" }}
+    >
+      <div className="flex flex-col justify-between bg-[var(--mina-burgundy)] px-6 pb-8 pt-[calc(var(--r)+3rem)] text-[var(--mina-ivory)] md:fixed md:inset-x-0 md:bottom-0 md:h-[var(--footer-h)] md:px-16 md:pb-10 md:pt-[calc(var(--r)+4rem)]">
+  <div className="mx-auto grid w-full max-w-[1300px] gap-10 md:grid-cols-2 md:gap-24">
+          <div>
+            <h2
+              id="contact-heading"
+              className="font-(family-name:--font-cormorant) text-3xl font-light leading-[1.15] md:text-4xl text-white"
+            >
+              Say hello,
+              <br />
+              we&apos;d love to hear from you.
+            </h2>
+            <p className="mt-3 max-w-[340px] font-[family-name:var(--font-source-sans)] text-sm leading-[1.6] text-[var(--mina-ivory)]/80">
+              Questions, orders or bulk requests. Send us a note and we&apos;ll
+              reply as soon as we can.
+            </p>
+            <a
+              href="https://www.instagram.com/mina.cafe_/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block text-xs uppercase tracking-[0.15em] underline underline-offset-[6px] hover:text-[var(--mina-butter,#F4EDBE)]"
+            >
+              Message @mina.cafe_ on Instagram
+            </a>
+          </div>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <label className="sr-only" htmlFor="contact-name">
+              Your name
+            </label>
+            <input
+              id="contact-name"
+              name="name"
+              type="text"
+              required
+              placeholder="Your name"
+              autoComplete="name"
+              className={field}
+            />
+
+            <label className="sr-only" htmlFor="contact-email">
+              Email
+            </label>
+            <input
+              id="contact-email"
+              name="email"
+              type="email"
+              required
+              placeholder="Email"
+              autoComplete="email"
+              className={field}
+            />
+
+            <label className="sr-only" htmlFor="contact-message">
+              Message
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              required
+              rows={2}
+              placeholder="How can we help?"
+              className={`${field} resize-none`}
+            />
+
+            <div className="mt-1 flex flex-wrap items-center gap-4">
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="cursor-pointer border border-[var(--mina-butter,#F4EDBE)] bg-[var(--mina-butter,#F4EDBE)] px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-[var(--mina-burgundy)] transition-colors hover:bg-transparent hover:text-[var(--mina-butter,#F4EDBE)] disabled:opacity-60 motion-reduce:transition-none"
+              >
+                {status === "sending" ? "Sending..." : "Send message"}
+              </button>
+              <p role="status" aria-live="polite" className="text-sm">
+                {status === "sent" && "Thank you, we'll be in touch."}
+                {status === "error" &&
+                  "Something went wrong. Please try again."}
+              </p>
+            </div>
+          </form>
+        </div>
+
+        <div>
+          <p
+            aria-hidden="true"
+            className="mt-6 text-center font-(family-name:--font-cormorant) text-[22vw] font-light uppercase leading-[0.8] text-[var(--mina-butter,#F4EDBE)] md:mt-4 md:text-[14vw]"
+          >
+            MINA CAFE
+          </p>
+          <p className="mt-4 text-center text-base text-butter underline underline-offset-8">
+            Website designed by Hasnain Webstudio
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
