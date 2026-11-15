@@ -20,7 +20,7 @@ export default function Categories() {
             id="categories-heading"
             className="font-(family-name:--font-cormorant) text-4xl font-light leading-[1.15] md:text-5xl"
           >
-            Explore more
+            Explore Categories
           </h2>
           <Link
             href="/menu"

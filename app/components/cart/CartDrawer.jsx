@@ -49,7 +49,7 @@ export default function CartDrawer() {
 
   return (
     <dialog ref={dialog} id="mina-cart" aria-labelledby="cart-heading" onCancel={(event) => { event.preventDefault(); closeCart(); }} onClick={(event) => { if (event.target === event.currentTarget && event.clientX < event.currentTarget.getBoundingClientRect().left) closeCart(); }} className="fixed inset-y-0 left-auto right-0 m-0 h-dvh max-h-none w-full max-w-[460px] flex-col border-0 border-l border-cocoa/20 bg-ivory bg-[url('/images/textures/bggrain.png')] bg-cover bg-center bg-no-repeat p-0 text-cocoa shadow-xl backdrop:bg-black/40 open:flex">
-      <div className="flex items-center justify-between gap-4 border-b border-cocoa/20 px-6 py-6 md:px-8">
+      <div className="flex items-center justify-between gap-4 border-b border-cocoa/20 px-6 py-6 md:px-8 ">
         <h2 id="cart-heading" className="font-(family-name:--font-cormorant) text-4xl font-light">Your cart <span className="text-2xl">({count})</span></h2>
         <button type="button" onClick={closeCart} aria-label="Close cart" className="flex h-11 w-11 cursor-pointer items-center justify-center hover:text-burgundy">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19" /></svg>

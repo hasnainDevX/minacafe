@@ -11,10 +11,10 @@ export function CartIcon({ className = "h-5 w-5" }) {
   );
 }
 
-export function CartButton({ beforeOpen }) {
+export function CartButton({ beforeOpen, className }) {
   const { count, open, openCart } = useCart();
   return (
-    <button type="button" data-cart-trigger aria-label={`Open cart, ${count} ${count === 1 ? "item" : "items"}`} aria-haspopup="dialog" aria-expanded={open} aria-controls="mina-cart" onClick={() => { beforeOpen?.(); openCart(); }} className="relative ml-auto flex min-h-[73px] min-w-12 cursor-pointer items-center justify-center px-3 text-cocoa hover:text-burgundy md:px-5">
+    <button type="button" data-cart-trigger aria-label={`Open cart, ${count} ${count === 1 ? "item" : "items"}`} aria-haspopup="dialog" aria-expanded={open} aria-controls="mina-cart" onClick={() => { beforeOpen?.(); openCart(); }} className={className || "relative ml-auto flex min-h-[73px] min-w-12 cursor-pointer items-center justify-center px-3 text-cocoa hover:text-burgundy md:px-5"}>
       <CartIcon className="h-6 w-6" />
       {count > 0 && <span className="absolute right-0 top-3 flex min-h-5 min-w-5 items-center justify-center rounded-full bg-burgundy px-1 text-[10px] text-white md:right-2" aria-hidden="true">{count}</span>}
     </button>

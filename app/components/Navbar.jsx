@@ -1,93 +1,72 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
+import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
-import { productCutouts } from "../assets/cutouts";
-import { CartButton, AddToCartButton } from "./cart/CartControls";
-import { products, categories } from "../assets/products";
+import { CartButton } from "./cart/CartControls";
+
 const sections = [
   ["/menu", "Our menu"],
   ["/our-story", "Our story"],
   ["/find-us", "Find us"],
 ];
+const extraLinks = [
+  ["/#bulk-heading", "Bulk orders"],
+  ["/#contact-heading", "Contact"],
+];
+
+function MenuToggle({ open, closing, compact = false, onClick }) {
+  return (
+    <button type="button" data-menu-trigger aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mina-menu" onClick={onClick} className={`group flex cursor-pointer items-center justify-center bg-white text-cocoa ${compact ? "h-12 w-14" : "min-h-[73px] self-stretch gap-4 px-3 md:gap-6 md:px-7"}`}>
+      {!compact && <span className="mx-4 hidden w-12 text-left text-base md:block">{open ? "CLOSE" : "EXPLORE"}</span>}
+      <span className={`${compact ? "w-6" : "w-[34px]"} grid gap-[9px]`} aria-hidden="true">
+        <i className={`block h-px w-full bg-current transition-transform duration-250 motion-reduce:transition-none ${open && !closing ? "translate-y-[5px] rotate-45" : ""}`} />
+        <i className={`block h-px w-full bg-current transition-transform duration-250 motion-reduce:transition-none ${open && !closing ? "-translate-y-[5px] -rotate-45" : ""}`} />
+      </span>
+    </button>
+  );
+}
 
 export default function Navbar() {
-  const dialog = useRef(null);
-  const closeButton = useRef(null);
   const navbar = useRef(null);
-  const content = useRef(null);
+  const floating = useRef(null);
   const opener = useRef(null);
   const closeTimer = useRef(null);
-  const isOpen = useRef(false);
-  const previousOverflow = useRef("");
+  const unlock = useRef(null);
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
-  const [category, setCategory] = useState("Milk bottles");
-
-  useEffect(
-    () => () => {
-      clearTimeout(closeTimer.current);
-      if (isOpen.current)
-        document.body.style.overflow = previousOverflow.current;
-    },
-    [],
-  );
+  const [scrolled, setScrolled] = useState(false);
+  const [panelTop, setPanelTop] = useState(0);
 
   useEffect(() => {
-    if (!open) return;
-    function positionPanel() {
-      const bottom = navbar.current.getBoundingClientRect().bottom;
-      navbar.current.style.setProperty(
-        "--menu-available-height",
-        `${Math.max(120, window.innerHeight - bottom - 24)}px`,
-      );
+    function update() {
+      if (open) return;
+      const announcement = document.querySelector('[aria-label="Announcement"]');
+      const threshold = navbar.current.offsetHeight + (announcement?.offsetHeight || 0);
+      setScrolled(window.scrollY > threshold);
     }
-    positionPanel();
-    const observer = new ResizeObserver(positionPanel);
-    observer.observe(navbar.current);
-    window.addEventListener("resize", positionPanel);
-    window.addEventListener("scroll", positionPanel, { passive: true });
+    const frame = requestAnimationFrame(update);
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
     return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", positionPanel);
-      window.removeEventListener("scroll", positionPanel);
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
     };
   }, [open]);
 
-  function show(event) {
-    opener.current = event.currentTarget;
-    setCategory("Milk bottles");
-    setClosing(false);
-    setOpen(true);
-    if (!isOpen.current)
-      previousOverflow.current = document.body.style.overflow;
-    isOpen.current = true;
+  useEffect(() => () => {
     clearTimeout(closeTimer.current);
-    document.body.style.overflow = "hidden";
+    unlock.current?.();
+  }, []);
 
-    closeButton.current.focus();
-    content.current.scrollTop = 0;
-  }
-
-  function finishClose() {
+  function finishClose(restoreFocus = true) {
     clearTimeout(closeTimer.current);
-    isOpen.current = false;
-
-    document.body.style.overflow = previousOverflow.current;
+    unlock.current?.();
+    unlock.current = null;
     setOpen(false);
     setClosing(false);
-    opener.current?.focus();
-  }
-
-  // Used when navigating to another page: closes instantly and
-  // does NOT return focus to the opener (that would steal focus from the new page).
-  function closeForNavigation() {
-    if (!isOpen.current) return;
-    clearTimeout(closeTimer.current);
-    isOpen.current = false;
-    document.body.style.overflow = previousOverflow.current;
-    setOpen(false);
-    setClosing(false);
+    if (restoreFocus) opener.current?.focus({ preventScroll: true });
   }
 
   function requestClose() {
@@ -97,188 +76,80 @@ export default function Navbar() {
       return;
     }
     setClosing(true);
-    closeTimer.current = setTimeout(finishClose, 280);
+    closeTimer.current = setTimeout(() => finishClose(), 260);
   }
 
-  const visibleProducts = products.filter(
-    (product) => product.category === category,
-  );
+  useEffect(() => {
+    if (!open) return;
+    function onKeyDown(event) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        clearTimeout(closeTimer.current);
+        unlock.current?.();
+        unlock.current = null;
+        setOpen(false);
+        setClosing(false);
+        opener.current?.focus({ preventScroll: true });
+      }
+    }
+    function positionPanel() {
+      setPanelTop((scrolled ? floating.current : navbar.current).getBoundingClientRect().bottom);
+    }
+    document.addEventListener("keydown", onKeyDown);
+    window.addEventListener("resize", positionPanel);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", positionPanel);
+    };
+  }, [open, scrolled]);
+
+  function toggle(event) {
+    if (open) { requestClose(); return; }
+    opener.current = event.currentTarget;
+    setPanelTop((scrolled ? floating.current : navbar.current).getBoundingClientRect().bottom);
+    clearTimeout(closeTimer.current);
+    setClosing(false);
+    const overflow = document.body.style.overflow;
+    const smoother = window.smoother;
+    const wasPaused = smoother?.paused();
+    smoother?.paused(true);
+    document.body.style.overflow = "hidden";
+    unlock.current = () => {
+      document.body.style.overflow = overflow;
+      if (smoother && !wasPaused) smoother.paused(false);
+    };
+    setOpen(true);
+  }
+
+  const closeForNavigation = () => finishClose(false);
 
   return (
     <>
-      {open && (
-        <div
-          className={`fixed inset-0 z-[39] bg-[#21171270] motion-reduce:animate-none ${
-            closing
-              ? "animate-[mina-backdrop-in_0.26s_ease_both_reverse]"
-              : "animate-[mina-backdrop-in_0.3s_ease_both]"
-          }`}
-          aria-hidden="true"
-          onClick={requestClose}
-        />
-      )}
-      <header
-        ref={navbar}
-        data-navbar
-        className="sticky top-[14px] z-40 mt-[14px] mx-[14px] flex flex-wrap items-center min-h-[74px] bg-white border border-[#4a2e1c24] rounded text-[var(--mina-cocoa)] font-[family-name:var(--font-source-sans)] [font-synthesis:none] md:top-6 md:mt-6 md:mx-6 md:flex-nowrap md:min-h-[86px]"
-        onKeyDown={(event) => {
-          if (event.key === "Escape" && open) {
-            event.preventDefault();
-            requestClose();
-          }
-        }}
-        onBlur={(event) => {
-          if (
-            open &&
-            event.relatedTarget &&
-            !event.currentTarget.contains(event.relatedTarget)
-          )
-            requestClose();
-        }}
-      >
-        <Link
-          className="flex flex-col items-center justify-center self-stretch min-w-[125px] px-[14px] pt-[10px] pb-[12px] min-h-[73px] border-r border-[#4a2e1c24] text-[var(--mina-cocoa)] no-underline font-[family-name:var(--font-cormorant)] font-light text-3xl leading-[0.9] md:min-w-[170px] md:px-[22px] md:pb-[15px] md:text-5xl"
-          href="/"
-          aria-label="Mina Cafe home"
-          onNavigate={closeForNavigation}
-        >
-          Mina
-        </Link>
-        <nav
-          className="flex items-center gap-7 px-3 order-3 w-full justify-center border-t border-[#4a2e1c18] md:order-none md:w-auto md:justify-start md:gap-8 md:px-9 md:border-t-0"
-          aria-label="Main navigation"
-        >
-          {sections.map(([href, name]) => (
-            <Link
-              key={href}
-              href={href}
-              onNavigate={closeForNavigation}
-              className="cursor-pointer py-3 border-0 bg-transparent text-inherit uppercase text-base leading-[1.4] hover:text-[var(--mina-burgundy)] hover:underline hover:underline-offset-[7px]"
-            >
-              {name}
-            </Link>
-          ))}
+      <header ref={navbar} data-navbar className="relative z-40 m-0 flex min-h-[74px] w-full flex-wrap items-center border-b border-[#4a2e1c24] bg-white text-cocoa [font-synthesis:none] md:min-h-[86px] md:flex-nowrap">
+        <Link href="/" aria-label="Mina Cafe home" onNavigate={closeForNavigation} className="flex min-h-[73px] min-w-[125px] flex-col items-center justify-center self-stretch border-r border-[#4a2e1c24] px-[14px] pb-[12px] pt-[10px] font-(family-name:--font-cormorant) text-3xl font-light leading-[0.9] md:min-w-[170px] md:px-[22px] md:pb-[15px] md:text-5xl">Mina</Link>
+        <nav aria-label="Main navigation" className="hidden items-center gap-8 px-9 md:flex">
+          {sections.map(([href, label]) => <Link key={href} href={href} onNavigate={closeForNavigation} className="py-3 text-base uppercase hover:text-burgundy hover:underline hover:underline-offset-8">{label}</Link>)}
         </nav>
-
         <CartButton beforeOpen={closeForNavigation} />
-        <button
-          ref={closeButton}
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="mina-menu"
-          onClick={(event) => (open ? requestClose() : show(event))}
-          className="group flex items-center justify-center gap-4 self-stretch px-3 min-h-[73px] border-0 bg-transparent text-inherit cursor-pointer md:gap-6 md:px-7"
-        >
-          <span className="hidden w-12 text-left text-base mx-4 md:block">
-            {open ? "CLOSE" : "EXPLORE"}
-          </span>
-          <span className="w-[34px] grid gap-[9px]" aria-hidden="true">
-            <i
-              className={`h-px w-full block bg-current transition-transform duration-[250ms] motion-reduce:transition-none ${
-                open && !closing
-                  ? "translate-y-[5px] rotate-45"
-                  : "group-hover:-translate-x-1"
-              }`}
-            />
-            <i
-              className={`h-px w-full block bg-current transition-transform duration-[250ms] motion-reduce:transition-none ${
-                open && !closing
-                  ? "-translate-y-[5px] -rotate-45"
-                  : "group-hover:translate-x-1"
-              }`}
-            />
-          </span>
-        </button>
-        <section
-          id="mina-menu"
-          ref={dialog}
-          hidden={!open}
-          aria-label="Explore Mina Cafe"
-          className={`absolute inset-x-0 top-[calc(100%+8px)] w-full max-h-[var(--menu-available-height,calc(100dvh-134px))] border border-[#4a2e1c24] rounded-[5px] bg-white overflow-hidden shadow-[0_22px_40px_#24140f14] text-[var(--mina-cocoa)] font-[family-name:var(--font-source-sans)] [font-synthesis:none] ${
-            open ? "flex flex-col" : "hidden"
-          } ${
-            closing
-              ? "motion-reduce:animate-none animate-[mina-drawer-out_0.26s_ease-in_both]"
-              : "motion-reduce:animate-none animate-[mina-drawer-in_0.45s_cubic-bezier(0.22,1,0.36,1)_both]"
-          }`}
-        >
-          <div className="flex flex-col min-h-0 flex-1 md:grid md:grid-cols-[minmax(0,1fr)]">
-            <div
-              ref={content}
-              className="pt-6 px-[18px] pb-[30px] overflow-y-auto overscroll-contain md:pt-[30px] md:px-[34px] md:pb-10"
-            >
-              <>
-                <div className="flex flex-col gap-4 my-6">
-                  <div>
-                    <h2 className="font-(family-name:--font-cormorant) font-light text-4xl">
-                      Find Your Favourite.
-                    </h2>
-                  </div>
-                  <div
-                    className="flex flex-wrap gap-x-4 gap-y-2 md:gap-x-5"
-                    role="group"
-                    aria-label="Filter products"
-                  >
-                    {categories.map((value) => (
-                      <button
-                        key={value}
-                        type="button"
-                        aria-pressed={category === value}
-                        onClick={() => setCategory(value)}
-                        className="cursor-pointer border-0 border-b border-transparent text-inherit bg-transparent text-base aria-pressed:border-b-[var(--mina-burgundy)] md:text-base"
-                      >
-                        {value}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-4 md:gap-x-6 md:gap-y-6">
-                  {visibleProducts.map((product) => (
-                    <div
-                      className="group block text-left p-0 min-w-0 cursor-pointer text-inherit no-underline"
-                      data-product-id={product.id}
-                      key={product.id}
-                    >
-                      <Link
-                        href={`/menu#${product.id}`}
-                        onNavigate={closeForNavigation}
-                        className="block aspect-square overflow-hidden bg-[var(--mina-ivory)] rounded-sm md:aspect-[1.3]"
-                      >
-                        <Image
-                          src={productCutouts[product.id]}
-                          alt={product.name}
-                          width={220}
-                          height={180}
-                          sizes="(max-width: 600px) 22vw, (max-width: 900px) 12vw, 140px"
-                          className="w-full h-full object-contain p-3 md:p-5 transition-transform duration-500 ease-in-out motion-reduce:transition-none group-hover:scale-[1.045]"
-                        />
-                      </Link>
-                      <div className="flex items-center justify-between gap-2 pt-3 text-xs leading-[1.35] md:text-sm">
-                        <Link
-                          href={`/menu#${product.id}`}
-                          onNavigate={closeForNavigation}
-                          className="min-w-0"
-                        >
-                          {product.name}
-                        </Link>
-                        <AddToCartButton
-                          productId={product.id}
-                          productName={product.name}
-                          beforeAdd={closeForNavigation}
-                          className="inline-flex h-6 w-6 md:h-9 md:w-9 shrink-0 cursor-pointer items-center justify-center border border-burgundy bg-burgundy text-xs text-white hover:bg-burgundy/95 md:mt-3 md:h-auto md:min-h-11 md:w-auto md:gap-2 md:px-3 md:py-2"
-                          labelClassName="sr-only md:not-sr-only"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </>
-            </div>
-          </div>
-        </section>
+        <MenuToggle open={open} closing={closing} onClick={toggle} />
       </header>
+      {(scrolled || open) && createPortal(
+        <>
+          {open && <div aria-hidden="true" onClick={requestClose} style={{ top: scrolled ? 0 : Math.max(0, panelTop) }} className={`fixed inset-x-0 bottom-0 z-[90] bg-[#21171270] motion-reduce:animate-none ${closing ? "animate-[mina-backdrop-in_0.26s_ease_both_reverse]" : "animate-[mina-backdrop-in_0.3s_ease_both]"}`} />}
+          {scrolled && (
+            <div ref={floating} data-floating-nav className="fixed right-4 top-4 z-[100] flex items-center border border-cocoa/20 bg-white text-cocoa shadow-sm md:right-6 md:top-6">
+              <CartButton beforeOpen={closeForNavigation} className="relative flex h-12 w-14 cursor-pointer items-center justify-center border-r border-cocoa/20 text-cocoa hover:text-burgundy" />
+              <MenuToggle compact open={open} closing={closing} onClick={toggle} />
+            </div>
+          )}
+          {open && (
+            <nav id="mina-menu" aria-label="Explore Mina Cafe" style={{ top: panelTop, maxHeight: `calc(100dvh - ${Math.max(0, panelTop)}px - 16px)` }} className={`fixed z-[100] w-[min(100vw,480px)] overflow-y-auto overscroll-contain rounded-b-md border border-cocoa/20 bg-white px-6 py-5 text-right text-cocoa shadow-lg md:px-10 md:py-8 ${scrolled ? "right-4 max-w-[calc(100vw-32px)] md:right-6" : "right-0"} ${closing ? "motion-reduce:animate-none animate-[mina-drawer-out_0.26s_ease-in_both]" : "motion-reduce:animate-none animate-[mina-drawer-in_0.45s_cubic-bezier(0.22,1,0.36,1)_both]"}`}>
+              {sections.map(([href, label]) => <Link key={href} href={href} onNavigate={closeForNavigation} className={`${scrolled ? "block" : "block md:hidden"} border-b border-cocoa/20 py-4 text-xl uppercase hover:text-burgundy md:text-2xl`}>{label}</Link>)}
+              {extraLinks.map(([href, label]) => <Link key={href} href={href} onNavigate={closeForNavigation} className="block border-b border-cocoa/20 py-4 text-xl uppercase last:border-b-0 hover:text-burgundy md:text-2xl">{label}</Link>)}
+            </nav>
+          )}
+        </>, document.body,
+      )}
     </>
   );
 }

@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import CartProvider from "./components/cart/CartProvider";
 import SmoothScroll from "./components/SmoothScroll";
+import Announcement from "./components/Announcement";
 
 const sourceSans = localFont({
   src: [
@@ -47,6 +48,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <SmoothScroll>
+          <Announcement />
           <CartProvider>{children}</CartProvider>
         </SmoothScroll>
       </body>
