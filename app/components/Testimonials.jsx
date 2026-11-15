@@ -107,7 +107,7 @@ export default function Testimonials() {
   return (
     <section
       aria-labelledby="testimonials-heading"
-      className="relative isolate px-6 py-16 text-white md:px-12 md:py-24 lg:py-32"
+      className="relative isolate px-6 py-18 text-white md:px-12 md:py-24 lg:py-32"
     >
       <div
         className="absolute inset-0 -z-10 [clip-path:inset(0)]"

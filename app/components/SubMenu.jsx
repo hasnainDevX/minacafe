@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { productCutouts } from "../assets/cutouts";
+import { AddToCartButton } from "./cart/CartControls";
 import StripedBackground from "./StripedBackground";
 
 const items = [
@@ -16,7 +17,7 @@ export default function SubMenu() {
   return (
     <section
       aria-labelledby="submenu-heading"
-      className="relative isolate px-5 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32 [--stripe-bg:#ffff] md:[--stripe-color:#f8e59a]/80 [--stripe-color:#f8e59a]/60"
+      className="relative isolate px-5 py-18 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32 [--stripe-bg:#ffff] md:[--stripe-color:#f8e59a]/80 [--stripe-color:#f8e59a]/60 border-y"
     >
       <StripedBackground />
       <div className="mx-auto max-w-[1080px]">
@@ -45,15 +46,13 @@ export default function SubMenu() {
                     className="object-contain p-6 md:p-8 transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
                   />
                 </span>
-                <span className="flex justify-between py-3 font-serif">
+              </Link>
+                <div className="flex justify-between gap-2 py-3 font-serif">
                   <span className="text-xs p-3 uppercase tracking-[0.16em] md:text-sm border bg-ivory">
                     {item.name}
                   </span>
-                  <span className="text-xs p-3 uppercase tracking-[0.16em] md:text-sm border bg-burgundy text-white hover:bg-burgundy/95">
-                    Add to Cart
-                  </span>
-                </span>
-              </Link>
+                  <AddToCartButton productId={item.id} productName={item.name} className="inline-flex cursor-pointer items-center justify-center gap-2 text-xs p-3 uppercase tracking-[0.16em] md:text-sm border bg-burgundy text-white hover:bg-burgundy/95" />
+                </div>
             </li>
           ))}
         </ul>

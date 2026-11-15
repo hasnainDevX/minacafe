@@ -6,7 +6,7 @@ export default function BulkSection() {
   return (
     <section
       aria-labelledby="bulk-heading"
-      className="relative isolate z-10 bg-[var(--mina-ivory)] px-6 py-16 text-burgundy md:px-12 md:py-24 lg:py-32"
+      className="relative isolate z-10 bg-ivory px-6 py-18 text-burgundy md:px-12 md:py-24 lg:py-32"
     >
       {/* background photo + burgundy overlay */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">

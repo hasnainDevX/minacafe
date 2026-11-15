@@ -5,9 +5,9 @@ export default function LocationIntro() {
   return (
     <section
       aria-labelledby="location-heading"
-      className="relative isolate z-10 bg-ivory h-screen px-6 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32"
+      className="relative isolate z-10 bg-ivory min-h-screen px-6 py-18 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32"
     >
-      {/* grain background */}
+      
       <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
         <Image
           src={bgGrain}

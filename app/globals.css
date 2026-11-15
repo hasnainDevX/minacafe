@@ -31,6 +31,45 @@ body {
   font-family: var(--font-source-sans), Arial, Helvetica, sans-serif;
 }
 
+/* Shared page and drawer scrollbar. Keep hover and pressed colours identical. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--mina-cocoa) var(--mina-ivory);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+@supports selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: var(--mina-ivory);
+  }
+
+  ::-webkit-scrollbar-thumb,
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active {
+    background: var(--mina-cocoa);
+    border: 2px solid var(--mina-ivory);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+}
+
 /* Equal-width vertical stripes, independent of image downloads. */
 .mina-stripes {
   --stripe-light: var(--mina-ivory);

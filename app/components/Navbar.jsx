@@ -3,50 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { productCutouts } from "../assets/cutouts";
-const products = [
-  { id: "creamy-milk-bottle", name: "Creamy Milk", category: "Milk bottles" },
-  {
-    id: "strawberry-milk-bottle",
-    name: "Strawberry Milk",
-    category: "Milk bottles",
-  },
-  {
-    id: "chocolate-milk-bottle",
-    name: "Chocolate Milk",
-    category: "Milk bottles",
-  },
-  { id: "mango-milk-bottle", name: "Mango Milk", category: "Milk bottles" },
-  {
-    id: "fresh-fruit-glass",
-    name: "Fresh Fruit Glass",
-    category: "Fruit & bowls",
-  },
-  {
-    id: "chicken-salad-bowl",
-    name: "Chicken Salad Bowl",
-    category: "Fruit & bowls",
-  },
-  {
-    id: "nut-and-nectar-mini-box",
-    name: "Nut & Nectar Mini Box",
-    category: "Nut & Nectar",
-  },
-  {
-    id: "nut-and-nectar-cup",
-    name: "Nut & Nectar Cup",
-    category: "Nut & Nectar",
-  },
-  {
-    id: "nut-and-nectar-bucket",
-    name: "Nut & Nectar Bucket",
-    category: "Nut & Nectar",
-  },
-];
-const categories = ["Milk bottles", "Fruit & bowls", "Nut & Nectar"];
+import { CartButton, AddToCartButton } from "./cart/CartControls";
+import { products, categories } from "../assets/products";
 const sections = [
-  ["menu", "Our menu"],
-  ["story", "Our story"],
-  ["visit", "Find us"],
+  ["/menu", "Our menu"],
+  ["/our-story", "Our story"],
+  ["/find-us", "Find us"],
 ];
 
 export default function Navbar() {
@@ -60,7 +22,6 @@ export default function Navbar() {
   const previousOverflow = useRef("");
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
-  const [section, setSection] = useState("menu");
   const [category, setCategory] = useState("Milk bottles");
 
   useEffect(
@@ -93,9 +54,8 @@ export default function Navbar() {
     };
   }, [open]);
 
-  function show(sectionName, event) {
+  function show(event) {
     opener.current = event.currentTarget;
-    setSection(sectionName);
     setCategory("Milk bottles");
     setClosing(false);
     setOpen(true);
@@ -122,6 +82,7 @@ export default function Navbar() {
   // Used when navigating to another page: closes instantly and
   // does NOT return focus to the opener (that would steal focus from the new page).
   function closeForNavigation() {
+    if (!isOpen.current) return;
     clearTimeout(closeTimer.current);
     isOpen.current = false;
     document.body.style.overflow = previousOverflow.current;
@@ -175,37 +136,39 @@ export default function Navbar() {
             requestClose();
         }}
       >
-        <a
+        <Link
           className="flex flex-col items-center justify-center self-stretch min-w-[125px] px-[14px] pt-[10px] pb-[12px] min-h-[73px] border-r border-[#4a2e1c24] text-[var(--mina-cocoa)] no-underline font-[family-name:var(--font-cormorant)] font-light text-3xl leading-[0.9] md:min-w-[170px] md:px-[22px] md:pb-[15px] md:text-5xl"
           href="/"
           aria-label="Mina Cafe home"
+          onNavigate={closeForNavigation}
         >
           Mina
-        </a>
+        </Link>
         <nav
           className="flex items-center gap-7 px-3 order-3 w-full justify-center border-t border-[#4a2e1c18] md:order-none md:w-auto md:justify-start md:gap-8 md:px-9 md:border-t-0"
           aria-label="Main navigation">
-          {sections.map(([id, name]) => (
-            <button
-              key={id}
-              type="button"
-              onClick={(event) => show(id, event)}
+          {sections.map(([href, name]) => (
+            <Link
+              key={href}
+              href={href}
+              onNavigate={closeForNavigation}
               className="cursor-pointer py-3 border-0 bg-transparent text-inherit uppercase text-base leading-[1.4] hover:text-[var(--mina-burgundy)] hover:underline hover:underline-offset-[7px]" >
               {name}
-            </button>
+            </Link>
           ))}
         </nav>
      
+        <CartButton beforeOpen={closeForNavigation} />
         <button
           ref={closeButton}
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           aria-controls="mina-menu"
-          onClick={(event) => (open ? requestClose() : show("menu", event))}
-          className="group flex items-center justify-center gap-4 self-stretch px-5 min-h-[73px] ml-auto border-0 bg-transparent text-inherit cursor-pointer md:gap-6 md:px-7"
+          onClick={(event) => (open ? requestClose() : show(event))}
+          className="group flex items-center justify-center gap-4 self-stretch px-3 min-h-[73px] border-0 bg-transparent text-inherit cursor-pointer md:gap-6 md:px-7"
         >
-          <span className="w-12 text-left text-base mx-4">
+          <span className="hidden w-12 text-left text-base mx-4 md:block">
             {open ? "CLOSE" : "EXPLORE"}
           </span>
           <span className="w-[34px] grid gap-[9px]" aria-hidden="true">
@@ -243,7 +206,6 @@ export default function Navbar() {
               ref={content}
               className="pt-6 px-[18px] pb-[30px] overflow-y-auto overscroll-contain md:pt-[30px] md:px-[34px] md:pb-10"
             >
-              {section === "menu" && (
                 <>
                   <div className="flex flex-col gap-4 my-6">
                     <div>
@@ -272,15 +234,13 @@ export default function Navbar() {
 
                   <div className="grid grid-cols-3 gap-x-3 gap-y-6 md:grid-cols-4 md:gap-x-6 md:gap-y-6">
                     {visibleProducts.map((product) => (
-                      <Link
-                        href={`/menu#${product.id}`}
+                      <div
                         className="group block text-left p-0 min-w-0 cursor-pointer text-inherit no-underline"
                         data-product-id={product.id}
                         key={product.id}
-                        aria-label={`View ${product.name}`}
-                        onClick={closeForNavigation}
+                        
                       >
-                        <span className="block aspect-square overflow-hidden bg-[var(--mina-ivory)] rounded-sm md:aspect-[1.3]">
+                        <Link href={`/menu#${product.id}`} onNavigate={closeForNavigation} className="block aspect-square overflow-hidden bg-[var(--mina-ivory)] rounded-sm md:aspect-[1.3]">
                           <Image
                             src={productCutouts[product.id]}
                             alt={product.name}
@@ -289,16 +249,15 @@ export default function Navbar() {
                             sizes="(max-width: 600px) 22vw, (max-width: 900px) 12vw, 140px"
                             className="w-full h-full object-contain p-3 md:p-5 transition-transform duration-500 ease-in-out motion-reduce:transition-none group-hover:scale-[1.045]"
                           />
-                        </span>
-                        <span className="flex justify-between gap-3 pt-3 text-xs leading-[1.35] [&>span:last-child]:text-[var(--mina-burgundy)] md:text-sm">
-                          <span>{product.name}</span>
-                          <span aria-hidden="true">Add to Cart</span>
-                        </span>
-                      </Link>
+                        </Link>
+                        <div className="pt-3 text-xs leading-[1.35] md:text-sm">
+                          <Link href={`/menu#${product.id}`} onNavigate={closeForNavigation}>{product.name}</Link>
+                          <AddToCartButton productId={product.id} productName={product.name} beforeAdd={closeForNavigation} />
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </>
-              )}
             </div>
           </div>
         </section>
