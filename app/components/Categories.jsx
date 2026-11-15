@@ -12,13 +12,13 @@ export default function Categories() {
   return (
     <section
       aria-labelledby="categories-heading"
-      className="bg-[var(--mina-ivory)] px-6 pb-20 pt-4 text-[var(--mina-cocoa)] md:px-12 md:pb-28"
+      className="bg-white px-6 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24"
     >
       <div className="mx-auto max-w-[1300px]">
         <div className="flex items-center justify-between">
           <h2
             id="categories-heading"
-            className="font-(family-name:--font-cormorant) text-3xl font-light tracking-[0.04em] md:text-5xl"
+            className="font-(family-name:--font-cormorant) text-4xl font-light leading-[1.15] md:text-5xl"
           >
             Explore more
           </h2>
@@ -31,22 +31,23 @@ export default function Categories() {
           </Link>
         </div>
 
-        <ul className="mt-8 grid grid-cols-1 gap-6 md:mt-12 md:grid-cols-3 md:gap-8">
+        <ul className="mt-8 grid grid-cols-1 gap-x-8 md:mt-10 lg:grid-cols-3">
           {categories.map((category) => (
             <li key={category.name}>
-              <Link href={category.href} className="group block">
-                <span className="relative block aspect-[8/7] overflow-hidden rounded-md bg-[var(--mina-peach,#EFD5BE)]">
+              <Link href={category.href} className="group flex items-center gap-5 border-t border-cocoa/20 py-5">
+                <span className="relative block h-24 w-24 shrink-0 overflow-hidden bg-peach md:h-28 md:w-28">
                   <Image
                     src={productImages[category.image]}
                     alt={category.name}
                     fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
+                    sizes="(max-width: 767px) 96px, 112px"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05] motion-reduce:transition-none"
                   />
                 </span>
-                <span className="mt-4 block text-sm font-medium uppercase tracking-[0.25em] md:text-base">
+                <span className="block text-base font-normal md:text-lg">
                   {category.name}
                 </span>
+                <span aria-hidden="true" className="ml-auto text-xl font-light">↗</span>
               </Link>
             </li>
           ))}

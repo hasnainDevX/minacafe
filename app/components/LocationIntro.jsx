@@ -1,23 +1,26 @@
 import Image from "next/image";
-import { productImages } from "../assets";
+import bgGrain from "../../public/images/textures/bggrain.png";
 
 export default function LocationIntro() {
   return (
     <section
       aria-labelledby="location-heading"
-      className="relative z-10 bg-[var(--mina-ivory)] px-6 py-20 text-[var(--mina-cocoa)] md:px-12 md:py-28"
+      className="relative isolate z-10 bg-[var(--mina-ivory)] px-6 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-[calc(var(--r)*-1+1px)] h-[var(--r)] bg-[var(--mina-ivory)]"
-        style={{
-          "--r": "clamp(28px, 4.5vw, 62px)",
-          WebkitMask:
-            "radial-gradient(circle at 50% 100%, #000 calc(var(--r) - 0.5px), transparent var(--r)) 0 0 / calc(var(--r) * 2) 100% repeat-x",
-          mask: "radial-gradient(circle at 50% 100%, #000 calc(var(--r) - 0.5px), transparent var(--r)) 0 0 / calc(var(--r) * 2) 100% repeat-x",
-        }}
-      />
-      {/* rough, torn-paper edge filter, defined once */}
+      
+
+      {/* grain background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+        <Image
+          src={bgGrain}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </div>
+
+      {/* Distort only the alpha outline; keep the photo pixels untouched. */}
       <svg width="0" height="0" className="absolute" aria-hidden="true">
         <defs>
           <filter id="mina-rough" x="-5%" y="-5%" width="110%" height="110%">
@@ -29,48 +32,50 @@ export default function LocationIntro() {
               result="noise"
             />
             <feDisplacementMap
-              in="SourceGraphic"
+              in="SourceAlpha"
               in2="noise"
               scale="14"
               xChannelSelector="R"
               yChannelSelector="G"
+              result="roughAlpha"
             />
+            <feComposite in="SourceGraphic" in2="roughAlpha" operator="in" />
           </filter>
         </defs>
       </svg>
 
-      <div className="mx-auto flex max-w-[1300px] flex-col items-center gap-14 md:flex-row md:items-start md:gap-12 lg:gap-16">
+      <div className="mx-auto grid max-w-[1300px] items-center gap-10 lg:grid-cols-2 lg:gap-0">
         {/* images */}
-        <div className="flex w-full flex-1 gap-5 md:gap-8">
-          <div className="relative aspect-[3/4] w-1/2 [filter:url(#mina-rough)]">
+        <div className="grid w-full max-w-[520px] grid-cols-2 items-start gap-5 lg:pr-12">
+          <div className="relative h-52 [filter:url(#mina-rough)] sm:h-72 lg:h-80">
             <Image
-              src={productImages["strawberry-milk-bottle"]}
-              alt="Strawberry milk bottle from Mina"
+              src="/images/cafe/cafe-counter-stock.jpg"
+              alt="Stock photo of a cafe counter with pendant lights"
               fill
-              sizes="(max-width: 768px) 45vw, 22vw"
+              sizes="(max-width: 575px) 45vw, 250px"
               className="object-cover"
             />
           </div>
-          <div className="relative mt-16 aspect-[3/4] w-1/2 [filter:url(#mina-rough)] md:mt-24">
+          <div className="relative mt-8 h-52 [filter:url(#mina-rough)] sm:h-72 lg:h-80">
             <Image
-              src={productImages["nut-and-nectar-cup"]}
-              alt="Nut and Nectar cup from Mina"
+              src="/images/cafe/cafe-interior-stock.jpg"
+              alt="Stock photo of a sunlit cafe interior with plants"
               fill
-              sizes="(max-width: 768px) 45vw, 22vw"
+              sizes="(max-width: 575px) 45vw, 250px"
               className="object-cover"
             />
           </div>
         </div>
 
         {/* text */}
-        <div className="w-full max-w-[420px] md:mt-24 md:shrink-0">
+        <div className="w-full lg:border-l lg:border-cocoa/20 lg:py-4 lg:pl-16">
           <h2
             id="location-heading"
-            className="font-(family-name:--font-cormorant) text-4xl font-light uppercase tracking-[0.12em] md:text-5xl"
+            className="font-(family-name:--font-cormorant) text-4xl font-light leading-[1.15] md:text-5xl"
           >
             Find us
           </h2>
-          <p className="mt-8 font-[family-name:var(--font-source-sans)] text-base leading-[1.75]">
+          <p className="mt-8 max-w-[520px] font-[family-name:var(--font-source-sans)] text-base leading-[1.7] md:text-lg">
             From our little corner of North Nazimabad, every bottle, cup and
             bowl is prepared by hand, fresh, hygienic and made with love. Come
             say hello, or get in touch to ask about today&apos;s menu.
@@ -79,7 +84,7 @@ export default function LocationIntro() {
             href="https://www.instagram.com/mina.cafe_/"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 flex w-full items-center justify-center border border-[var(--mina-cocoa)] px-8 py-4 text-xs uppercase tracking-[0.2em] transition-colors hover:bg-[var(--mina-cocoa)] hover:text-[var(--mina-ivory)] motion-reduce:transition-none"
+            className="mt-8 inline-flex items-center justify-center border border-[var(--mina-cocoa)] px-8 py-4 text-xs uppercase tracking-[0.2em] transition-colors hover:border-[var(--mina-burgundy)] hover:bg-[var(--mina-burgundy)] hover:text-[var(--mina-ivory)] motion-reduce:transition-none"
           >
             Visit us on Instagram
           </a>

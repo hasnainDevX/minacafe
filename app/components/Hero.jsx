@@ -82,13 +82,13 @@ export default function Hero() {
   const reveal = "block mina-reveal motion-reduce:animate-none";
 
   return (
-   <section
-  className="sticky top-0 z-0 isolate h-[calc(100svh_+_var(--r))] overflow-hidden bg-cocoa text-ivory"
-  aria-label="A taste of Mina"
-  aria-roledescription="carousel"
-  data-paused={stopped}
-  style={{ "--r": "clamp(28px, 4.5vw, 62px)" }}
->
+    <section
+      className="sticky top-0 z-0 isolate h-[calc(100svh_+_var(--r))] overflow-hidden bg-cocoa text-ivory"
+      aria-label="A taste of Mina"
+      aria-roledescription="carousel"
+      data-paused={stopped}
+      style={{ "--r": "clamp(28px, 4.5vw, 62px)" }}
+    >
       <style>{`
         @keyframes mina-wipe { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
         @keyframes mina-settle { from { transform: scale(1.2) translateY(6%); } to { transform: scale(1) translateY(0); } }
@@ -171,8 +171,8 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="absolute inset-x-5 top-[130px] bottom-[calc(110px_+_var(--r))] flex flex-col justify-between text-white md:inset-x-12">
-        <h1 className="font-(family-name:--font-cormorant) text-5xl mt-8 uppercase leading-[0.95] md:text-7xl">
+      <div className="absolute inset-x-5 top-[130px] bottom-[calc(80px_+_var(--r))] flex flex-col items-center justify-center gap-6 text-center text-white md:inset-x-12 md:top-[130px] md:bottom-[calc(110px_+_var(--r))] md:items-stretch md:justify-between md:gap-0 md:text-left">
+        <h1 className="mt-0 font-(family-name:--font-cormorant) text-[2.5rem] uppercase leading-[0.98] md:mt-28 md:text-7xl md:leading-[0.95]">
           <span className="block overflow-hidden pb-[0.1em]">
             <span className={`${reveal} [animation-delay:180ms]`}>
               From my hands
@@ -185,15 +185,15 @@ export default function Hero() {
           </span>
         </h1>
 
-        <div className="mina-fade-up max-w-[360px] self-start md:self-end">
-          <p className="font-[family-name:var(--font-source-sans)] text-lg leading-[1.5] md:text-xl">
+        <div className="mina-fade-up flex max-w-[320px] flex-col items-center md:max-w-[360px] md:items-start md:self-end">
+          <p className="font-[family-name:var(--font-source-sans)] text-sm leading-[1.5] md:text-base">
             Fresh, hygienic and delicious treats made by hand in Karachi, every
             cup and bottle, just for you.
           </p>
-          <div className="mt-5 flex items-center gap-4">
+          <div className="mt-5 flex w-full max-w-[260px] flex-col items-stretch gap-3 md:mt-5 md:w-auto md:max-w-none md:flex-row md:items-center md:gap-4">
             <a
               href="/menu"
-              className="border border-white bg-white px-5 py-2.5 text-sm uppercase tracking-[0.15em] text-cocoa transition-colors hover:bg-transparent hover:text-white motion-reduce:transition-none"
+              className="border border-white bg-white px-5 py-3 text-center text-xs uppercase tracking-[0.15em] text-cocoa transition-colors hover:bg-transparent hover:text-white motion-reduce:transition-none md:py-2.5 md:text-sm"
             >
               View Menu
             </a>
@@ -201,7 +201,7 @@ export default function Hero() {
               href="https://www.instagram.com/mina.cafe_/"
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-white px-5 py-2.5 text-sm uppercase tracking-[0.15em] transition-colors hover:bg-white hover:text-cocoa motion-reduce:transition-none"
+              className="border border-white px-5 py-3 text-center text-xs uppercase tracking-[0.15em] transition-colors hover:bg-white hover:text-cocoa motion-reduce:transition-none md:py-2.5 md:text-sm"
             >
               Order Now
             </a>
@@ -209,13 +209,6 @@ export default function Hero() {
         </div>
       </div>
       <div className="absolute left-6 right-6 bottom-[calc(1.5rem_+_var(--r))] grid grid-cols-[1fr_40px] gap-x-3 gap-y-[18px] items-end md:left-[38px] md:right-[38px] md:bottom-[calc(34px_+_var(--r))] md:grid-cols-[1fr_minmax(200px,1.1fr)_44px] md:gap-9">
-        <div className="col-start-1 md:col-auto">
-          <p className="font-semibold text-xs leading-[1.55] m-0 md:text-sm">
-            A LITTLE SOMETHING
-            <br />
-            TO MAKE YOUR DAY.
-          </p>
-        </div>
         <div className="flex items-center gap-3 pb-px col-start-1 row-start-2 md:gap-[18px] md:col-auto md:row-auto">
           <div
             className="flex flex-1 gap-[6px]"
@@ -238,7 +231,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-    
     </section>
   );
 }

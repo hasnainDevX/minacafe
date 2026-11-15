@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { productImages } from "../assets";
+import { productCutouts } from "../assets/cutouts";
 const products = [
   { id: "creamy-milk-bottle", name: "Creamy Milk", category: "Milk bottles" },
   {
@@ -282,12 +282,12 @@ export default function Navbar() {
                       >
                         <span className="block aspect-square overflow-hidden bg-[var(--mina-ivory)] rounded-sm md:aspect-[1.3]">
                           <Image
-                            src={productImages[product.id]}
+                            src={productCutouts[product.id]}
                             alt={product.name}
                             width={220}
                             height={180}
                             sizes="(max-width: 600px) 22vw, (max-width: 900px) 12vw, 140px"
-                            className="w-full h-full object-cover object-[center_58%] transition-transform duration-500 ease-in-out motion-reduce:transition-none group-hover:scale-[1.045]"
+                            className="w-full h-full object-contain p-3 md:p-5 transition-transform duration-500 ease-in-out motion-reduce:transition-none group-hover:scale-[1.045]"
                           />
                         </span>
                         <span className="flex justify-between gap-3 pt-3 text-xs leading-[1.35] [&>span:last-child]:text-[var(--mina-burgundy)] md:text-sm">

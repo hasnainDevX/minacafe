@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { productImages } from "../assets";
+import { productCutouts } from "../assets/cutouts";
+import StripedBackground from "./StripedBackground";
 
 const items = [
   { id: "strawberry-milk-bottle", name: "Strawberry Milk", tone: "#EFD5BE" },
@@ -15,44 +16,39 @@ export default function SubMenu() {
   return (
     <section
       aria-labelledby="submenu-heading"
-      className="mina-stripes mina-paper px-5 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24"
+      className="relative isolate overflow-hidden mina-paper px-6 py-16 text-cocoa md:px-12 md:py-24"
     >
-      <div className="mx-auto max-w-[1300px]">
+      <StripedBackground />
+      <div className="mx-auto max-w-[1080px]">
         <h2
           id="submenu-heading"
-          className="mb-8 font-(family-name:--font-cormorant) text-4xl font-light md:mb-12 md:text-5xl"
+          className="mb-8 font-(family-name:--font-cormorant) text-4xl font-light leading-[1.15] md:mb-10 md:text-5xl"
         >
           Our little favourites
         </h2>
 
-        <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <ul className="flex flex-col gap-12 md:gap-16">
           {items.map((item) => (
-            <li key={item.id}>
+            <li key={item.id} className="w-full max-w-[480px] odd:ml-auto even:mr-auto md:w-[44.444%]">
               <Link
                 href={`/menu#${item.id}`}
-                className="group block rounded-sm bg-[var(--mina-ivory)] p-2.5 md:p-3"
+                className="group block"
               >
                 <span
-                  className="relative block aspect-[6/7] overflow-hidden rounded-md"
-                  style={{ backgroundColor: item.tone }}
+                  className="relative block aspect-[4/3] overflow-hidden rounded-[4px] bg-white"
+                  // style={{ backgroundColor: item.tone }}
                 >
                   <Image
-                    src={productImages[item.id]}
+                    src={productCutouts[item.id]}
                     alt={item.name}
                     fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
+                    sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1175px) 40vw, 480px"
+                    className="object-contain p-6 md:p-8 transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
                   />
                 </span>
-                <span className="flex items-center justify-between px-2 pb-2 pt-4">
-                  <span className="font-(family-name:--font-cormorant) text-2xl">
+                <span className="block pt-3">
+                  <span className="text-xs font-normal uppercase leading-relaxed tracking-[0.16em] md:text-sm">
                     {item.name}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="text-3xl font-light leading-none transition-transform duration-300 group-hover:rotate-90 motion-reduce:transition-none"
-                  >
-                    +
                   </span>
                 </span>
               </Link>
