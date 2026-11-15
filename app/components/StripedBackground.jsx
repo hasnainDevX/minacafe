@@ -1,8 +1,15 @@
-export default function StripedBackground() {
+export default function StripedBackground({ className = "" }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-10 bg-[url('/images/textures/mina-stripes.svg')] bg-fixed bg-repeat [background-size:clamp(88px,14vw,192px)_192px]"
+      className={`pointer-events-none absolute inset-0 -z-10 ${className}`}
+      style={{
+        backgroundColor: "var(--stripe-bg, #F3ECE8)",
+        backgroundImage:
+          "linear-gradient(90deg, var(--stripe-color, #EFD5BE) 50%, transparent 50%)",
+        backgroundSize: "var(--stripe-width, clamp(88px, 14vw, 192px)) 100%",
+        backgroundRepeat: "repeat-x",
+      }}
     />
   );
 }

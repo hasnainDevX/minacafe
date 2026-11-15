@@ -16,27 +16,26 @@ export default function SubMenu() {
   return (
     <section
       aria-labelledby="submenu-heading"
-      className="relative isolate overflow-hidden mina-paper px-6 py-16 text-cocoa md:px-12 md:py-24"
+      className="relative isolate px-5 py-16 text-[var(--mina-cocoa)] md:px-12 md:py-24 [--stripe-bg:#ffff] [--stripe-color:#f8e59a]"
     >
       <StripedBackground />
       <div className="mx-auto max-w-[1080px]">
         <h2
           id="submenu-heading"
-          className="mb-8 font-(family-name:--font-cormorant) text-4xl font-light leading-[1.15] md:mb-10 md:text-5xl"
+          className="mb-8 font-(family-name:--font-cormorant) text-burgundy text-4xl font-light leading-[1.15] md:mb-10 md:text-5xl lg:text-7xl"
         >
           Our little favourites
         </h2>
 
         <ul className="flex flex-col gap-12 md:gap-16">
           {items.map((item) => (
-            <li key={item.id} className="w-full max-w-[480px] odd:ml-auto even:mr-auto md:w-[44.444%]">
-              <Link
-                href={`/menu#${item.id}`}
-                className="group block"
-              >
+            <li
+              key={item.id}
+              className="w-full max-w-[480px] odd:ml-auto even:mr-auto md:w-[44.444%]"
+            >
+              <Link href={`/menu#${item.id}`} className="group block">
                 <span
-                  className="relative block aspect-[4/3] overflow-hidden rounded-[4px] bg-white"
-                  // style={{ backgroundColor: item.tone }}
+                  className="relative block aspect-[4/3] overflow-hidden rounded-[4px] bg-white border"
                 >
                   <Image
                     src={productCutouts[item.id]}
