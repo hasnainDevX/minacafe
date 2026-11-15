@@ -104,7 +104,7 @@ export default function Footer() {
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="cursor-pointer border border-[var(--mina-butter,#F4EDBE)] bg-[var(--mina-butter,#F4EDBE)] px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-[var(--mina-burgundy)] transition-colors hover:bg-transparent hover:text-[var(--mina-butter,#F4EDBE)] disabled:opacity-60 motion-reduce:transition-none"
+                className="cursor-pointer border border-butter bg-white px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-burgundy transition-colors hover:bg-butter disabled:opacity-60 motion-reduce:transition-none"
               >
                 {status === "sending" ? "Sending..." : "Send message"}
               </button>
@@ -120,7 +120,7 @@ export default function Footer() {
         <div>
           <p
             aria-hidden="true"
-            className="mt-6 text-center font-(family-name:--font-cormorant) text-[22vw] font-light uppercase leading-[0.8] text-[var(--mina-butter,#F4EDBE)] md:mt-4 md:text-[14vw]"
+            className="mt-6 text-center font-(family-name:--font-cormorant) text-[22vw] font-light uppercase leading-[0.8] text-white md:mt-4 md:text-[14vw]"
           >
             MINA CAFE
           </p>
