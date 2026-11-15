@@ -24,7 +24,7 @@ export default function SubMenu() {
           id="submenu-heading"
           className="mb-12 font-(family-name:--font-cormorant) text-burgundy text-4xl font-light leading-[1.15] md:mb-20 md:text-5xl lg:text-7xl text-center md:text-left"
         >
-          Our little favourites
+          Our Little Favourites
         </h2>
 
         <ul className="flex flex-col gap-12 md:gap-16 ">
@@ -45,11 +45,11 @@ export default function SubMenu() {
                     className="object-contain p-6 md:p-8 transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
                   />
                 </span>
-                <span className="flex justify-between pt-3">
-                  <span className="text-xs uppercase tracking-[0.16em] md:text-sm">
+                <span className="flex justify-between py-3 font-serif">
+                  <span className="text-xs p-3 uppercase tracking-[0.16em] md:text-sm border bg-ivory">
                     {item.name}
                   </span>
-                  <span className="text-xs uppercase tracking-[0.16em] md:text-sm">
+                  <span className="text-xs p-3 uppercase tracking-[0.16em] md:text-sm border bg-burgundy text-white hover:bg-burgundy/95">
                     Add to Cart
                   </span>
                 </span>
