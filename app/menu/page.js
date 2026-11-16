@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import { products, categories } from "../assets/products";
 import Footer from "../components/Footer";
 import FAQ from "../components/FAQ";
-// import Testimonials from "../components/Testimonials";
+import PageTestimonials from "../components/PageTestimonials";
 
 export const metadata = { title: "Our Menu | Mina Cafe" };
 
@@ -30,7 +30,7 @@ export default function MenuPage() {
           </section>
         ))}
       </main>
-      {/* <Testimonials/> */}
+      <PageTestimonials />
       <FAQ/>
       <Footer/>
     </div>

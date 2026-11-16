@@ -93,7 +93,7 @@ export default function CartDrawer() {
       </div>
       <div className="border-t border-cocoa/20 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-5 md:px-8">
         <p role="status" className="mb-4 text-sm">{count} {count === 1 ? "item" : "items"} in your cart</p>
-        <button type="button" onClick={closeCart} className="w-full cursor-pointer border border-burgundy bg-burgundy px-6 py-4 text-xs uppercase tracking-[0.15em] text-white hover:bg-burgundy/95">Place Order</button>
+        <Link href="/checkout" onNavigate={closeCart} className="block w-full cursor-pointer border border-burgundy bg-burgundy px-6 py-4 text-center text-xs uppercase tracking-[0.15em] text-white hover:bg-burgundy/95">Checkout</Link>
       </div>
     </dialog>
   );

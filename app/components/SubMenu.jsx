@@ -31,7 +31,7 @@ export default function SubMenu() {
 
         <ul className="flex flex-col gap-12 md:gap-16 ">
           {items.map((item) => (
-            <li
+            <ProductReveal as="li" motion="rise"
               key={item.id}
               className="w-full max-w-[480px] odd:ml-auto even:mr-auto md:w-[44.444%]"
             >
@@ -56,7 +56,7 @@ export default function SubMenu() {
                   </span>
                   <AddToCartButton productId={item.id} productName={item.name} className="inline-flex cursor-pointer items-center justify-center gap-2 text-xs p-3 uppercase tracking-[0.16em] md:text-sm border bg-burgundy text-white hover:bg-burgundy/95" />
                 </div>
-            </li>
+            </ProductReveal>
           ))}
         </ul>
       </div>

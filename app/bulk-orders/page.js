@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import BulkOrderForm from "../components/bulk-orders/BulkOrderForm";
-import bgGrain from "../../public/images/textures/bggrain.png";
 import Footer from "../components/Footer";
 import FAQ from "../components/FAQ";
 
@@ -10,12 +9,12 @@ export const metadata = { title: "Bulk Orders | Mina Cafe", description: "Enquir
 export default function BulkOrdersPage() {
   return (
     <div className="relative isolate min-h-screen bg-ivory text-cocoa">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <Image src={bgGrain} alt="" fill sizes="100vw" className="object-cover" />
-        <div className="absolute inset-0 bg-ivory/60" />
-      </div>
       <Navbar />
-      <main className="px-4 py-12 md:px-12 md:py-20">
+      <main className="relative isolate px-4 py-12 md:px-12 md:py-20">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <Image src="/images/photography/nut-and-nectar-yellow-baskets.webp" alt="" fill sizes="100vw" className="object-cover object-center" />
+          <div className="absolute inset-0 bg-black/35" />
+        </div>
         <div className="mx-auto max-w-[760px] bg-white px-6 py-12 sm:px-10 md:px-16 md:py-16">
           <div className="mb-10 text-center md:mb-14">
             <h1 className="font-(family-name:--font-cormorant) text-4xl font-light uppercase leading-[1.15] md:text-6xl">Bulk orders</h1>

@@ -41,6 +41,23 @@ export default function Navbar() {
   const [panelTop, setPanelTop] = useState(0);
 
   useEffect(() => {
+    const element = navbar.current;
+    let animation;
+    let entered = false;
+    function enter() {
+      if (entered || document.querySelector('[data-mina-intro][data-state="loading"]')) return;
+      entered = true;
+      element.style.opacity = "";
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        animation = element.animate([{ opacity: 0, transform: "translateY(-24px)" }, { opacity: 1, transform: "translateY(0)" }], { duration: 700, easing: "cubic-bezier(0.22,1,0.36,1)" });
+      }
+    }
+    document.addEventListener("mina:content-visible", enter);
+    enter();
+    return () => { document.removeEventListener("mina:content-visible", enter); animation?.cancel(); element.style.opacity = ""; };
+  }, [pathname]);
+
+  useEffect(() => {
     function update() {
       if (open) return;
       const secondSection = pathname === "/" ? document.querySelector("[data-section-cover]") : null;

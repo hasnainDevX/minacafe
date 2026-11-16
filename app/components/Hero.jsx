@@ -1,22 +1,21 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { productImages } from "../assets";
 import Navbar from "./Navbar";
 
 const slides = [
   {
-    src: productImages["strawberry-milk-bottle"],
+    src: "/images/photography/strawberry-milk-yellow-baskets.webp",
     name: "Strawberry Milk",
-    position: "center 56%",
+    position: "center 58%",
   },
   {
-    src: productImages["nut-and-nectar-cup"],
-    name: "Nut & Nectar",
-    position: "center 63%",
+    src: "/images/photography/fruit-glass-stall-at-night.webp",
+    name: "Fresh Fruit Glass",
+    position: "center 65%",
   },
   {
-    src: productImages["mango-milk-bottle"],
+    src: "/images/photography/mango-milk-yellow-baskets.webp",
     name: "Mango Milk",
     position: "center 58%",
   },

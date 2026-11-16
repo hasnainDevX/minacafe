@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import LocationIntro from "../components/LocationIntro";
 import Footer from "../components/Footer";
+import PageTestimonials from "../components/PageTestimonials";
 import FAQ from "../components/FAQ";
 
 export const metadata = { title: "Find Us | Mina Cafe" };
@@ -13,6 +14,7 @@ export default function FindUsPage() {
         <h1 className="sr-only">Find us</h1>
         <LocationIntro />
       </main>
+      <PageTestimonials />
       <FAQ/>
       <Footer/>
     </div>

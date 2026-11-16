@@ -1,6 +1,6 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-// import Testimonials from "../components/Testimonials";
+import PageTestimonials from "../components/PageTestimonials";
 
 export const metadata = { title: "Our Story | Mina Cafe" };
 
@@ -13,7 +13,7 @@ export default function StoryPage() {
         <h2 className="mt-10 max-w-[650px] font-(family-name:--font-cormorant) text-4xl font-light md:text-5xl">From my hands to your heart.</h2>
         <p className="mt-6 max-w-[600px] text-base leading-[1.7] md:text-lg">From our little corner of North Nazimabad, every bottle, cup and bowl is prepared by hand. Come say hello and find your little favourite.</p>
       </main>
-      {/* <Testimonials/> */}
+      <PageTestimonials />
       <Footer/>
     </div>
   );

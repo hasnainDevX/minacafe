@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-export default function ProductReveal({ as: Tag = "div", children, ...props }) {
+export default function ProductReveal({ as: Tag = "div", motion = "zoom", children, ...props }) {
   const card = useRef(null);
 
   useGSAP(() => {
@@ -14,7 +14,7 @@ export default function ProductReveal({ as: Tag = "div", children, ...props }) {
       let entered = false;
       let revealed = false;
       let animation;
-      gsap.set(element, { opacity: 0, scale: 0.72 });
+      gsap.set(element, { opacity: 0, scale: motion === "rise" ? 1 : 0.72, y: motion === "rise" ? 32 : 0 });
 
       function reveal() {
         if (revealed || !entered) return;
@@ -24,7 +24,8 @@ export default function ProductReveal({ as: Tag = "div", children, ...props }) {
         animation = gsap.to(element, {
           opacity: 1,
           scale: 1,
-          duration: 1.15,
+          y: 0,
+          duration: motion === "rise" ? 0.85 : 1.15,
           ease: "power2.out",
           clearProps: "opacity,transform",
         });
@@ -49,7 +50,7 @@ export default function ProductReveal({ as: Tag = "div", children, ...props }) {
       };
     });
     return () => media.revert();
-  }, { scope: card });
+  }, { scope: card, dependencies: [motion], revertOnUpdate: true });
 
-  return <Tag ref={card} data-product-reveal {...props}>{children}</Tag>;
+  return <Tag ref={card} data-product-reveal={motion} {...props}>{children}</Tag>;
 }

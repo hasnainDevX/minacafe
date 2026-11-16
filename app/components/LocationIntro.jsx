@@ -48,8 +48,8 @@ export default function LocationIntro() {
         <div className="grid w-full max-w-[520px] grid-cols-2 items-start gap-5 lg:pr-12">
           <div className="relative h-52 [filter:url(#mina-rough)] sm:h-72 lg:h-80">
             <Image
-              src="/images/cafe/cafe-counter-stock.jpg"
-              alt="Stock photo of a cafe counter with pendant lights"
+              src="/images/photography/fruit-glass-north-nazimabad.webp"
+              alt="Mina fruit glass at the North Nazimabad stall"
               fill
               sizes="(max-width: 575px) 45vw, 250px"
               className="object-cover"
@@ -57,8 +57,8 @@ export default function LocationIntro() {
           </div>
           <div className="relative mt-8 h-52 [filter:url(#mina-rough)] sm:h-72 lg:h-80">
             <Image
-              src="/images/cafe/cafe-interior-stock.jpg"
-              alt="Stock photo of a sunlit cafe interior with plants"
+              src="/images/photography/creamy-milk-north-nazimabad.webp"
+              alt="Mina creamy milk bottle in North Nazimabad"
               fill
               sizes="(max-width: 575px) 45vw, 250px"
               className="object-cover"
@@ -87,6 +87,17 @@ export default function LocationIntro() {
           >
             Visit us on Instagram
           </a>
+          <div className="mt-6 max-w-[520px]">
+            <iframe
+              title="Mina Cafe (Portable Stall), North Nazimabad, Karachi"
+              src="https://www.google.com/maps?q=Mina+Cafe+Portable+Stall&ll=24.9285468,67.0415666&z=17&output=embed"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+              className="h-[180px] w-full border border-cocoa/20 sm:h-[200px]"
+            />
+            <a href="https://maps.app.goo.gl/wjPkvrJnkTH7UC7KA" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-10 items-center text-sm underline underline-offset-4">Get directions ↗</a>
+          </div>
         </div>
       </div>
     </section>

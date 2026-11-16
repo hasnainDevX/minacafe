@@ -1,0 +1,7 @@
+import { whatsappNumber } from "../config/contact";
+export default function LocationMap() {
+  return <section aria-labelledby="map-heading" className="bg-white px-6 py-20 text-cocoa md:px-12 md:py-24 lg:py-32"><div className="mx-auto grid max-w-[1300px] items-center gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16">
+    <div><h2 id="map-heading" className="font-(family-name:--font-cormorant) text-4xl font-light leading-[1.15] md:text-5xl">Our location</h2><p className="mt-6 max-w-[420px] text-base leading-[1.7] md:text-lg">Block F, North Nazimabad, Karachi.<br />Between SPAR supermarket and Allied Bank.</p><div className="mt-8 flex flex-wrap items-center gap-6"><a href="https://maps.app.goo.gl/wjPkvrJnkTH7UC7KA" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center bg-burgundy px-8 py-4 text-xs uppercase tracking-[0.2em] text-white">Get directions</a><a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center border-b border-cocoa/40 text-base">Message Mina</a></div></div>
+    <iframe title="Mina Cafe (Portable Stall), North Nazimabad, Karachi" src="https://www.google.com/maps?q=Mina+Cafe+Portable+Stall&ll=24.9285468,67.0415666&z=17&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen className="h-[320px] w-full border border-cocoa/20 md:h-[420px]" />
+  </div></section>;
+}

@@ -3,6 +3,7 @@ import "./globals.css";
 import CartProvider from "./components/cart/CartProvider";
 import SmoothScroll from "./components/SmoothScroll";
 import Announcement from "./components/Announcement";
+import ContentReveals from "./components/ContentReveals";
 import WelcomeExperience from "./components/WelcomeExperience";
 
 const sourceSans = localFont({
@@ -53,6 +54,7 @@ export default function RootLayout({ children }) {
           <CartProvider>{children}</CartProvider>
         </SmoothScroll>
         <WelcomeExperience />
+        <ContentReveals />
       </body>
     </html>
   );
