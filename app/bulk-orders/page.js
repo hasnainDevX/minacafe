@@ -2,6 +2,8 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import BulkOrderForm from "../components/bulk-orders/BulkOrderForm";
 import bgGrain from "../../public/images/textures/bggrain.png";
+import Footer from "../components/Footer";
+import FAQ from "../components/FAQ";
 
 export const metadata = { title: "Bulk Orders | Mina Cafe", description: "Enquire about Mina bulk orders for your event, team or gathering." };
 
@@ -23,6 +25,8 @@ export default function BulkOrdersPage() {
           <BulkOrderForm />
         </div>
       </main>
+      <FAQ/>
+      <Footer/>
     </div>
   );
 }
