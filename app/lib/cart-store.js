@@ -2,17 +2,24 @@ import { products } from "../assets/products.js";
 
 export const CART_KEY = "mina-cart-v1";
 const LIFETIME = 30 * 24 * 60 * 60 * 1000;
-const validIds = new Set(products.map((product) => product.id));
+const catalog = new Map(products.map((product) => [product.id, product]));
+export const cartItemKey = (item) => item.variant ? `${item.id}::${item.variant}` : item.id;
 const EMPTY = [];
 
 function normalize(items) {
   if (!Array.isArray(items)) return [];
-  const quantities = new Map();
+  const lines = new Map();
   for (const item of items) {
-    if (!validIds.has(item?.id) || !Number.isInteger(item.quantity) || item.quantity < 1) continue;
-    quantities.set(item.id, Math.min(99, (quantities.get(item.id) || 0) + item.quantity));
+    const product = catalog.get(item?.id);
+    if (!product || !Number.isInteger(item.quantity) || item.quantity < 1) continue;
+    const variant = product.variants?.find((option) => option.id === (item.variant || product.variants[0].id));
+    if ((product.variants && !variant) || (!product.variants && item.variant)) continue;
+    const line = { id: item.id, quantity: item.quantity, ...(variant ? { variant: variant.id } : {}) };
+    const key = cartItemKey(line);
+    line.quantity = Math.min(99, (lines.get(key)?.quantity || 0) + item.quantity);
+    lines.set(key, line);
   }
-  return Array.from(quantities, ([id, quantity]) => ({ id, quantity }));
+  return Array.from(lines.values());
 }
 
 function decode(value) {
@@ -23,7 +30,7 @@ function decode(value) {
   } catch { return null; }
 }
 
-// Only IDs and quantities are persisted; product details come from the catalog.
+// Only product IDs, option IDs and quantities are persisted; product details come from the catalog.
 export function createCartStore(getBrowser = () => window) {
   let items = EMPTY;
   let initialized = false;
@@ -81,20 +88,20 @@ export function createCartStore(getBrowser = () => window) {
         if (!listeners.size) getBrowser().removeEventListener("storage", sync);
       };
     },
-    add(id) {
+    add(id, variant) {
       initialize();
-      if (!validIds.has(id)) return;
-      const existing = items.find((item) => item.id === id);
-      commit(existing ? items.map((item) => item.id === id ? { ...item, quantity: item.quantity + 1 } : item) : [...items, { id, quantity: 1 }]);
+      const [line] = normalize([{ id, variant, quantity: 1 }]);
+      if (!line) return;
+      commit([...items, line]);
     },
     setQuantity(id, quantity) {
       initialize();
       if (!Number.isInteger(quantity) || quantity < 0) return;
-      commit(quantity === 0 ? items.filter((item) => item.id !== id) : items.map((item) => item.id === id ? { ...item, quantity: Math.min(99, quantity) } : item));
+      commit(quantity === 0 ? items.filter((item) => cartItemKey(item) !== id) : items.map((item) => cartItemKey(item) === id ? { ...item, quantity: Math.min(99, quantity) } : item));
     },
     remove(id) {
       initialize();
-      commit(items.filter((item) => item.id !== id));
+      commit(items.filter((item) => cartItemKey(item) !== id));
     },
   };
 }

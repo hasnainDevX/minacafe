@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { CartButton } from "./cart/CartControls";
@@ -11,7 +12,7 @@ const sections = [
   ["/find-us", "Find us"],
 ];
 const extraLinks = [
-  ["/#bulk-heading", "Bulk orders"],
+  ["/bulk-orders", "Bulk orders"],
   ["/#contact-heading", "Contact"],
 ];
 
@@ -28,6 +29,7 @@ function MenuToggle({ open, closing, compact = false, onClick }) {
 }
 
 export default function Navbar() {
+  const pathname = usePathname();
   const navbar = useRef(null);
   const floating = useRef(null);
   const opener = useRef(null);
@@ -41,11 +43,15 @@ export default function Navbar() {
   useEffect(() => {
     function update() {
       if (open) return;
-      const announcement = document.querySelector('[aria-label="Announcement"]');
-      const threshold = navbar.current.offsetHeight + (announcement?.offsetHeight || 0);
-      setScrolled(window.scrollY > threshold);
+      const secondSection = pathname === "/" ? document.querySelector("[data-section-cover]") : null;
+      const boundary = secondSection || navbar.current;
+      const rect = boundary.getBoundingClientRect();
+      setScrolled(secondSection ? rect.top <= 24 : rect.bottom <= 0);
     }
-    const frame = requestAnimationFrame(update);
+    // Read the rendered position so the floating controls follow ScrollSmoother too.
+    let frame;
+    function tick() { update(); frame = requestAnimationFrame(tick); }
+    frame = requestAnimationFrame(tick);
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     return () => {
@@ -53,7 +59,7 @@ export default function Navbar() {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
-  }, [open]);
+  }, [open, pathname]);
 
   useEffect(() => () => {
     clearTimeout(closeTimer.current);

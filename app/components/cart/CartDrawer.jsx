@@ -7,6 +7,7 @@ import { products } from "../../assets/products";
 import { productCutouts } from "../../assets/cutouts";
 import { useCart } from "./CartProvider";
 import { CartIcon } from "./CartControls";
+import { cartItemKey } from "../../lib/cart-store";
 
 export default function CartDrawer() {
   const { items, count, open, closeCart, setQuantity, removeItem } = useCart();
@@ -67,17 +68,22 @@ export default function CartDrawer() {
           <ul className="divide-y divide-cocoa/20">
             {items.map((item) => {
               const product = products.find((product) => product.id === item.id);
+              if (!product) return null;
+              const variant = product.variants?.find((option) => option.id === item.variant);
+              const key = cartItemKey(item);
+              const itemLabel = `${product.name}${variant ? ` — ${variant.label}` : ""}`;
               return (
-                <li key={item.id} className="flex gap-4 py-6">
-                  <div className="relative h-24 w-24 shrink-0 bg-white"><Image src={productCutouts[item.id]} alt={product.name} fill sizes="96px" className="object-contain p-2" /></div>
+                <li key={key} className="flex gap-4 py-6">
+                  <div className="relative h-24 w-24 shrink-0 bg-white"><Image src={product.image || productCutouts[item.id]} alt={product.name} fill sizes="96px" className={product.image ? "object-cover" : "object-contain p-2"} /></div>
                   <div className="min-w-0 flex-1">
                     <h3 className="text-base">{product.name}</h3>
+                    <p className="mt-1 text-xs text-cocoa/70">{variant ? `${variant.label} · ` : ""}Rs. {(variant?.price ?? product.price).toLocaleString("en-PK")} each</p>
                     <div className="mt-3 inline-flex items-center border border-cocoa/30">
-                      <button type="button" aria-label={`Decrease ${product.name} quantity`} onClick={() => setQuantity(item.id, item.quantity - 1)} className="h-11 w-11 cursor-pointer hover:bg-peach">−</button>
+                      <button type="button" aria-label={`Decrease ${itemLabel} quantity`} onClick={() => setQuantity(key, item.quantity - 1)} className="h-11 w-11 cursor-pointer hover:bg-peach">−</button>
                       <span className="min-w-7 text-center text-sm" aria-label={`Quantity ${item.quantity}`}>{item.quantity}</span>
-                      <button type="button" aria-label={`Increase ${product.name} quantity`} disabled={item.quantity >= 99} onClick={() => setQuantity(item.id, item.quantity + 1)} className="h-11 w-11 cursor-pointer hover:bg-peach disabled:cursor-default disabled:opacity-40">+</button>
+                      <button type="button" aria-label={`Increase ${itemLabel} quantity`} disabled={item.quantity >= 99} onClick={() => setQuantity(key, item.quantity + 1)} className="h-11 w-11 cursor-pointer hover:bg-peach disabled:cursor-default disabled:opacity-40">+</button>
                     </div>
-                    <button type="button" aria-label={`Remove ${product.name} from cart`} onClick={() => removeItem(item.id)} className="mt-2 block min-h-8 cursor-pointer text-xs underline underline-offset-4 hover:text-burgundy">Remove</button>
+                    <button type="button" aria-label={`Remove ${itemLabel} from cart`} onClick={() => removeItem(key)} className="mt-2 block min-h-8 cursor-pointer text-xs underline underline-offset-4 hover:text-burgundy">Remove</button>
                   </div>
                 </li>
               );

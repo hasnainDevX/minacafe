@@ -12,7 +12,7 @@ export default function Hours() {
   return (
     <section
       aria-labelledby="hours-heading"
-      className="bg-white px-6 py-18 text-cocoa md:px-12 md:py-24 lg:py-32"
+      className="bg-white px-6 py-20 text-cocoa md:px-12 md:py-24 lg:py-32"
     >
       <div className="mx-auto grid max-w-[1300px] gap-12 md:grid-cols-2 md:gap-0">
         <div className="md:pr-16">

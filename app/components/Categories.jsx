@@ -12,7 +12,7 @@ export default function Categories() {
   return (
     <section
       aria-labelledby="categories-heading"
-      className="bg-white px-6 py-18 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32 border-t md:border-none"
+      className="bg-white px-6 py-20 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32 border-t md:border-none"
     >
       <div className="mx-auto max-w-[1300px]">
         <div className="flex items-center justify-between">

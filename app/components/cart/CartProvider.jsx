@@ -21,7 +21,7 @@ export default function CartProvider({ children }) {
       items, count, open,
       openCart: () => setOpen(true),
       closeCart: () => setOpen(false),
-      addItem: (id) => { cartStore.add(id); setOpen(true); },
+      addItem: (id, variant) => { cartStore.add(id, variant); setOpen(true); },
       setQuantity: cartStore.setQuantity,
       removeItem: cartStore.remove,
     }}>

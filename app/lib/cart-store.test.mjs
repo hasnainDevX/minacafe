@@ -87,3 +87,36 @@ test("changes in another tab update subscribers", () => {
   assert.equal(updates, 2);
   unsubscribe();
 });
+
+
+test("different chai sizes persist and can be changed independently", () => {
+  const env = browser();
+  const store = createCartStore(() => env);
+  store.add("kashmiri-chai", "small");
+  store.add("kashmiri-chai", "large");
+  store.add("kashmiri-chai", "large");
+  const restored = createCartStore(() => env);
+  restored.initialize();
+  assert.deepEqual(restored.getSnapshot(), [
+    { id: "kashmiri-chai", quantity: 1, variant: "small" },
+    { id: "kashmiri-chai", quantity: 2, variant: "large" },
+  ]);
+  restored.setQuantity("kashmiri-chai::small", 3);
+  restored.remove("kashmiri-chai::large");
+  assert.deepEqual(restored.getSnapshot(), [{ id: "kashmiri-chai", quantity: 3, variant: "small" }]);
+});
+
+test("legacy fruit carts get the included topping and invalid variants are ignored", () => {
+  const env = browser();
+  env.localStorage.setItem(CART_KEY, JSON.stringify({ version: 1, expires: Date.now() + 10000, items: [
+    { id: "fresh-fruit-glass", quantity: 2 },
+    { id: "kashmiri-chai", quantity: 1, variant: "unknown" },
+  ] }));
+  const store = createCartStore(() => env);
+  store.initialize();
+  store.add("fresh-fruit-glass", "all-three");
+  assert.deepEqual(store.getSnapshot(), [
+    { id: "fresh-fruit-glass", quantity: 2, variant: "honey" },
+    { id: "fresh-fruit-glass", quantity: 1, variant: "all-three" },
+  ]);
+});

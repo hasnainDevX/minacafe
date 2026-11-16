@@ -29,7 +29,7 @@ export default function SmoothScroll({ children }) {
         const smoother = ScrollSmoother.create({
           wrapper: wrapper.current,
           content: content.current,
-          smooth: 1.1,
+          smooth: 1.6,
           smoothTouch: false,
           effects: true,
         });

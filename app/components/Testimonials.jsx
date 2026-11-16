@@ -183,7 +183,7 @@ export default function Testimonials() {
       <section
         ref={section}
         aria-labelledby="testimonials-heading"
-        className="relative isolate px-6 py-18 text-white [clip-path:inset(0)] md:px-12 md:py-24 lg:py-32"
+        className="relative isolate px-6 py-20 text-white [clip-path:inset(0)] md:px-12 md:py-24 lg:py-32"
       >
         {/* Touch devices: fixed image, clipped to this section by the
             section's clip-path. No JavaScript, no fade, no timing. */}
@@ -255,7 +255,7 @@ export default function Testimonials() {
                 <li
                   key={`${review.handle}-${i}`}
                   aria-hidden={i >= N ? "true" : undefined}
-                  className="relative flex min-h-[300px] w-[82%] shrink-0 flex-col items-center justify-center border border-[#4a2e1c33] bg-white px-8 py-12 text-center sm:w-[46%] lg:w-[31.5%]"
+                  className="relative flex min-h-[320px] md:min-h-[300px] w-[82%] shrink-0 flex-col items-center justify-center border border-[#4a2e1c33] bg-white px-8 py-14 text-center md:py-12 sm:w-[46%] lg:w-[31.5%]"
                 >
                   <span
                     aria-hidden="true"

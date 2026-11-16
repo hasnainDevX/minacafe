@@ -3,6 +3,7 @@ import Link from "next/link";
 import { productCutouts } from "../assets/cutouts";
 import { AddToCartButton } from "./cart/CartControls";
 import StripedBackground from "./StripedBackground";
+import ProductReveal from "./ProductReveal";
 
 const items = [
   { id: "strawberry-milk-bottle", name: "Strawberry Milk", tone: "#EFD5BE" },
@@ -17,7 +18,7 @@ export default function SubMenu() {
   return (
     <section
       aria-labelledby="submenu-heading"
-      className="relative isolate px-5 py-18 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32 [--stripe-bg:#ffff] md:[--stripe-color:#f8e59a]/80 [--stripe-color:#f8e59a]/60 border-y"
+      className="relative isolate px-5 py-20 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32 [--stripe-bg:#ffff] md:[--stripe-color:#f8e59a]/80 [--stripe-color:#f8e59a]/60 border-y"
     >
       <StripedBackground />
       <div className="mx-auto max-w-[1080px]">
@@ -38,6 +39,7 @@ export default function SubMenu() {
                 <span
                   className="relative block aspect-[4/3] overflow-hidden rounded-[4px] bg-white border"
                 >
+                  <ProductReveal className="absolute inset-0">
                   <Image
                     src={productCutouts[item.id]}
                     alt={item.name}
@@ -45,6 +47,7 @@ export default function SubMenu() {
                     sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1175px) 40vw, 480px"
                     className="object-contain p-6 md:p-8 transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
                   />
+                  </ProductReveal>
                 </span>
               </Link>
                 <div className="flex justify-between gap-2 py-3 font-serif">

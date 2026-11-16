@@ -1,9 +1,9 @@
 import Image from "next/image";
 import bgGrain from "../../public/images/textures/bggrain.png";
-import { AddToCartButton } from "../components/cart/CartControls";
+import MenuProductCard from "../components/MenuProductCard";
 import Navbar from "../components/Navbar";
 import { products, categories } from "../assets/products";
-import { productCutouts } from "../assets/cutouts";
+
 
 export const metadata = { title: "Our Menu | Mina Cafe" };
 
@@ -22,14 +22,7 @@ export default function MenuPage() {
             <h2 className="mb-6 font-(family-name:--font-cormorant) text-3xl font-light md:text-4xl">{category}</h2>
             <div className="grid grid-cols-2 gap-x-5 gap-y-8 md:grid-cols-3 lg:grid-cols-4">
               {products.filter((product) => product.category === category).map((product) => (
-                <article key={product.id} id={product.id} className="scroll-mt-44">
-                  <div className="relative aspect-square border border-cocoa/20 bg-white">
-                    <Image src={productCutouts[product.id]} alt={product.name} fill sizes="(max-width: 767px) 45vw, (max-width: 1023px) 30vw, 280px" className="object-contain p-5 md:p-8" />
-                  </div>
-                  <h3 className="mt-3 text-sm md:text-base">{product.name}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-cocoa/75 md:text-sm">{product.description}</p>
-                  <AddToCartButton productId={product.id} productName={product.name} />
-                </article>
+                <MenuProductCard key={product.id} product={product} />
               ))}
             </div>
           </section>

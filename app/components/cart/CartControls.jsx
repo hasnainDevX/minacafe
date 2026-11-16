@@ -23,6 +23,7 @@ export function CartButton({ beforeOpen, className }) {
 
 export function AddToCartButton({
   productId,
+  variantId,
   productName,
   beforeAdd,
   className = "mt-3 inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 border border-burgundy bg-burgundy px-3 py-2 text-xs text-white hover:bg-burgundy/95",
@@ -30,7 +31,7 @@ export function AddToCartButton({
 }) {
   const { addItem } = useCart();
   return (
-    <button type="button" aria-label={`Add ${productName} to cart`} onClick={() => { beforeAdd?.(); addItem(productId); }} className={className}>
+    <button type="button" aria-label={`Add ${productName} to cart`} onClick={() => { beforeAdd?.(); addItem(productId, variantId); }} className={className}>
       <CartIcon className="md:h-4 md:w-4 h-3 w-3 shrink-0" />
       <span className={labelClassName}>Add to Cart</span>
     </button>

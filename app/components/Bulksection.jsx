@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import bgGrain from "../../public/images/textures/bggrain.png";
 import sectionbg from "../../public/images/textures/site-background.png";
 
@@ -6,7 +7,7 @@ export default function BulkSection() {
   return (
     <section
       aria-labelledby="bulk-heading"
-      className="relative isolate z-10 bg-ivory px-6 py-18 text-burgundy md:px-12 md:py-24 lg:py-32"
+      className="relative isolate z-10 bg-ivory px-6 py-20 text-burgundy md:px-12 md:py-24 lg:py-32"
     >
       {/* background photo + burgundy overlay */}
       <div className="absolute inset-0 -z-10" aria-hidden="true">
@@ -19,7 +20,7 @@ export default function BulkSection() {
         />
         <div className="absolute inset-0 bg-ivory/40" />
       </div>
-      <div className="relative mx-auto max-w-[900px] border border-burgundy px-8 py-12 text-center md:px-16 md:py-16">
+      <div className="relative mx-auto max-w-[900px] border border-burgundy px-8 py-14 text-center md:px-16 md:py-16">
         {/* grain background */}
         <div
           className="absolute inset-0 -z-10 overflow-hidden"
@@ -53,14 +54,12 @@ export default function BulkSection() {
           bottles, fruit glasses and bowls by hand in larger quantities. Message
           us with your date and numbers and we&apos;ll sort out the rest.
         </p>
-        <a
-          href="https://www.instagram.com/mina.cafe_/"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/bulk-orders"
           className="mt-8 inline-flex items-center justify-center border border-burgundy bg-[var(--mina-burgundy)] px-8 py-4 text-xs uppercase tracking-[0.2em] text-[var(--mina-ivory)] transition-colors hover:bg-transparent hover:text-[var(--mina-burgundy)] motion-reduce:transition-none"
         >
           Place a bulk order
-        </a>
+        </Link>
       </div>
       {/* cloud edge: same background as the section, hanging into the footer */}
       <div

@@ -5,7 +5,7 @@ export default function LocationIntro() {
   return (
     <section
       aria-labelledby="location-heading"
-      className="relative isolate bg-ivory  px-6 py-18 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32"
+      className="relative isolate bg-ivory  px-6 py-20 text-[var(--mina-cocoa)] md:px-12 md:py-24 lg:py-32"
     >
       
       <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
@@ -43,7 +43,7 @@ export default function LocationIntro() {
         </defs>
       </svg>
 
-      <div className="mx-auto grid max-w-[1300px] items-center gap-10 lg:grid-cols-2 lg:gap-0">
+      <div className="mx-auto grid max-w-[1300px] items-center gap-12 md:gap-10 lg:grid-cols-2 lg:gap-0">
         {/* images */}
         <div className="grid w-full max-w-[520px] grid-cols-2 items-start gap-5 lg:pr-12">
           <div className="relative h-52 [filter:url(#mina-rough)] sm:h-72 lg:h-80">
