@@ -49,3 +49,5 @@ studio/.sanity/
 
 .next-check*/
 .next-build-check/
+
+/.next-perf-check/

@@ -18,7 +18,7 @@ export default function SubMenu() {
       <div className="mx-auto max-w-[1080px]">
         <h2
           id="submenu-heading"
-          className="mb-12 font-(family-name:--font-cormorant) text-burgundy text-4xl font-light leading-[1.15] md:mb-20 md:text-5xl lg:text-7xl text-center md:text-left"
+          className="mb-12 font-(family-name:--font-cormorant) text-cocoa text-4xl font-light leading-[1.15] md:mb-20 md:text-5xl lg:text-7xl text-center md:text-left"
         >
           Loved by our Customers
         </h2>

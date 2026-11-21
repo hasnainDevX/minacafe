@@ -27,11 +27,11 @@ export default function MenuPage() {
       </div>
       <Navbar />
       <main className="mx-auto max-w-[1300px] px-6 py-18 md:px-12 md:py-24 lg:py-32">
-        <div className="flex w-full justify-between">
-          <h1 className="font-(family-name:--font-cormorant) text-5xl font-light md:text-7xl">
+        <div className="flex w-full flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-10">
+          <h1 className="shrink-0 whitespace-nowrap font-(family-name:--font-cormorant) text-5xl font-light md:text-7xl">
             Our Menu
           </h1>
-        <OrderingNotice />
+        <OrderingNotice compact />
         </div>
         <MenuCatalog />
       </main>

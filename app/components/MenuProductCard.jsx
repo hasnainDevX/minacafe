@@ -18,7 +18,7 @@ export default function MenuProductCard({ product }) {
         </ProductReveal>
         {product.isNew && <span className="absolute left-3 top-3 bg-burgundy px-3 py-1.5 text-[10px] uppercase tracking-widest text-ivory">New</span>}
       </div>
-      <div className="mt-3 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1"><h3 className="text-sm md:text-base">{product.name}</h3><p className="text-sm text-burgundy">Rs. {price.toLocaleString("en-PK")}</p></div>
+      <div className="mt-3 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1"><h3 className="text-sm md:text-base">{product.name}</h3><p className="text-sm text-cocoa">Rs. {price.toLocaleString("en-PK")}</p></div>
       <p className="mt-2 text-xs leading-relaxed text-cocoa/75 md:text-sm">{product.description}</p>
       <div className="mt-auto pt-3">
         {product.variants && <label className="block text-[10px] uppercase tracking-widest">{product.optionLabel}<select aria-label={`${product.name} ${(product.optionLabel || "option").toLowerCase()}`} value={variant?.id || ""} onChange={(event) => setVariantId(event.target.value)} className="mt-2 block min-h-11 w-full border border-cocoa/25 bg-ivory px-2 py-2 text-xs normal-case tracking-normal outline-offset-2 focus:outline-burgundy">{product.variants.map((option) => <option key={option.id} value={option.id}>{option.label} — Rs. {option.price}</option>)}</select></label>}

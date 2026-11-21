@@ -21,8 +21,11 @@ export default function ContentReveals() {
         state.animation.finished.then(() => { state.conceal.cancel(); state.animation.cancel(); }).catch(() => {});
       }
       const observer = new IntersectionObserver(entries => entries.forEach(entry => { const state = states.get(entry.target); if (state) state.visible = entry.isIntersecting; reveal(entry.target); }), { rootMargin: '0px 0px -40px 0px' });
-      function scan() {
-        document.querySelectorAll('main h1, main h2, main h3, main p, section[aria-labelledby] h2, section[aria-labelledby] p, [data-footer-content] h2, [data-footer-content] p').forEach(el => {
+      const selector = 'main h1, main h2, main h3, main p, section[aria-labelledby] h2, section[aria-labelledby] p, [data-footer-content] h2, [data-footer-content] p';
+      function scan(root = document) {
+        const elements = [...root.querySelectorAll(selector)];
+        if (root instanceof Element && root.matches(selector)) elements.unshift(root);
+        elements.forEach(el => {
           if (states.has(el) || el.closest(excluded)) return;
           const conceal = el.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 1, fill: 'both' });
           conceal.pause();
@@ -31,7 +34,24 @@ export default function ContentReveals() {
       }
       function resume() { states.forEach((_, el) => reveal(el)); }
       scan();
-      const changes = new MutationObserver(scan);
+      const changes = new MutationObserver(records => {
+        // Only inspect newly inserted subtrees; text updates need no animation setup.
+        const added = new Set();
+        records.forEach(record => record.addedNodes.forEach(node => {
+          if (node instanceof Element && node.isConnected) added.add(node);
+        }));
+        added.forEach(node => {
+          if (![...added].some(parent => parent !== node && parent.contains(node))) scan(node);
+        });
+        states.forEach((state, el) => {
+          if (!el.isConnected) {
+            observer.unobserve(el);
+            state.animation?.cancel();
+            state.conceal.cancel();
+            states.delete(el);
+          }
+        });
+      });
       changes.observe(document.getElementById('smooth-content') || document.body, { childList: true, subtree: true });
       document.addEventListener('mina:content-visible', resume); document.addEventListener('close', resume, true);
       cleanup = () => { observer.disconnect(); changes.disconnect(); document.removeEventListener('mina:content-visible', resume); document.removeEventListener('close', resume, true); states.forEach((state, el) => { state.animation?.cancel(); state.conceal.cancel(); }); };

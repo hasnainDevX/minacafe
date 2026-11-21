@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StripedBackground from "./StripedBackground";
+import BrandIllustration from "./BrandIllustration";
 import { useStorefront } from "./StorefrontProvider";
 
 const INTRO_KEY = "mina-intro-seen-v1";
@@ -39,7 +40,7 @@ export default function WelcomeExperience() {
   // The popup needs to know whether chai exists, but the intro must not
   // restart when products load, so this is read from a ref, not a dependency.
   const hasChaiRef = useRef(false);
-  hasChaiRef.current = Boolean(chai);
+  useEffect(() => { hasChaiRef.current = Boolean(chai); }, [chai]);
 
   function closePopup() {
     popup.current?.close();
@@ -185,6 +186,7 @@ export default function WelcomeExperience() {
         className="fixed inset-0 z-[1000] flex isolate flex-col items-center justify-center gap-3 overflow-hidden bg-white text-cocoa [--stripe-bg:#ffffff] [--stripe-color:#efd5be]"
       >
         <StripedBackground />
+        <BrandIllustration className="h-auto w-20 shrink-0 md:w-24" />
         <span
           ref={wordmark}
           aria-hidden="true"
@@ -233,7 +235,7 @@ export default function WelcomeExperience() {
           type="button"
           onClick={closePopup}
           aria-label="Close launch announcement"
-          className="absolute right-3 top-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-sm bg-ivory text-xl"
+          className="absolute right-3 top-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-sm text-xl border"
         >
           ×
         </button>

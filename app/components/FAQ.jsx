@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import CafeIllustration from "./CafeIllustration";
+import BrandIllustration from "./BrandIllustration";
 import { useStorefront } from "./StorefrontProvider";
 
 export default function FAQ() {
@@ -73,7 +73,7 @@ export default function FAQ() {
             A few things you might be wondering. For everything else, we’re just
             a message away.
           </p>
-          <CafeIllustration className="mt-8 h-auto w-40 text-burgundy md:w-48" />
+          <BrandIllustration className="mt-8 h-auto w-40 md:w-48" />
           {/* <a href={settings.instagramUrl} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex min-h-11 items-center gap-5 border-b border-burgundy text-xs uppercase tracking-[0.16em] text-burgundy">Ask us anything <span aria-hidden="true">↗</span></a> */}
         </div>
         <div className="border-t border-cocoa/25">
