@@ -1,14 +1,10 @@
-const hours = [
-  ["Monday", "4:00 PM – 10:00 PM"],
-  ["Tuesday", "4:00 PM – 10:00 PM"],
-  ["Wednesday", "4:00 PM – 10:00 PM"],
-  ["Thursday", "4:00 PM – 10:00 PM"],
-  ["Friday", "4:00 PM – 10:00 PM"],
-  ["Saturday", "4:00 PM – 10:00 PM"],
-  ["Sunday", "Closed"],
-];
+"use client";
+import { useStorefront } from "./StorefrontProvider";
+import { DAYS, formatTime } from "../lib/business";
 
 export default function Hours() {
+  const { settings } = useStorefront();
+  const hours = [1,2,3,4,5,6,0].map(day => { const row = settings.hours.find(r => Number(r.day) === day); return [DAYS[day], !row || row.closed ? "Closed" : formatTime(row.open) + " – " + formatTime(row.close)]; });
   return (
     <section
       aria-labelledby="hours-heading"

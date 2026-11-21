@@ -10,11 +10,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother, useGSAP);
 ScrollTrigger.config({ ignoreMobileResize: true });
 
 const MOUSE =
-  "(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)";
-
-// Comma = "or". Valid media query syntax (no "and not").
-const TOUCH =
-  "(prefers-reduced-motion: no-preference) and (hover: none), (prefers-reduced-motion: no-preference) and (pointer: coarse)";
+  "(min-width: 768px) and (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)";
 
 export default function SmoothScroll({ children }) {
   const wrapper = useRef(null);
@@ -81,15 +77,6 @@ export default function SmoothScroll({ children }) {
           delete window.smoother;
           smoother.kill();
         };
-      });
-
-      // Touch devices: hero stays pinned with CSS sticky (no JS, no lag)
-      media.add(TOUCH, () => {
-        content.current
-          .querySelectorAll("[data-section-underlay]")
-          .forEach((underlay) => {
-            gsap.set(underlay, { position: "sticky", top: 0, zIndex: 0 });
-          });
       });
 
       const onLoad = () => ScrollTrigger.refresh();

@@ -1,20 +1,14 @@
+"use client";
+import { useStorefront } from "./StorefrontProvider";
 import Image from "next/image";
 import Link from "next/link";
-import { productCutouts } from "../assets/cutouts";
 import { AddToCartButton } from "./cart/CartControls";
 import StripedBackground from "./StripedBackground";
 import ProductReveal from "./ProductReveal";
 
-const items = [
-  { id: "strawberry-milk-bottle", name: "Strawberry Milk", tone: "#EFD5BE" },
-  { id: "mango-milk-bottle", name: "Mango Milk", tone: "#F4EDBE" },
-  { id: "fresh-fruit-glass", name: "Fresh Fruit Glass", tone: "#F3ECE8" },
-  { id: "chicken-salad-bowl", name: "Chicken Salad Bowl", tone: "#F4EDBE" },
-  { id: "nut-and-nectar-cup", name: "Nut & Nectar Cup", tone: "#EFD5BE" },
-  { id: "nut-and-nectar-bucket", name: "Nut & Nectar Bucket", tone: "#F3ECE8" },
-];
-
 export default function SubMenu() {
+  const { products } = useStorefront();
+  const items = products.filter(p => p.featured);
   return (
     <section
       aria-labelledby="submenu-heading"
@@ -26,7 +20,7 @@ export default function SubMenu() {
           id="submenu-heading"
           className="mb-12 font-(family-name:--font-cormorant) text-burgundy text-4xl font-light leading-[1.15] md:mb-20 md:text-5xl lg:text-7xl text-center md:text-left"
         >
-          Our Little Favourites
+          Loved by our Customers
         </h2>
 
         <ul className="flex flex-col gap-12 md:gap-16 ">
@@ -40,13 +34,13 @@ export default function SubMenu() {
                   className="relative block aspect-[4/3] overflow-hidden rounded-[4px] bg-white border"
                 >
                   <ProductReveal className="absolute inset-0">
-                  <Image
-                    src={productCutouts[item.id]}
+                  {item.image ? <Image
+                    src={item.image}
                     alt={item.name}
                     fill
                     sizes="(max-width: 767px) calc(100vw - 48px), (max-width: 1175px) 40vw, 480px"
-                    className="object-contain p-6 md:p-8 transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
-                  />
+                    className={(item.imageFit === "contain" ? "object-contain p-6 md:p-8 " : "object-cover ") + "transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"}
+                  /> : <span className="flex h-full items-center justify-center text-sm">Photo coming soon</span>}
                   </ProductReveal>
                 </span>
               </Link>

@@ -2,7 +2,8 @@
 
 import { createContext, useCallback, useContext, useEffect, useState, useSyncExternalStore } from "react";
 import { cartStore } from "../../lib/cart-store";
-import { products } from "../../assets/products";
+import { useStorefront } from "../StorefrontProvider";
+import { resolveCart } from "../../lib/business";
 import CartToast from "./CartToast";
 import CartDrawer from "./CartDrawer";
 
@@ -13,21 +14,24 @@ export function useCart() {
 }
 
 export default function CartProvider({ children }) {
+  const { products, canOrder } = useStorefront();
   const items = useSyncExternalStore(cartStore.subscribe, cartStore.getSnapshot, cartStore.getServerSnapshot);
   const [open, setOpen] = useState(false);
   const [toast, setToast] = useState(null);
   const dismissToast = useCallback(() => setToast(null), []);
   useEffect(() => cartStore.initialize(), []);
+  useEffect(() => cartStore.setCatalog(products), [products]);
   const count = items.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <CartContext.Provider value={{
-      items, count, open,
+      items, count, open, lines: resolveCart(items, products),
       openCart: () => setOpen(true),
       closeCart: () => setOpen(false),
       addItem: (id, variant) => {
         const product = products.find(item => item.id === id);
-        if (!product) return;
+        if (!canOrder || !product || product.isAvailable === false) return;
+        cartStore.setCatalog(products);
         cartStore.add(id, variant);
         const option = product.variants?.find(item => item.id === variant);
         setToast({ name: `${product.name}${option ? ` (${option.label})` : ""}` });

@@ -1,4 +1,5 @@
 "use client";
+import BrandLogo from "./BrandLogo";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -149,7 +150,7 @@ export default function Navbar() {
   return (
     <>
       <header ref={navbar} data-navbar className="relative z-40 m-0 flex min-h-[74px] w-full flex-wrap items-center border-b border-[#4a2e1c24] bg-white text-cocoa [font-synthesis:none] md:min-h-[86px] md:flex-nowrap">
-        <Link href="/" aria-label="Mina Cafe home" onNavigate={closeForNavigation} className="flex min-h-[73px] min-w-[125px] flex-col items-center justify-center self-stretch border-r border-[#4a2e1c24] px-[14px] pb-[12px] pt-[10px] font-(family-name:--font-cormorant) text-3xl font-light leading-[0.9] md:min-w-[170px] md:px-[22px] md:pb-[15px] md:text-5xl">Mina</Link>
+        <Link href="/" aria-label="Mina Cafe home" onNavigate={closeForNavigation} className="flex min-h-[73px] min-w-[125px] flex-col items-center justify-center self-stretch border-r border-[#4a2e1c24] px-[14px] pb-[12px] pt-[10px] font-(family-name:--font-cormorant) text-3xl font-light leading-[0.9] md:min-w-[170px] md:px-[22px] md:pb-[15px] md:text-5xl"><BrandLogo className="h-12 w-25 md:h-14 md:w-30" /></Link>
         <nav aria-label="Main navigation" className="hidden items-center gap-8 px-9 md:flex">
           {sections.map(([href, label]) => <Link key={href} href={href} onNavigate={closeForNavigation} className="py-3 text-base uppercase hover:text-burgundy hover:underline hover:underline-offset-8">{label}</Link>)}
         </nav>

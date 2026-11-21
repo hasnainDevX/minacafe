@@ -9,6 +9,6 @@ export const products = [
   { id: "nut-and-nectar-mini-box", name: "Nut & Nectar Mini Box", category: "Nut & Nectar", price: 250, description: "Dry fruits coated with honey, in a compact mini box." },
   { id: "nut-and-nectar-cup", name: "Nut & Nectar Cup", category: "Nut & Nectar", price: 400, description: "Dry fruits coated with honey, served in a convenient cup." },
   { id: "nut-and-nectar-bucket", name: "Nut & Nectar Bucket", category: "Nut & Nectar", price: 1200, description: "A generous bucket of honey-coated dry fruits to enjoy together." },
-  { id: "kashmiri-chai", name: "Kashmiri Chai", category: "Chai", price: 100, description: "Rich, aromatic and perfectly spiced.", image: "/images/photography/kashmiri-chai-cups.webp", isNew: true, optionLabel: "Cup size", variants: [{ id: "small", label: "Small", price: 100 }, { id: "medium", label: "Medium", price: 200 }, { id: "large", label: "Large", price: 300 }] },
+  { id: "kashmiri-chai", name: "Kashmiri Chai", category: "Kashmiri Chai", price: 100, description: "Rich, aromatic and perfectly spiced.", image: "/images/photography/kashmiri-chai-cups.webp", isNew: true, optionLabel: "Cup size", variants: [{ id: "small", label: "Small", price: 100 }, { id: "medium", label: "Medium", price: 200 }, { id: "large", label: "Large", price: 300 }] },
 ];
-export const categories = ["Milk bottles", "Fruit & bowls", "Nut & Nectar", "Chai"];
+export const categories = ["Milk bottles", "Fruit & bowls", "Nut & Nectar", "Kashmiri Chai"];

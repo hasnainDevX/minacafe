@@ -1,7 +1,10 @@
+"use client";
+import { useStorefront } from "./StorefrontProvider";
 import Image from "next/image";
 import bgGrain from "../../public/images/textures/bggrain.png";
 
 export default function LocationIntro() {
+  const { settings } = useStorefront();
   return (
     <section
       aria-labelledby="location-heading"
@@ -75,12 +78,10 @@ export default function LocationIntro() {
             Find us
           </h2>
           <p className="mt-8 max-w-[520px] font-[family-name:var(--font-source-sans)] text-base leading-[1.7] md:text-lg">
-            From our little corner of North Nazimabad, every bottle, cup and
-            bowl is prepared by hand, fresh, hygienic and made with love. Come
-            say hello, or get in touch to ask about today&apos;s menu.
+            {settings.address}. Come say hello, or get in touch about today’s menu.
           </p>
           <a
-            href="https://www.instagram.com/mina.cafe_/"
+            href={settings.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center justify-center border bg-white border-[var(--mina-cocoa)] px-8 py-4 text-xs uppercase tracking-[0.2em] transition-colors hover:border-[var(--mina-burgundy)] hover:bg-[var(--mina-burgundy)] hover:text-[var(--mina-ivory)] motion-reduce:transition-none"
@@ -96,7 +97,7 @@ export default function LocationIntro() {
               allowFullScreen
               className="h-[180px] w-full border border-cocoa/20 sm:h-[200px]"
             />
-            <a href="https://maps.app.goo.gl/wjPkvrJnkTH7UC7KA" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-10 items-center text-sm underline underline-offset-4">Get directions ↗</a>
+            <a href={settings.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-10 items-center text-sm underline underline-offset-4">Get directions ↗</a>
           </div>
         </div>
       </div>

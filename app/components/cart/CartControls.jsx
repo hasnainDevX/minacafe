@@ -1,6 +1,7 @@
 "use client";
 
 import { useCart } from "./CartProvider";
+import { useStorefront } from "../StorefrontProvider";
 
 export function CartIcon({ className = "h-5 w-5" }) {
   return (
@@ -30,10 +31,13 @@ export function AddToCartButton({
   labelClassName = "",
 }) {
   const { addItem } = useCart();
+  const { products, canOrder, loading, error } = useStorefront();
+  const product = products.find(p => p.id === productId);
+  const disabled = !canOrder || !product || product.isAvailable === false;
   return (
-    <button type="button" aria-label={`Add ${productName} to cart`} onClick={() => { beforeAdd?.(); addItem(productId, variantId); }} className={className}>
+    <button type="button" disabled={disabled} aria-label={disabled ? `${productName}: unavailable` : `Add ${productName} to cart`} onClick={() => { beforeAdd?.(); addItem(productId, variantId); }} className={`${className} disabled:cursor-not-allowed disabled:opacity-50`}>
       <CartIcon className="md:h-4 md:w-4 h-3 w-3 shrink-0" />
-      <span className={labelClassName}>Add to Cart</span>
+      <span className={labelClassName}>{loading ? "Loading…" : error ? "Unavailable" : product?.isAvailable === false ? "Sold Out" : disabled ? "Unavailable" : "Add to Cart"}</span>
     </button>
   );
 }

@@ -17,7 +17,7 @@ export default function ContentReveals() {
         if (!state || state.done || !state.visible || document.querySelector('[data-mina-intro][data-state="loading"], dialog[open]')) return;
         state.done = true;
         observer.unobserve(el);
-        state.animation = el.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 800, easing: 'cubic-bezier(0.22,1,0.36,1)', fill: 'both' });
+        state.animation = el.animate([{ opacity: 0, filter: 'blur(5px)', transform: 'translateY(16px)' }, { opacity: 1, filter: 'blur(0px)', transform: 'translateY(0)' }], { duration: 800, easing: 'cubic-bezier(0.22,1,0.36,1)', fill: 'both' });
         state.animation.finished.then(() => { state.conceal.cancel(); state.animation.cancel(); }).catch(() => {});
       }
       const observer = new IntersectionObserver(entries => entries.forEach(entry => { const state = states.get(entry.target); if (state) state.visible = entry.isIntersecting; reveal(entry.target); }), { rootMargin: '0px 0px -40px 0px' });

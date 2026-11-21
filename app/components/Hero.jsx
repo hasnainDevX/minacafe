@@ -2,8 +2,9 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Navbar from "./Navbar";
+import { useStorefront } from "./StorefrontProvider";
 
-const slides = [
+const defaultSlides = [
   {
     src: "/images/photography/strawberry-milk-yellow-baskets.webp",
     name: "Strawberry Milk",
@@ -24,6 +25,8 @@ const SLIDE_DURATION = 6500;
 const WIPE = 1300; 
 
 export default function Hero() {
+  const { home } = useStorefront();
+  const slides = home.heroSlides?.length ? home.heroSlides : defaultSlides;
   const [active, setActive] = useState(0);
   const [previous, setPrevious] = useState(null);
   const [paused, setPaused] = useState(false);
@@ -70,7 +73,7 @@ export default function Hero() {
         remaining.current - (performance.now() - started),
       );
     };
-  }, [active, stopped, loaded]);
+  }, [active, stopped, loaded, slides.length]);
 
   function selectSlide(index) {
     if (index === active) return;
@@ -112,9 +115,6 @@ export default function Hero() {
         [data-paused="true"] .mina-motion,
         [data-paused="true"] img { animation-play-state: paused; }
 
-        @media (max-width: 767px) {
-          .mina-slide-active img, .mina-slide-leaving img { animation: none; }
-        }
         @media (prefers-reduced-motion: reduce) {
           .mina-slide-active, .mina-slide-active .mina-motion, .mina-slide-leaving .mina-motion,
           .mina-slide-active img, .mina-slide-leaving img,
@@ -174,20 +174,19 @@ export default function Hero() {
         <h1 className="mt-0 font-(family-name:--font-cormorant) text-[2.5rem] uppercase leading-[0.98] md:mt-28 md:text-7xl md:leading-[0.95]">
           <span className="block overflow-hidden pb-[0.1em]">
             <span className={`${reveal} [animation-delay:180ms]`}>
-              From my hands
+              {home.heroHeading || "From my hands"}
             </span>
           </span>
           <span className="-mt-[0.06em] block overflow-hidden pb-[0.1em]">
             <span className={`${reveal} [animation-delay:360ms]`}>
-              to your heart.
+              {home.heroHeading ? "" : "to your heart."}
             </span>
           </span>
         </h1>
 
         <div className="mina-fade-up flex max-w-[320px] flex-col items-center md:max-w-[360px] md:items-start md:self-end">
           <p className="font-[family-name:var(--font-source-sans)] text-sm leading-[1.5] md:text-base">
-            Fresh, hygienic and delicious treats made by hand in Karachi, every
-            cup and bottle, just for you.
+            {home.heroDescription || "Fresh, hygienic and delicious treats made by hand in Karachi, every cup and bottle, just for you."}
           </p>
           <div className="mt-5 flex w-full max-w-[260px] flex-col items-stretch gap-3 md:mt-5 md:w-auto md:max-w-none md:flex-row md:items-center md:gap-4">
             <a
@@ -197,9 +196,7 @@ export default function Hero() {
               View Menu
             </a>
             <a
-              href="https://www.instagram.com/mina.cafe_/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/menu"
               className="border border-white px-5 py-3 text-center text-xs uppercase tracking-[0.15em] transition-colors hover:bg-white hover:text-cocoa motion-reduce:transition-none md:py-2.5 md:text-sm"
             >
               Order Now

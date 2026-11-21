@@ -1,14 +1,19 @@
+"use client";
+import { useStorefront } from "./StorefrontProvider";
 import Image from "next/image";
 import Link from "next/link";
 import { productImages } from "../assets";
 
-const categories = [
+const defaults = [
   { name: "Milk bottles", image: "strawberry-milk-bottle", href: "/menu" },
   { name: "Fruit & bowls", image: "fresh-fruit-glass", href: "/menu" },
   { name: "Nut & Nectar", image: "nut-and-nectar-cup", href: "/menu" },
+  { name: "Kashmiri Chai", image: "kashmiri-chai", href: "/menu#kashmiri-chai" },
 ];
 
 export default function Categories() {
+  const { categories: catalogCategories, products } = useStorefront();
+  const categories = catalogCategories.length ? catalogCategories.map(c => ({...c, href: "/menu#category-" + c.id, photo: c.image || products.find(p => p.category === c.name)?.categoryImage || products.find(p => p.category === c.name)?.image })) : defaults;
   return (
     <section
       aria-labelledby="categories-heading"
@@ -31,13 +36,13 @@ export default function Categories() {
           </Link>
         </div>
 
-        <ul className="mt-8 grid grid-cols-1 gap-x-8 md:mt-10 lg:grid-cols-3">
+        <ul className="mt-8 grid grid-cols-1 gap-x-8 md:mt-10 lg:grid-cols-4">
           {categories.map((category) => (
             <li key={category.name}>
               <Link href={category.href} className="group flex items-center gap-5 border-t border-cocoa/20 py-5">
                 <span className="relative block h-24 w-24 shrink-0 overflow-hidden bg-peach md:h-28 md:w-28">
                   <Image
-                    src={productImages[category.image]}
+                    src={category.photo || productImages[category.image] || "/images/photography/kashmiri-chai-cups.webp"}
                     alt={category.name}
                     fill
                     sizes="(max-width: 767px) 96px, 112px"

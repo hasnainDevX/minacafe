@@ -4,7 +4,7 @@ const Marquee = ({
   children,
   speed = 15,
   direction = 'left',
-  pauseOnHover = true,
+  pauseOnHover = false,
   gap = 'gap-16',
   className = '',
   itemClassName = '',

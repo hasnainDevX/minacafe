@@ -64,7 +64,7 @@ export default function BulkSection() {
       {/* cloud edge: same background as the section, hanging into the footer */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-full z-10 h-[var(--r)] bg-[var(--mina-ivory)]"
+        className="hidden md:block pointer-events-none absolute inset-x-0 top-full z-10 h-[var(--r)] bg-[var(--mina-ivory)]"
         style={{
           "--r": "clamp(28px, 4.5vw, 62px)",
           WebkitMask:

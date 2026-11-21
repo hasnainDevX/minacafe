@@ -22,7 +22,7 @@ export default function Home() {
         </div>
         <div
           data-section-cover
-          className="relative z-10 min-h-[calc(100svh_+_var(--r))] bg-white"
+          className="relative z-10 md:min-h-[calc(100svh_+_var(--r))] bg-white"
         >
           <div
             aria-hidden="true"
@@ -41,7 +41,7 @@ export default function Home() {
             itemClassName="gap-10"
           >
             <span>★ Fresh daily</span>
-            <span>★ Karachi's favorite</span>
+            <span>★ Karachi&apos;s favorite</span>
             <span>★ 200+ happy customers</span>
           </Marquee>
           <SubMenu />
@@ -55,7 +55,7 @@ export default function Home() {
         itemClassName="gap-10 text-5xl md:text-7xl text-burgundy "
       >
         <span>★ Fresh daily</span>
-        <span>★ Karachi's favorite</span>
+        <span>★ Karachi&apos;s favorite</span>
         <span>★ 200+ happy customers</span>
       </Marquee>
       <LocationIntro />

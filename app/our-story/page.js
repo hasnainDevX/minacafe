@@ -18,9 +18,7 @@ export default function StoryPage() {
               From my hands to your heart.
             </h2>
             <p className="mt-6 max-w-[600px] text-base leading-[1.7] md:text-lg">
-              From our little corner of North Nazimabad, every bottle, cup and
-              bowl is prepared by hand. Come say hello and find your little
-              favourite.
+              Our journey began on 22 July, with a little stall in North Nazimabad and a challenge: 365 days of Mina, from stall to café. Every bottle, cup and bowl is prepared by hand. Come be part of our story.
             </p>
           </div>
           <div className="h-[50vh] w-full overflow-hidden rounded-lg">

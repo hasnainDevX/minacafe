@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
+import { useStorefront } from "./StorefrontProvider";
 
-const FORM_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID"; // replace with your endpoint
 
 export default function Footer() {
+  const { settings, refresh } = useStorefront();
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
 
   async function handleSubmit(event) {
@@ -11,16 +12,10 @@ export default function Footer() {
     const form = event.currentTarget;
     setStatus("sending");
     try {
-      const response = await fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(new FormData(form))),
-      });
-      if (!response.ok) throw new Error("Request failed");
-      form.reset();
+      const { settings: latest } = await refresh(true);
+      const data = new FormData(form);
+      const message = ["Hello Mina!", "Name: " + data.get("name"), "Phone: " + data.get("phone"), "", data.get("message")].join("\n");
+      window.location.assign("https://wa.me/" + latest.whatsappNumber.replace(/\D/g, "") + "?text=" + encodeURIComponent(message));
       setStatus("sent");
     } catch {
       setStatus("error");
@@ -39,7 +34,7 @@ export default function Footer() {
     >
       <div
         data-footer-content
-        className="flex flex-col justify-between bg-[var(--mina-burgundy)] px-6 pb-8 pt-[calc(var(--r)+3rem)] text-[var(--mina-ivory)] md:h-full md:px-16 md:pb-10 md:pt-[calc(var(--r)+4rem)]"
+        className="flex flex-col justify-between bg-[var(--mina-burgundy)] px-6 pb-8 pt-16 text-[var(--mina-ivory)] md:h-full md:px-16 md:pb-10 md:pt-[calc(var(--r)+4rem)]"
       >
         <div className="mx-auto grid w-full max-w-[1300px] gap-10 md:grid-cols-2 md:gap-24">
           <div>
@@ -56,7 +51,7 @@ export default function Footer() {
               reply as soon as we can.
             </p>
             <a
-              href="https://www.instagram.com/mina.cafe_/"
+              href={settings.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 inline-block text-xs uppercase tracking-[0.15em] underline underline-offset-[6px] hover:text-[var(--mina-butter,#F4EDBE)]"
@@ -79,16 +74,16 @@ export default function Footer() {
               className={field}
             />
 
-            <label className="sr-only" htmlFor="contact-email">
-              Email
+            <label className="sr-only" htmlFor="contact-phone">
+              Phone number
             </label>
             <input
-              id="contact-email"
-              name="email"
-              type="email"
+              id="contact-phone"
+              name="phone"
+              type="tel"
               required
-              placeholder="Email"
-              autoComplete="email"
+              placeholder="Phone number"
+              autoComplete="tel"
               className={field}
             />
 
@@ -110,10 +105,10 @@ export default function Footer() {
                 disabled={status === "sending"}
                 className="cursor-pointer border border-butter bg-white px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-burgundy transition-colors hover:bg-butter disabled:opacity-60 motion-reduce:transition-none"
               >
-                {status === "sending" ? "Sending..." : "Send message"}
+                {status === "sending" ? "Sending..." : "Continue on WhatsApp"}
               </button>
               <p role="status" aria-live="polite" className="text-sm">
-                {status === "sent" && "Thank you, we'll be in touch."}
+                {status === "sent" && "Send the draft in WhatsApp to contact Mina."}
                 {status === "error" &&
                   "Something went wrong. Please try again."}
               </p>

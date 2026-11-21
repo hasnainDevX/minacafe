@@ -1,14 +1,15 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { products } from "../../assets/products";
-import { whatsappNumber } from "../../config/contact";
+import { useStorefront } from "../StorefrontProvider";
 
 const input = "mt-2 block min-h-12 w-full rounded-none border-0 border-b border-cocoa/25 bg-transparent px-0 py-3 text-base text-cocoa outline-none focus:border-burgundy";
 const label = "block text-base leading-[1.7] text-cocoa";
 const localToday = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Karachi", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
 
 export default function BulkOrderForm() {
+  const { products, settings } = useStorefront();
+  const whatsappNumber = settings.whatsappNumber.replace(/\D/g, "");
   const form = useRef(null);
   const review = useRef(null);
   const [enquiry, setEnquiry] = useState("");
