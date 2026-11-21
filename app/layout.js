@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { pageMetadata } from "./lib/seo";
 import "./globals.css";
 import StorefrontProvider from "./components/StorefrontProvider";
 import SiteExperience from "./components/SiteExperience";
@@ -25,10 +26,10 @@ const sourceSans = localFont({
   display: "swap",
 });
 
-export const metadata = {
-  title: "Mina Cafe",
-  description: "From my hands to your heart.",
-};
+export const metadata = pageMetadata(
+  "Mina Café | Fresh Treats in North Nazimabad, Karachi",
+  "Discover Mina Café in North Nazimabad, Karachi. Explore fresh fruit glasses, milk bottles, chicken salad bowls and Kashmiri chai, and order on WhatsApp.",
+);
 
 export default function RootLayout({ children }) {
   return (

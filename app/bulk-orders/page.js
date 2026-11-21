@@ -1,10 +1,11 @@
+import { pageMetadata } from "../lib/seo";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
 import BulkOrderForm from "../components/bulk-orders/BulkOrderForm";
 import Footer from "../components/Footer";
 import FAQ from "../components/FAQ";
 
-export const metadata = { title: "Bulk Orders | Mina Cafe", description: "Enquire about Mina bulk orders for your event, team or gathering." };
+export const metadata = pageMetadata("Bulk Orders | Mina Café Karachi", "Plan Mina Café treats for your team, gathering or event. Share your date, guest count and favourite products to enquire about a bulk order.", "/bulk-orders");
 
 export default function BulkOrdersPage() {
   return (

@@ -1,8 +1,10 @@
+import { pageMetadata } from "../lib/seo";
 import Footer from "../components/Footer";
+import InstagramFeed from "../components/InstagramFeed";
 import Navbar from "../components/Navbar";
 import PageTestimonials from "../components/PageTestimonials";
 
-export const metadata = { title: "Our Story | Mina Cafe" };
+export const metadata = pageMetadata("Our Story | Mina Café Karachi", "Discover 365 days of Mina: a journey from a little stall in North Nazimabad to a café, with handmade treats and a personal touch.", "/our-story");
 
 export default function StoryPage() {
   return (
@@ -33,6 +35,7 @@ export default function StoryPage() {
           </div>
         </div>
       </main>
+      <InstagramFeed />
       <PageTestimonials />
       <Footer />
     </div>

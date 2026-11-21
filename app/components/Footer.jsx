@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import BrandIllustration from "./BrandIllustration";
 import { useStorefront } from "./StorefrontProvider";
 
 
@@ -58,6 +59,7 @@ export default function Footer() {
             >
               Message @mina.cafe_ on Instagram
             </a>
+            <BrandIllustration className="pointer-events-none mt-6 h-auto w-28 select-none opacity-20 md:w-36" />
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">

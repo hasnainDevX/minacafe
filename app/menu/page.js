@@ -1,3 +1,4 @@
+import { pageMetadata } from "../lib/seo";
 import Image from "next/image";
 import bgGrain from "../../public/images/textures/bggrain.png";
 import MenuCatalog from "../components/MenuCatalog";
@@ -7,7 +8,7 @@ import FAQ from "../components/FAQ";
 import PageTestimonials from "../components/PageTestimonials";
 import { OrderingNotice } from "../components/StorefrontProvider";
 
-export const metadata = { title: "Our Menu | Mina Cafe" };
+export const metadata = pageMetadata("Our Menu | Mina Café Karachi", "Explore Mina Café’s menu: milk bottles, fresh fruit glasses, chicken salad bowls, Nut & Nectar and Kashmiri chai. Choose your favourites and order on WhatsApp.", "/menu");
 
 export default function MenuPage() {
   return (

@@ -173,7 +173,8 @@ export default function CheckoutForm() {
               <label>
                 Delivery address
                 <textarea
-                  className={input}
+                  className={`${input} [&::-webkit-scrollbar]:hidden`}
+                  style={{ scrollbarWidth: "none" }}
                   name="address"
                   autoComplete="street-address"
                   rows={2}

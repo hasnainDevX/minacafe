@@ -183,7 +183,7 @@ export default function WelcomeExperience() {
         data-state="loading"
         role="status"
         aria-label="Loading Mina"
-        className="fixed inset-0 z-[1000] flex isolate flex-col items-center justify-center gap-3 overflow-hidden bg-white text-cocoa [--stripe-bg:#ffffff] [--stripe-color:#efd5be]"
+        className="fixed inset-0 z-[1000] flex isolate flex-col items-center justify-center gap-3 overflow-hidden bg-white text-cocoa [--stripe-bg:#ffffff] [--stripe-color:color-mix(in_srgb,var(--mina-peach)_50%,transparent)]"
       >
         <StripedBackground />
         <BrandIllustration className="h-auto w-20 shrink-0 md:w-24" />
@@ -235,7 +235,7 @@ export default function WelcomeExperience() {
           type="button"
           onClick={closePopup}
           aria-label="Close launch announcement"
-          className="absolute right-3 top-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-sm text-xl border"
+          className="absolute right-3 top-3 z-10 flex h-11 w-11 cursor-pointer items-center justify-center rounded-sm bg-white text-xl border"
         >
           ×
         </button>

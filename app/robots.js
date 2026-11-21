@@ -1,1 +1,5 @@
-export default function robots(){return {rules:{userAgent:"*",allow:"/",disallow:["/dashboard","/checkout","/api/"]}};}
+import { publicSiteUrl } from './lib/seo';
+export default function robots() {
+  const origin = publicSiteUrl();
+  return { rules: { userAgent: '*', allow: '/', disallow: ['/dashboard', '/checkout', '/api/'] }, ...(origin ? { sitemap: new URL('/sitemap.xml', origin).href } : {}) };
+}

@@ -1,1 +1,6 @@
-export default function sitemap(){const base=process.env.SITE_URL;if(!base || base.includes("localhost"))return [];return ["/","/menu","/our-story","/find-us","/bulk-orders"].map(path=>({url:new URL(path,base).href}));}
+import { publicSiteUrl } from './lib/seo';
+export default function sitemap() {
+  const origin = publicSiteUrl();
+  if (!origin) return [];
+  return ['/', '/menu', '/our-story', '/find-us', '/bulk-orders'].map(path => ({ url: new URL(path, origin).href }));
+}
