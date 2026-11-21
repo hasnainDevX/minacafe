@@ -7,7 +7,6 @@ import Testimonials from "./components/Testimonials";
 import Bulksection from "./components/Bulksection";
 import Footer from "./components/Footer";
 import Marquee from "./components/Marquee";
-import FAQ from "./components/FAQ";
 
 export default function Home() {
   return (
@@ -60,7 +59,6 @@ export default function Home() {
       </Marquee>
       <LocationIntro />
       <Testimonials />
-      <FAQ />
       <Bulksection />
       <Footer />
     </main>

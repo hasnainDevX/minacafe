@@ -1,31 +1,36 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { useCart } from "./CartProvider";
-import { CartIcon } from "./CartControls";
 import { cartItemKey } from "../../lib/cart-store";
-import { OrderingNotice, useStorefront } from "../StorefrontProvider";
+import { useStorefront } from "../StorefrontProvider";
+import { CartIcon } from "./CartControls";
+import { useCart } from "./CartProvider";
 
 export default function CartDrawer() {
-  const { items, lines, count, open, closeCart, setQuantity, removeItem } = useCart();
+  const { items, lines, count, open, closeCart, setQuantity, removeItem } =
+    useCart();
   const { canOrder } = useStorefront();
-  const valid = lines.length > 0 && lines.every(line => line.available);
+  const valid = lines.length > 0 && lines.every((line) => line.available);
   const total = lines.reduce((sum, line) => sum + line.subtotal, 0);
   const dialog = useRef(null);
   const restore = useRef(null);
 
   useEffect(() => {
     const panel = dialog.current;
-    const duration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 300;
+    const duration = window.matchMedia("(prefers-reduced-motion: reduce)")
+      .matches
+      ? 0
+      : 300;
     let animation;
     if (open) {
       if (!panel.open) {
         const trigger = document.activeElement;
         const { overflow, paddingRight } = document.body.style;
-        const scrollbar = window.innerWidth - document.documentElement.clientWidth;
-        const padding = parseFloat(getComputedStyle(document.body).paddingRight) || 0;
+        const scrollbar =
+          window.innerWidth - document.documentElement.clientWidth;
+        const padding =
+          parseFloat(getComputedStyle(document.body).paddingRight) || 0;
         document.body.style.paddingRight = `${padding + scrollbar}px`;
         document.body.style.overflow = "hidden";
         const smoother = window.smoother;
@@ -35,74 +40,207 @@ export default function CartDrawer() {
           document.body.style.overflow = overflow;
           document.body.style.paddingRight = paddingRight;
           smoother?.paused(wasPaused || false);
-          const target = trigger?.isConnected && trigger.getClientRects().length ? trigger : document.querySelector("[data-cart-trigger]");
+          const target =
+            trigger?.isConnected && trigger.getClientRects().length
+              ? trigger
+              : document.querySelector("[data-cart-trigger]");
           target?.focus({ preventScroll: true });
         };
         panel.showModal();
       }
-      animation = panel.animate([{ transform: "translateX(100%)" }, { transform: "translateX(0)" }], { duration, easing: "cubic-bezier(0.22, 1, 0.36, 1)" });
+      animation = panel.animate(
+        [{ transform: "translateX(100%)" }, { transform: "translateX(0)" }],
+        { duration, easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
+      );
     } else if (panel.open) {
-      animation = panel.animate([{ transform: "translateX(0)" }, { transform: "translateX(100%)" }], { duration, easing: "ease-in", fill: "forwards" });
-      animation.finished.then(() => {
-        panel.close();
-        restore.current?.();
-        restore.current = null;
-      }).catch(() => {});
+      animation = panel.animate(
+        [{ transform: "translateX(0)" }, { transform: "translateX(100%)" }],
+        { duration, easing: "ease-in", fill: "forwards" },
+      );
+      animation.finished
+        .then(() => {
+          panel.close();
+          restore.current?.();
+          restore.current = null;
+        })
+        .catch(() => {});
     }
     return () => animation?.cancel();
   }, [open]);
 
-  useEffect(() => () => { restore.current?.(); }, []);
+  useEffect(
+    () => () => {
+      restore.current?.();
+    },
+    [],
+  );
 
   return (
-    <dialog ref={dialog} id="mina-cart" aria-labelledby="cart-heading" onCancel={(event) => { event.preventDefault(); closeCart(); }} onClick={(event) => { if (event.target === event.currentTarget && event.clientX < event.currentTarget.getBoundingClientRect().left) closeCart(); }} className="fixed inset-y-0 left-auto right-0 m-0 h-dvh max-h-none w-full max-w-[460px] flex-col border-0 border-l border-cocoa/20 bg-ivory bg-[url('/images/textures/bggrain.png')] bg-cover bg-center bg-no-repeat p-0 text-cocoa shadow-xl backdrop:bg-black/40 open:flex">
-      <div className="absolute inset-0 bg-butter/40">
-      <div className="flex items-center justify-between gap-4 border-b border-cocoa/20 px-6 py-6 md:px-8 ">
-        <h2 id="cart-heading" className="font-(family-name:--font-cormorant) text-4xl font-light">Your cart <span className="text-2xl">({count})</span></h2>
-        <button type="button" onClick={closeCart} aria-label="Close cart" className="flex h-11 w-11 cursor-pointer items-center justify-center hover:text-burgundy">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19" /></svg>
-        </button>
-      </div>
-      <div style={{ scrollbarWidth: "none" }} className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain px-6 md:px-8">
-        {/* <OrderingNotice /> */}
-        {items.length === 0 ? (
-          <div className="flex min-h-80 flex-col items-center justify-center gap-5 py-16 text-center">
-            <CartIcon className="h-10 w-10" />
-            <p className="font-(family-name:--font-cormorant) text-3xl font-light">A little room for your favourites.</p>
-            <p className="text-sm">Your cart is empty.</p>
-            <Link href="/menu" onNavigate={closeCart} className="border border-burgundy bg-burgundy px-6 py-3 text-xs uppercase tracking-widest text-white">Explore our menu</Link>
-          </div>
-        ) : (
-          <ul className="divide-y divide-cocoa/20">
-            {lines.map((item) => {
-              const product = item.product || { name: "Removed product" };
-              const variant = item.variantInfo;
-              const key = cartItemKey(item);
-              const itemLabel = `${product.name}${variant ? ` — ${variant.label}` : ""}`;
-              return (
-                <li key={key} className="flex gap-4 py-6">
-                  <div className="relative h-24 w-24 shrink-0 bg-white">{product.image && <Image src={product.image} alt={product.name} fill sizes="96px" className={product.imageFit === "contain" ? "object-contain p-2" : "object-cover"} />}</div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-base">{product.name}</h3>
-                    <p className="mt-1 text-xs text-cocoa/70">{item.issue || `${variant ? `${variant.label} · ` : ""}Rs. ${item.price.toLocaleString("en-PK")} each · Rs. ${item.subtotal.toLocaleString("en-PK")}`}</p>
-                    <div className="mt-3 inline-flex items-center border border-cocoa/30">
-                      <button type="button" aria-label={`Decrease ${itemLabel} quantity`} onClick={() => setQuantity(key, item.quantity - 1)} className="h-11 w-11 cursor-pointer hover:bg-peach">−</button>
-                      <span className="min-w-7 text-center text-sm" aria-label={`Quantity ${item.quantity}`}>{item.quantity}</span>
-                      <button type="button" aria-label={`Increase ${itemLabel} quantity`} disabled={item.quantity >= 99 || !item.available || !canOrder} onClick={() => setQuantity(key, item.quantity + 1)} className="h-11 w-11 cursor-pointer hover:bg-peach disabled:cursor-default disabled:opacity-40">+</button>
+    <dialog
+      ref={dialog}
+      id="mina-cart"
+      aria-labelledby="cart-heading"
+      onCancel={(event) => {
+        event.preventDefault();
+        closeCart();
+      }}
+      onClick={(event) => {
+        if (
+          event.target === event.currentTarget &&
+          event.clientX < event.currentTarget.getBoundingClientRect().left
+        )
+          closeCart();
+      }}
+      className="fixed inset-y-0 left-auto right-0 m-0 h-dvh max-h-none w-full max-w-[460px] flex-col border-0 border-l border-cocoa/20 bg-ivory bg-[url('/images/textures/bggrain.png')] bg-cover bg-center bg-no-repeat p-0 text-cocoa shadow-xl backdrop:bg-black/40 open:flex"
+    >
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-butter/40">
+        <div className="flex items-center justify-between gap-4 border-b border-cocoa/20 px-6 py-6 md:px-8 ">
+          <h2
+            id="cart-heading"
+            className="font-(family-name:--font-cormorant) text-4xl font-light"
+          >
+            Your cart <span className="text-2xl">({count})</span>
+          </h2>
+          <button
+            type="button"
+            onClick={closeCart}
+            aria-label="Close cart"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center hover:text-burgundy"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.3"
+              aria-hidden="true"
+            >
+              <path d="m5 5 14 14M19 5 5 19" />
+            </svg>
+          </button>
+        </div>
+        <div
+          className="min-h-0 flex-1 overflow-y-auto px-6 md:px-8"
+        >
+          {items.length === 0 ? (
+            <div className="flex min-h-80 flex-col items-center justify-center gap-5 py-16 text-center">
+              <CartIcon className="h-10 w-10" />
+              <p className="font-(family-name:--font-cormorant) text-3xl font-light">
+                A little room for your favourites.
+              </p>
+              <p className="text-sm">Your cart is empty.</p>
+              <Link
+                href="/menu"
+                onNavigate={closeCart}
+                className="border border-burgundy bg-burgundy px-6 py-3 text-xs uppercase tracking-widest text-white"
+              >
+                Explore our menu
+              </Link>
+            </div>
+          ) : (
+            <ul className="divide-y divide-cocoa/20">
+              {lines.map((item) => {
+                const product = item.product || { name: "Removed product" };
+                const variant = item.variantInfo;
+                const key = cartItemKey(item);
+                const itemLabel = `${product.name}${variant ? ` — ${variant.label}` : ""}`;
+                return (
+                  <li key={key} className="flex gap-4 py-6">
+                    <div className="relative h-24 w-24 shrink-0 bg-white">
+                      {product.image && (
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          sizes="96px"
+                          className={
+                            product.imageFit === "contain"
+                              ? "object-contain p-2"
+                              : "object-cover"
+                          }
+                        />
+                      )}
                     </div>
-                    <button type="button" aria-label={`Remove ${itemLabel} from cart`} onClick={() => removeItem(key)} className="mt-2 block min-h-8 cursor-pointer text-xs underline underline-offset-4 hover:text-burgundy">Remove</button>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
-      <div className="border-t border-cocoa/20 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-5 md:px-8">
-        <p role="status" className="mb-4 text-sm">{count} {count === 1 ? "item" : "items"} in your cart</p>
-        <p className="mb-4 flex justify-between text-lg"><span>Food total</span><span>Rs. {total.toLocaleString("en-PK")}</span></p>
-        {canOrder && valid ? <Link href="/checkout" onNavigate={closeCart} className="block w-full cursor-pointer border border-burgundy bg-burgundy px-6 py-4 text-center text-xs uppercase tracking-[0.15em] text-white hover:bg-burgundy/95">Checkout</Link> : <button disabled className="w-full bg-burgundy px-6 py-4 text-sm text-white opacity-50">{!valid && items.length ? "Remove unavailable items to continue" : "Checkout unavailable"}</button>}
-      </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-base">{product.name}</h3>
+                      <p className="mt-1 text-xs text-cocoa/70">
+                        {item.issue ||
+                          `${variant ? `${variant.label} · ` : ""}Rs. ${item.price.toLocaleString("en-PK")} each · Rs. ${item.subtotal.toLocaleString("en-PK")}`}
+                      </p>
+                      <div className="mt-3 flex items-center gap-3">
+                        <div className="inline-flex items-center border border-cocoa/30">
+                          <button
+                            type="button"
+                            aria-label={`Decrease ${itemLabel} quantity`}
+                            onClick={() => setQuantity(key, item.quantity - 1)}
+                            className="h-8 w-8 cursor-pointer hover:bg-peach"
+                          >
+                            −
+                          </button>
+                          <span
+                            className="min-w-6 text-center text-sm"
+                            aria-label={`Quantity ${item.quantity}`}
+                          >
+                            {item.quantity}
+                          </span>
+                          <button
+                            type="button"
+                            aria-label={`Increase ${itemLabel} quantity`}
+                            disabled={
+                              item.quantity >= 99 ||
+                              !item.available ||
+                              !canOrder
+                            }
+                            onClick={() => setQuantity(key, item.quantity + 1)}
+                            className="h-8 w-8 cursor-pointer hover:bg-peach disabled:cursor-default disabled:opacity-40"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          aria-label={`Remove ${itemLabel} from cart`}
+                          onClick={() => removeItem(key)}
+                          className="cursor-pointer text-xs underline underline-offset-4 hover:text-burgundy"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+        <div className="border-t border-cocoa/20 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-5 md:px-8">
+          <p role="status" className="mb-4 text-sm">
+            {count} {count === 1 ? "item" : "items"} in your cart
+          </p>
+          <p className="mb-4 flex justify-between text-lg">
+            <span>Food total</span>
+            <span>Rs. {total.toLocaleString("en-PK")}</span>
+          </p>
+          {canOrder && valid ? (
+            <Link
+              href="/checkout"
+              onNavigate={closeCart}
+              className="block w-full cursor-pointer border border-burgundy bg-burgundy px-6 py-4 text-center text-xs uppercase tracking-[0.15em] text-white hover:bg-burgundy/95"
+            >
+              Checkout
+            </Link>
+          ) : (
+            <button
+              disabled
+              className="w-full bg-burgundy px-6 py-4 text-sm text-white opacity-50"
+            >
+              {!valid && items.length
+                ? "Remove unavailable items to continue"
+                : "Checkout unavailable"}
+            </button>
+          )}
+        </div>
       </div>
     </dialog>
   );

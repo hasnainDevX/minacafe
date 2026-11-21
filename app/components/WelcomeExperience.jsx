@@ -8,7 +8,6 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StripedBackground from "./StripedBackground";
 import { useStorefront } from "./StorefrontProvider";
-import BrandLogo from "./BrandLogo";
 
 const INTRO_KEY = "mina-intro-seen-v1";
 
@@ -29,15 +28,18 @@ export default function WelcomeExperience() {
   const pathname = usePathname();
   const { products } = useStorefront();
   const chai = products.find((product) => product.id === "kashmiri-chai");
-  const initialPath = useRef(pathname);
-  const navigated = useRef(false);
+
   const overlay = useRef(null);
   const wordmark = useRef(null);
-  const hasChai = Boolean(chai);
-  const introPlayed = useRef(false);
   const popup = useRef(null);
   const popupShown = useRef(false);
+  const introPlayed = useRef(false);
   const releaseLock = useRef(null);
+
+  // The popup needs to know whether chai exists, but the intro must not
+  // restart when products load, so this is read from a ref, not a dependency.
+  const hasChaiRef = useRef(false);
+  hasChaiRef.current = Boolean(chai);
 
   function closePopup() {
     popup.current?.close();
@@ -48,19 +50,15 @@ export default function WelcomeExperience() {
   }
 
   useEffect(() => {
-    if (pathname !== initialPath.current) navigated.current = true;
     const loader = overlay.current;
     const modal = popup.current;
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    const showIntro =
-      !introPlayed.current &&
-      ((!navigated.current &&
-        initialPath.current === "/" &&
-        pathname === "/") ||
-        !readSession(INTRO_KEY));
-    const eligiblePopup = hasChai && (pathname === "/" || pathname === "/menu");
+
+    // Intro plays once per browser session.
+    const showIntro = !introPlayed.current && !readSession(INTRO_KEY);
+
     const timers = new Set();
     let disposed = false;
     let timeline;
@@ -97,7 +95,9 @@ export default function WelcomeExperience() {
     }
 
     function maybeOpenPopup() {
-      if (!eligiblePopup || popupShown.current) return;
+      const eligible =
+        hasChaiRef.current && (pathname === "/" || pathname === "/menu");
+      if (!eligible || popupShown.current) return;
       // Wait if the visitor is already using the cart or navigation.
       if (
         document.querySelector("dialog[open]") ||
@@ -172,7 +172,7 @@ export default function WelcomeExperience() {
       releaseLock.current?.();
       releaseLock.current = null;
     };
-  }, [pathname, hasChai]);
+  }, [pathname]);
 
   return (
     <>
@@ -188,7 +188,7 @@ export default function WelcomeExperience() {
         <span
           ref={wordmark}
           aria-hidden="true"
-          className="block origin-center font-(family-name:--font-cormorant) text-[clamp(7rem,23vw,20rem)] font-light leading-none text-burgundy tracking-[-0.055em] will-change-transform"
+          className="block origin-center font-(family-name:--font-cormorant) text-[clamp(7rem,23vw,20rem)] font-light leading-none text-cocoa tracking-[-0.055em] will-change-transform"
           style={{ transform: "scale(0.42)" }}
         >
           m

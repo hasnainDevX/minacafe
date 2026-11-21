@@ -40,7 +40,7 @@ export default function StorefrontProvider({ children }) {
 
 export function OrderingNotice() {
   const { loading, error, orderingReady, status, refresh } = useStorefront();
-  return <div className="my-6 border rounded-full p-4 border-cocoa text-lg" role="status">
+  return <div className="my-6 md:text-lg text-sm" role="status">
     {loading ? "Loading today’s menu…" : error || (!orderingReady ? "Our menu is being updated. Please check back shortly." : status.message)}
     {error && <button className="ml-3 cursor-pointer underline" onClick={() => refresh(true).catch(() => {})}>Try again</button>}
   </div>;
