@@ -2,19 +2,19 @@
   {
     "original": "Fruit-Glass-1.jfif.jpeg",
     "destination": "public/images/products/fresh-fruit-glass.jpg",
-    "status": "ai-placeholder",
+    "status": "removed-unused-ai-placeholder",
     "sha256": "794FED7178AD4BEE64A38B4E2C04F27A6213F772965ABEB15253D1CF619F1B78"
   },
   {
     "original": "creamy-4.jfif.jpeg",
     "destination": "public/images/products/creamy-milk-bottle.jpg",
-    "status": "ai-placeholder",
+    "status": "removed-unused-ai-placeholder",
     "sha256": "51395517609F950326070F0A12598E78A1681270B2594C32ECA5A10BEA5B5016"
   },
   {
     "original": "strawberry-2.jfif.jpeg",
     "destination": "public/images/products/strawberry-milk-bottle.jpg",
-    "status": "ai-placeholder",
+    "status": "removed-unused-ai-placeholder",
     "sha256": "E5168F34A0118EFFC3B70ABC791541EC3C5B6042D3C9DF18B19DAC395D4B93F1"
   },
   {
@@ -26,19 +26,19 @@
   {
     "original": "mango.jfif.jpeg",
     "destination": "public/images/products/mango-milk-bottle.jpg",
-    "status": "ai-placeholder",
+    "status": "removed-unused-ai-placeholder",
     "sha256": "BC1E35B8E0FF9588CE5BDC133E4B530CCD82D2CBF039BA7ED134C1F66521E1F8"
   },
   {
     "original": "mini.jpg.jpeg",
     "destination": "public/images/products/nut-and-nectar-mini-box.jpg",
-    "status": "ai-placeholder",
+    "status": "removed-unused-ai-placeholder",
     "sha256": "24E6753C3029B77FC0598305332A6028956E6FAE8E25743DE7926CFC9DF5080D"
   },
   {
     "original": "cup.jpg.jpeg",
     "destination": "public/images/products/nut-and-nectar-cup.jpg",
-    "status": "ai-placeholder",
+    "status": "removed-unused-ai-placeholder",
     "sha256": "DB15DBC24B0A703EB6DB0F373005A09B3095206C3E70E1D1BC1AE6FE3CF0A5C9"
   },
   {
@@ -50,7 +50,7 @@
   {
     "original": "salad%20ai.jpg.jpeg",
     "destination": "public/images/products/chicken-salad-bowl.jpg",
-    "status": "ai-placeholder",
+    "status": "removed-unused-ai-placeholder",
     "sha256": "1C1A47B53D661EA47483A73D32C5BFA55C43B22A5F23AC630E44CC6E5F433C73"
   },
   {

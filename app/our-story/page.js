@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { pageMetadata } from "../lib/seo";
 import Footer from "../components/Footer";
 import InstagramFeed from "../components/InstagramFeed";
@@ -13,6 +14,7 @@ export default function StoryPage() {
       <main className="mx-auto w-full max-w-[1300px] px-6 py-18 md:px-12 md:py-24 lg:py-32">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
+            <Image src="/images/brand/mina-cup-fruit-outline.png" alt="" aria-hidden="true" width={1312} height={1199} sizes="128px" className="mb-6 h-auto w-24 opacity-80 md:w-32" />
             <h1 className="font-(family-name:--font-cormorant) text-5xl font-light md:text-7xl">
               Our story
             </h1>

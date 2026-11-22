@@ -1,7 +1,7 @@
 // Set SITE_URL to the final public origin when deploying.
 export function publicSiteUrl() {
   try {
-    const url = new URL(process.env.SITE_URL);
+    const url = new URL(process.env.SITE_URL || "https://minacafe.online");
     if (!['https:', 'http:'].includes(url.protocol) || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(url.hostname)) return null;
     return url.origin;
   } catch { return null; }

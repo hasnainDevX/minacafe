@@ -15,7 +15,7 @@ Tailwind tokens: bg-ivory, bg-butter, bg-peach, bg-cocoa, bg-burgundy, text-ink,
 - Preview uses Cormorant Light (300), loaded through the Google Fonts stylesheet, for headings and local Source Sans Pro (300/400/600) for body text. Romie files are preserved but unused.
 
 ## Asset folders
-- public/images/products/: nine old-site AI placeholder images. Not verified photographs.
+- public/images/products/: two old-site AI placeholder JPGs still referenced (chocolate milk and nut-and-nectar bucket), plus preserved product cutouts. Seven unused AI JPGs were removed; manifest entries retain their provenance.
 - public/images/brand/: existing Mina logo.
 - public/images/textures/: supplied paper references plus original SVG grain used by CSS.
 - public/images/decorations/: supplied paper frames and tape.
@@ -30,4 +30,4 @@ Replace the relevant public/images/products file with the real photograph using 
 name/extension, or change its single entry in app/assets/index.js if the format changes.
 Update manifest status to real-photo once replaced. Do not label AI placeholders as real photos.
 Use consented original images for the final launch. Keep source/licence records for supplied
-decorative references. No asset was deleted or recompressed during organization.
+decorative references. Real owner photography, original logo and menu/submenu PNG cutouts are preserved.

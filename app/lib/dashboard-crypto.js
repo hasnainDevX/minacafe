@@ -1,7 +1,7 @@
 import { SignJWT, jwtVerify } from "jose";
 const encoder = new TextEncoder();
 export const SESSION_SECONDS = 8 * 60 * 60;
-export function authConfigured() { return Boolean(process.env.DASHBOARD_PASSWORD?.length >= 12 && process.env.DASHBOARD_SESSION_SECRET?.length >= 32); }
+export function authConfigured() { return Boolean(process.env.DASHBOARD_PASSWORD?.length >= 8 && process.env.DASHBOARD_SESSION_SECRET?.length >= 32); }
 function key() { if (!authConfigured()) throw new Error("Dashboard access has not been configured."); return encoder.encode(process.env.DASHBOARD_SESSION_SECRET); }
 export async function passwordMatches(password) {
  if (!authConfigured() || typeof password !== "string" || password.length > 256) return false;

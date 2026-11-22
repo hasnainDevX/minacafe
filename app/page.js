@@ -1,3 +1,4 @@
+import LocalBusinessData from "./components/LocalBusinessData";
 import Hero from "./components/Hero";
 import LocationIntro from "./components/LocationIntro";
 import Categories from "./components/Categories";
@@ -11,6 +12,7 @@ import Marquee from "./components/Marquee";
 export default function Home() {
   return (
     <main className="mina-home">
+      <LocalBusinessData />
       <div
         data-section-stack
         className="relative"

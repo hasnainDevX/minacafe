@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import bgGrain from "../../public/images/textures/bggrain.png";
-import sectionbg from "../../public/images/textures/site-background.png";
 
 export default function BulkSection() {
   return (
@@ -43,6 +42,7 @@ export default function BulkSection() {
           className="absolute right-4 top-4 h-2 w-2 rounded-full bg-[var(--mina-burgundy)]"
         />
 
+        <Image src="/images/brand/mina-fruit-glass-outline-tilted.png" alt="" aria-hidden="true" width={1254} height={1254} sizes="96px" className="mx-auto mb-5 h-auto w-20 opacity-80 md:w-24" />
         <h2
           id="bulk-heading"
           className="font-(family-name:--font-cormorant) text-4xl font-light leading-[1.15] md:text-5xl"
