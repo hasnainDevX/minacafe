@@ -34,3 +34,26 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Cloudflare Workers deployment
+
+Mina uses server-side dashboard authentication and Sanity settings endpoints. Deploy the Worker; do not use Seri's static out export configuration.
+
+Cloudflare Workers Builds settings:
+- Worker name: minacafe
+- Build command: npm run build:cloudflare
+- Deploy command: npm run deploy:cloudflare
+- Root directory: repository root
+- Node.js: 22 or newer
+
+Add these encrypted **runtime Secrets** in Workers > minacafe > Settings > Variables and Secrets: DASHBOARD_PASSWORD, DASHBOARD_SESSION_SECRET (32+ characters), SANITY_API_WRITE_TOKEN. Keep their existing local values; do not put them in Wrangler or Git. Build variables alone do not configure runtime secrets.
+
+Wrangler includes the public SITE_URL, Sanity project/dataset, and MINA_CLOUDFLARE flag. For login through a workers.dev preview, add a runtime variable DASHBOARD_ALLOWED_ORIGINS with its exact https origin (no /dashboard path). No wildcard hostnames are accepted. The final minacafe.online domain is already allowed.
+
+Local checks: npm run build, npm run build:cloudflare, then npm run check:cloudflare (bundles without publishing). After building, npm run preview:cloudflare serves the Worker locally.
+
+Cloudflare uses unoptimized image URLs to avoid requiring a paid Images binding. Static shells use the read-only asset cache; live Sanity reads bypass it. This setup does not require R2, D1 or KV. Robots and sitemap are statically generated under Cache Components, so they must not export force-static.
+
+Reference: https://opennext.js.org/cloudflare/get-started
+
+Verified locally: standard Next.js build, OpenNext Worker build, Wrangler dry-run, 21 unit tests, and Workers HTTP checks for public pages, metadata routes, login/logout and protected settings. The compressed Worker was approximately 1.36 MiB. These checks do not publish the site.

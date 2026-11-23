@@ -1,0 +1,4 @@
+NEXTJS_ENV=development
+# Keep actual secrets in ignored .env.local for local development.
+# Set DASHBOARD_PASSWORD, DASHBOARD_SESSION_SECRET, and SANITY_API_WRITE_TOKEN
+# as encrypted runtime Secrets in Cloudflare Workers settings before deployment.

@@ -9,10 +9,15 @@
     "lint": "eslint",
     "test": "node --test app/lib/*.test.mjs",
     "studio:dev": "npm --prefix studio run dev",
-    "studio:build": "npm --prefix studio run build"
+    "studio:build": "npm --prefix studio run build",
+    "build:cloudflare": "node scripts/build-cloudflare.mjs",
+    "preview:cloudflare": "opennextjs-cloudflare preview",
+    "deploy:cloudflare": "opennextjs-cloudflare deploy",
+    "check:cloudflare": "wrangler deploy --dry-run"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@opennextjs/cloudflare": "^1.20.18",
     "gsap": "^3.15.1",
     "jose": "^6.2.18",
     "next": "16.4.6",
@@ -24,6 +29,7 @@
     "@tailwindcss/turbopack": "4.3.3",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
-    "tailwindcss": "4.3.3"
+    "tailwindcss": "4.3.3",
+    "wrangler": "^4.166.0"
   }
 }

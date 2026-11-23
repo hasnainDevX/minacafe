@@ -1,3 +1,4 @@
+// Cache Components prerenders this metadata route; force-static is not supported.
 import { publicSiteUrl } from './lib/seo';
 export default function robots() {
   const origin = publicSiteUrl();

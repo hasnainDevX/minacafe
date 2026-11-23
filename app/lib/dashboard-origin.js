@@ -14,6 +14,11 @@ export function sameOrigin(request, env = process.env) {
       const configured = new URL(env.SITE_URL);
       if (configured.protocol === "https:") allowed.add(configured.origin);
     }
+    // Optional exact Workers preview URL, set by the owner in runtime variables.
+    for (const value of (env.DASHBOARD_ALLOWED_ORIGINS || "").split(",").map(value => value.trim()).filter(Boolean)) {
+      const extra = new URL(value);
+      if (extra.protocol === "https:" && value === extra.origin) allowed.add(extra.origin);
+    }
     return allowed.has(origin.origin);
   } catch {
     return false;

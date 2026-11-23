@@ -51,3 +51,10 @@ studio/.sanity/
 .next-build-check/
 
 /.next-perf-check/
+
+# Cloudflare build output and local secrets
+/.next-cloudflare/
+/.open-next/
+/.wrangler/
+.dev.vars*
+!.dev.vars.example

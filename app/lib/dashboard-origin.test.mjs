@@ -30,3 +30,11 @@ test("local development still requires the exact request origin and port", () =>
   assert.equal(sameOrigin(request("http://localhost:3001", "same-origin", {}, url), env), false);
   assert.equal(sameOrigin(request("https://minacafe.online", "same-origin", {}, url), env), false);
 });
+
+test("Workers preview login requires an explicitly configured exact origin", () => {
+  const preview = "https://minacafe.example.workers.dev";
+  assert.equal(sameOrigin(request(preview), production), false);
+  assert.equal(sameOrigin(request(preview), { ...production, DASHBOARD_ALLOWED_ORIGINS: preview }), true);
+  assert.equal(sameOrigin(request("https://other.example.workers.dev"), { ...production, DASHBOARD_ALLOWED_ORIGINS: preview }), false);
+  assert.equal(sameOrigin(request(preview, "cross-site"), { ...production, DASHBOARD_ALLOWED_ORIGINS: preview }), false);
+});

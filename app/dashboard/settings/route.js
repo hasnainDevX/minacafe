@@ -17,7 +17,7 @@ export async function POST(request) {
  try {
   const response=await fetch("https://"+projectId+".api.sanity.io/v2025-02-19/data/mutate/"+dataset+"?visibility=sync",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+process.env.SANITY_API_WRITE_TOKEN},body:JSON.stringify({mutations:[{patch:{id:"business-settings",set:settings}}]}),cache:"no-store",signal:AbortSignal.timeout(10000)});
   if(!response.ok)throw Error();
-  revalidateTag("mina-storefront", {expire:0});
+  if (process.env.MINA_CLOUDFLARE !== "true") revalidateTag("mina-storefront", {expire:0});
   return Response.json({ok:true},{headers:privateHeaders});
  }catch{return Response.json({error:"Could not save. Please try again."},{status:503,headers:privateHeaders});}
 }

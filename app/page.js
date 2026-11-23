@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import LocalBusinessData from "./components/LocalBusinessData";
 import Hero from "./components/Hero";
 import LocationIntro from "./components/LocationIntro";
@@ -12,7 +13,7 @@ import Marquee from "./components/Marquee";
 export default function Home() {
   return (
     <main className="mina-home">
-      <LocalBusinessData />
+      <Suspense fallback={null}><LocalBusinessData /></Suspense>
       <div
         data-section-stack
         className="relative"

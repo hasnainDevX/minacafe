@@ -7,6 +7,10 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    ".next-perf-check/**",
+    ".next-cloudflare/**",
+    ".open-next/**",
+    ".wrangler/**",
     ".next-check/**",
     ".next-build-check/**",
     ".npm-cache/**",

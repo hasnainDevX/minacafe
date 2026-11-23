@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "minacafe",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-23",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    "SITE_URL": "https://minacafe.online",
+    "MINA_CLOUDFLARE": "true",
+    "SANITY_PROJECT_ID": "ea5s4yve",
+    "SANITY_DATASET": "production"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "keep_vars": true
+}

@@ -27,7 +27,9 @@ export async function getStorefront({ fresh = false, allowPreview = true } = {})
   const url = new URL(`https://${projectId}.api.sanity.io/v2025-02-19/data/query/${dataset}`);
   url.searchParams.set("query", query);
   url.searchParams.set("perspective", "published");
-  const response = await fetch(url, { ...(fresh ? { cache: "no-store" } : { next: { revalidate: 30, tags: ["mina-storefront"] } }), signal: AbortSignal.timeout(10000) });
+  // Workers serve live catalog data directly; the asset cache is read-only.
+  const uncached = fresh || process.env.MINA_CLOUDFLARE === "true";
+  const response = await fetch(url, { ...(uncached ? { cache: "no-store" } : { next: { revalidate: 30, tags: ["mina-storefront"] } }), signal: AbortSignal.timeout(10000) });
   if (!response.ok) throw new Error("Menu is temporarily unavailable. Please try again.");
   const { result } = await response.json();
   if (!result || !Array.isArray(result.products)) throw new Error("Menu could not be loaded.");

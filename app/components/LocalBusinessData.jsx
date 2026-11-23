@@ -1,17 +1,27 @@
+import { connection } from "next/server";
 import { cacheLife, cacheTag } from "next/cache";
 import { getStorefront } from "../lib/storefront";
 import { publicSiteUrl } from "../lib/seo";
 import { DAYS } from "../lib/business";
 
-export default async function LocalBusinessData() {
+async function cachedSettings() {
   "use cache";
   cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
   cacheTag("mina-storefront");
+  return (await getStorefront({ allowPreview: false })).settings;
+}
+
+export default async function LocalBusinessData() {
   const origin = publicSiteUrl();
   if (!origin) return null;
+  if (process.env.MINA_CLOUDFLARE === "true") await connection();
   let settings;
   try {
-    ({ settings } = await getStorefront({ allowPreview: false }));
+    if (process.env.MINA_CLOUDFLARE === "true") {
+      ({ settings } = await getStorefront({ fresh: true, allowPreview: false }));
+    } else {
+      settings = await cachedSettings();
+    }
   } catch {
     // A temporary CMS outage must not prevent the homepage from rendering.
     return null;
