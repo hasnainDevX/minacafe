@@ -12,7 +12,7 @@
     "studio:build": "npm --prefix studio run build",
     "build:cloudflare": "node scripts/build-cloudflare.mjs",
     "preview:cloudflare": "opennextjs-cloudflare preview",
-    "deploy:cloudflare": "opennextjs-cloudflare deploy",
+    "deploy:cloudflare": "wrangler deploy",
     "check:cloudflare": "wrangler deploy --dry-run"
   },
   "dependencies": {

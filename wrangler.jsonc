@@ -20,5 +20,13 @@
   "observability": {
     "enabled": true
   },
-  "keep_vars": true
+  "keep_vars": true,
+  "build": {
+    "command": "npm run build:cloudflare",
+    "watch_dir": [
+      "app",
+      "public",
+      "scripts"
+    ]
+  }
 }

@@ -8,4 +8,11 @@ const result = spawnSync(process.execPath, [cli, "build", "--openNextConfigPath"
   env: { ...process.env, MINA_CLOUDFLARE: "true", NEXT_BUILD_DIR: ".next" },
 });
 if (result.error) throw result.error;
-process.exit(result.status ?? 1);
+if (result.status !== 0) process.exit(result.status ?? 1);
+// Direct Wrangler deployments also need the prerendered cache assets present.
+const cache = spawnSync(process.execPath, [cli, "populateCache", "local"], {
+  stdio: "inherit",
+  env: { ...process.env, MINA_CLOUDFLARE: "true", NEXT_BUILD_DIR: ".next" },
+});
+if (cache.error) throw cache.error;
+process.exit(cache.status ?? 1);

@@ -41,7 +41,7 @@ Mina uses server-side dashboard authentication and Sanity settings endpoints. De
 
 Cloudflare Workers Builds settings:
 - Worker name: minacafe
-- Build command: npm run build:cloudflare
+- Build command: leave blank (Wrangler runs the Cloudflare build automatically)
 - Deploy command: npm run deploy:cloudflare
 - Root directory: repository root
 - Node.js: 22 or newer
@@ -50,10 +50,12 @@ Add these encrypted **runtime Secrets** in Workers > minacafe > Settings > Varia
 
 Wrangler includes the public SITE_URL, Sanity project/dataset, and MINA_CLOUDFLARE flag. For login through a workers.dev preview, add a runtime variable DASHBOARD_ALLOWED_ORIGINS with its exact https origin (no /dashboard path). No wildcard hostnames are accepted. The final minacafe.online domain is already allowed.
 
-Local checks: npm run build, npm run build:cloudflare, then npm run check:cloudflare (bundles without publishing). After building, npm run preview:cloudflare serves the Worker locally.
+Local checks: npm run build, then npm run check:cloudflare (builds and bundles without publishing). After building, npm run preview:cloudflare serves the Worker locally.
 
 Cloudflare uses unoptimized image URLs to avoid requiring a paid Images binding. Static shells use the read-only asset cache; live Sanity reads bypass it. This setup does not require R2, D1 or KV. Robots and sitemap are statically generated under Cache Components, so they must not export force-static.
 
 Reference: https://opennext.js.org/cloudflare/get-started
 
 Verified locally: standard Next.js build, OpenNext Worker build, Wrangler dry-run, 21 unit tests, and Workers HTTP checks for public pages, metadata routes, login/logout and protected settings. The compressed Worker was approximately 1.36 MiB. These checks do not publish the site.
+
+Wrangler has a custom build hook, so npm run deploy:cloudflare or npx wrangler deploy generates .open-next/worker.js and the static cache before uploading. Do not commit .open-next; it is generated during deployment. An extra dashboard build command is unnecessary.
