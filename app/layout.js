@@ -1,3 +1,4 @@
+import Script from "next/script";
 import localFont from "next/font/local";
 import { pageMetadata } from "./lib/seo";
 import "./globals.css";
@@ -31,6 +32,8 @@ export const metadata = pageMetadata(
   "Discover Mina Café in North Nazimabad, Karachi. Explore fresh fruit glasses, milk bottles, chicken salad bowls and Kashmiri chai, and order on WhatsApp.",
 );
 
+const GTM_ID = "GTM-P4SBH79R";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${sourceSans.variable} h-full antialiased`}>
@@ -45,6 +48,18 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap"
           rel="stylesheet"
         />
+        <Script
+          id="gtag-base"
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          `}
+        </Script>
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <StorefrontProvider><SiteExperience>{children}</SiteExperience></StorefrontProvider>
