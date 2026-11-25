@@ -2,6 +2,7 @@
 import { useState } from "react";
 import BrandIllustration from "./BrandIllustration";
 import { useStorefront } from "./StorefrontProvider";
+import Link from "next/link";
 
 
 export default function Footer() {
@@ -15,8 +16,19 @@ export default function Footer() {
     try {
       const { settings: latest } = await refresh(true);
       const data = new FormData(form);
-      const message = ["Hello Mina!", "Name: " + data.get("name"), "Phone: " + data.get("phone"), "", data.get("message")].join("\n");
-      window.location.assign("https://wa.me/" + latest.whatsappNumber.replace(/\D/g, "") + "?text=" + encodeURIComponent(message));
+      const message = [
+        "Hello Mina!",
+        "Name: " + data.get("name"),
+        "Phone: " + data.get("phone"),
+        "",
+        data.get("message"),
+      ].join("\n");
+      window.location.assign(
+        "https://wa.me/" +
+          latest.whatsappNumber.replace(/\D/g, "") +
+          "?text=" +
+          encodeURIComponent(message),
+      );
       setStatus("sent");
     } catch {
       setStatus("error");
@@ -110,7 +122,8 @@ export default function Footer() {
                 {status === "sending" ? "Sending..." : "Continue on WhatsApp"}
               </button>
               <p role="status" aria-live="polite" className="text-sm">
-                {status === "sent" && "Send the draft in WhatsApp to contact Mina."}
+                {status === "sent" &&
+                  "Send the draft in WhatsApp to contact Mina."}
                 {status === "error" &&
                   "Something went wrong. Please try again."}
               </p>
@@ -126,7 +139,14 @@ export default function Footer() {
             MINA CAFE
           </p>
           <p className="mt-4 text-center text-base text-butter underline underline-offset-8">
-            Website designed by Hasnain Webstudio
+            Website designed by{" "}
+            <Link
+              href="https://hasnainwebstudio.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Hasnain Webstudio
+            </Link>
           </p>
         </div>
       </div>
